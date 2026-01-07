@@ -12,7 +12,7 @@
   margin-top: calc(0px - var(--header-height, 80px));
   text-align: left;
 }
-.hero-title, .hero-desc, .hero-btn {
+.hero-title, .hero-desc {
   text-align: left;
   margin-left: 0;
 }
@@ -29,7 +29,4 @@
   color: var(--neutralPrimary);
   font-size: 1.25rem;
   margin: 1rem 0;
-}
-.hero-btn {
-  font-size: 1.1rem;
 }
