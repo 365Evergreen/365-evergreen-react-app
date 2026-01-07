@@ -1,0 +1,109 @@
+/* Header styles */
+.header-root {
+  background-color: var(--themePrimary);
+  color: var(--white);
+}
+.header-container {
+  width: 100%;
+  margin: 0;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+.header-logo {
+  height: 40px;
+  vertical-align: middle;
+}
+
+.header-nav {
+  display: flex;
+  gap: 32px;
+}
+.header-nav-btn {
+  color: var(--white);
+  font-weight: 500;
+  font-size: 18px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  padding: 0;
+}
+.header-nav-btn:focus {
+  outline: 2px solid var(--themeSecondary);
+}
+
+/* Hamburger styles */
+.header-hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+.header-hamburger-bar {
+  width: 28px;
+  height: 3px;
+  background: #222 !important;
+  margin: 4px 0;
+  border-radius: 2px;
+  transition: background 0.2s;
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .header-container {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+  .header-hamburger {
+    order: 1;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex !important;
+    z-index: 20;
+  }
+  .header-logo {
+    order: 2;
+    margin: 0 auto;
+    display: block;
+    position: relative;
+    left: 0;
+    right: 0;
+    text-align: center;
+  }
+  .header-nav {
+    position: absolute;
+    top: 64px;
+    left: 0;
+    right: 0;
+    background: #fff !important;
+    flex-direction: column;
+    gap: 0;
+    padding: 1rem 0;
+    display: none !important;
+    z-index: 1000;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+  .header-nav.header-nav--open {
+    display: flex !important;
+  }
+  .header-hamburger {
+    display: flex !important;
+  }
+  .header-container {
+    position: relative;
+  }
+}

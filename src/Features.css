@@ -1,0 +1,39 @@
+/* Features styles */
+.features-root {
+  background-color: var(--white);
+  padding: 3rem 0;
+}
+.features-container {
+  width: 100%;
+  margin: 0;
+  text-align: center;
+  box-sizing: border-box;
+}
+.features-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 40px;
+  margin-top: 32px;
+}
+.features-card {
+  width: 240px;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  background: var(--neutralLighter);
+  border-radius: 8px;
+  box-shadow: 0 1px 4px #0001;
+}
+.features-icon {
+  color: var(--themeSecondary);
+  margin-bottom: 12px;
+  font-size: 32px;
+}
+.features-title {
+  margin: 1rem 0 0.5rem;
+}
+.features-desc {
+  color: var(--neutralSecondary);
+}

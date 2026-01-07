@@ -1,0 +1,60 @@
+/* LatestPosts styles */
+.latest-posts-root {
+  background: #fff;
+  padding: 3rem 0;
+}
+.latest-posts-container {
+  width: 100%;
+  margin: 0;
+  box-sizing: border-box;
+}
+.latest-posts-title {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.latest-posts-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+}
+.latest-posts-card {
+  background: var(--neutralLighter);
+  border-radius: 8px;
+  box-shadow: 0 1px 4px #0001;
+  padding: 1.5rem;
+  width: 260px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.latest-posts-date {
+  color: var(--neutralSecondary);
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+.latest-posts-title-link {
+  color: var(--themePrimary);
+  font-weight: 600;
+  text-decoration: none;
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+}
+.latest-posts-title-link:hover {
+  text-decoration: underline;
+}
+.latest-posts-excerpt {
+  color: var(--neutralPrimary);
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+.latest-posts-readmore {
+  margin-top: auto;
+  color: var(--themeSecondary);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.98rem;
+}
+.latest-posts-readmore:hover {
+  text-decoration: underline;
+}

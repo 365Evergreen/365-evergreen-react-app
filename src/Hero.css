@@ -1,0 +1,17 @@
+/* Hero styles */
+.hero-root {
+  background-color: var(--themeLighterAlt);
+  padding: 4rem 0;
+  text-align: center;
+}
+.hero-title {
+  color: var(--themePrimary);
+}
+.hero-desc {
+  color: var(--neutralPrimary);
+  font-size: 1.25rem;
+  margin: 1rem 0;
+}
+.hero-btn {
+  font-size: 1.1rem;
+}

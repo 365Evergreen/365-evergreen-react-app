@@ -1,0 +1,23 @@
+/* CTA styles */
+.cta-root {
+  background: var(--themePrimary);
+  color: #fff;
+  padding: 3rem 0;
+  text-align: center;
+}
+.cta-container {
+  width: 100%;
+  margin: 0;
+  box-sizing: border-box;
+}
+.cta-title {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+.cta-desc {
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+}
+.cta-action {
+  margin-top: 1.5rem;
+}
