@@ -5,6 +5,7 @@
   padding: 3rem 0 1.5rem 0;
   margin-top: 2rem;
   font-size: 1.05rem;
+  padding-left: 4vw;
 }
 .footer-container {
   width: 100%;
@@ -117,5 +118,8 @@
   .footer-links {
     justify-content: flex-start;
     gap: 2rem;
+  }
+  .footer-root {
+    padding-left: 2vw;
   }
 }

@@ -2,8 +2,13 @@
 .cta-root {
   background: var(--themePrimary);
   color: #fff;
-  padding: 3rem 0;
+  padding: 3rem 0 3rem 4vw;
   text-align: center;
+}
+@media (max-width: 900px) {
+  .cta-root {
+    padding: 2rem 0 2rem 2vw;
+  }
 }
 .cta-container {
   width: 100%;

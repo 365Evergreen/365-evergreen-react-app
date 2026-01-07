@@ -111,6 +111,9 @@
   margin-top: 1rem;
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
+.contact-form-root {
+  padding-left: 4vw;
+}
 @media (max-width: 900px) {
   .contact-wrapper {
     flex-direction: column;
@@ -118,5 +121,8 @@
   }
   .contact-container {
     padding: 2rem 1rem;
+  }
+  .contact-form-root {
+    padding-left: 2vw;
   }
 }

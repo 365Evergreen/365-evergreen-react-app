@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react';
-import { Spinner, Button } from '@fluentui/react-components';
+import { Button } from '@fluentui/react-components';
 import '../LatestPosts.css';
 
 interface Post {

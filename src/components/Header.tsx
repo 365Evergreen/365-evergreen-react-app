@@ -17,7 +17,7 @@ export function Header() {
   return (
     <header className={`header-root${scrolled ? ' header-root--scrolled' : ''}`}>
       <div className="header-container">
-        <img src="/vite.svg" alt="Logo" className="header-logo" />
+        <img src="https://365evergreen.com/wp-content/uploads/2025/07/cropped-Evergreen_Logo__2110.webp" alt="365 Evergreen Logo" className="header-logo" />
         <nav className={`header-nav${menuOpen ? ' header-nav--open' : ''}`}>
           <Button as="a" href="#" className="header-nav-btn" appearance="transparent">Home</Button>
           <Button as="a" href="#features" className="header-nav-btn" appearance="transparent">Features</Button>

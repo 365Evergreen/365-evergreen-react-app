@@ -1,5 +1,5 @@
-
 import { Button } from '@fluentui/react-components';
+import '../Hero.css';
 
 export function Hero() {
   return (

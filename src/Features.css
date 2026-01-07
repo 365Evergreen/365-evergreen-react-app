@@ -1,7 +1,12 @@
 /* Features styles */
 .features-root {
   background-color: var(--white);
-  padding: 3rem 0;
+  padding: 3rem 0 3rem 4vw;
+}
+@media (max-width: 900px) {
+  .features-root {
+    padding: 2rem 0 2rem 2vw;
+  }
 }
 .features-container {
   width: 100%;

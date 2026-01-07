@@ -2,6 +2,7 @@
 .latest-posts-root {
   background: #fff;
   padding: 3rem 0;
+  padding-left: 4vw;
 }
 .latest-posts-container {
   width: 100%;
@@ -65,5 +66,8 @@
   .latest-posts-list {
     grid-template-columns: 1fr;
     grid-template-rows: none;
+  }
+  .latest-posts-root {
+    padding-left: 2vw;
   }
 }

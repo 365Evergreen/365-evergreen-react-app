@@ -8,6 +8,10 @@
   background: transparent;
   transition: background 0.3s, box-shadow 0.3s;
   box-shadow: none;
+  padding-top: 1.2rem;
+  padding-bottom: 1.2rem;
+  --header-height: 44px;
+  height: var(--header-height);
 }
 .header-root--scrolled {
   background: #fff;
@@ -16,15 +20,17 @@
 .header-container {
   width: 100%;
   margin: 0;
-  padding: 1rem;
+  padding: 0 0 0 4vw;
   display: flex;
   align-items: center;
   justify-content: space-between;
   box-sizing: border-box;
 }
 .header-logo {
-  height: 40px;
-  vertical-align: middle;
+  height: 44px;
+  width: auto;
+  max-width: 160px;
+  display: block;
 }
 
 .header-nav {
@@ -93,6 +99,8 @@
     left: 0;
     right: 0;
     text-align: center;
+    height: 36px;
+    max-width: 120px;
   }
   .header-nav {
     position: absolute;
@@ -115,5 +123,16 @@
   }
   .header-container {
     position: relative;
+  }
+}
+@media (max-width: 900px) {
+  .header-container {
+    padding: 0 0 0 2vw;
+  }
+}
+@media (min-width: 600px) {
+  .header-root {
+    --header-height: 88px;
+    height: var(--header-height);
   }
 }
