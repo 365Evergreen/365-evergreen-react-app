@@ -1,7 +1,17 @@
 /* Header styles */
 .header-root {
-  background-color: var(--themePrimary);
-  color: var(--white);
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 2000;
+  background: transparent;
+  transition: background 0.3s, box-shadow 0.3s;
+  box-shadow: none;
+}
+.header-root--scrolled {
+  background: #fff;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.08);
 }
 .header-container {
   width: 100%;

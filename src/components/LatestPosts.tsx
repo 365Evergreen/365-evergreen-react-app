@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Spinner } from '@fluentui/react-components';
+import { Spinner, Button } from '@fluentui/react-components';
 import '../LatestPosts.css';
 
 interface Post {
@@ -7,48 +7,71 @@ interface Post {
   title: string;
   excerpt: string;
   url: string;
+  date: string;
 }
 
+const placeholderPosts: Post[] = [
+  {
+    id: '1',
+    title: '10 Tips for Sustainable Living',
+    excerpt: 'Discover practical ways to reduce your carbon footprint and live more sustainably every day.',
+    url: '#',
+    date: '2026-01-01',
+  },
+  {
+    id: '2',
+    title: 'How to Start a Community Garden',
+    excerpt: 'A step-by-step guide to building a thriving community garden in your neighborhood.',
+    url: '#',
+    date: '2026-01-03',
+  },
+  {
+    id: '3',
+    title: 'Eco-Friendly Home Upgrades',
+    excerpt: 'Upgrade your home with these affordable and effective eco-friendly improvements.',
+    url: '#',
+    date: '2026-01-05',
+  },
+  {
+    id: '4',
+    title: 'Zero Waste Lifestyle: Getting Started',
+    excerpt: 'Learn how to minimize waste and embrace a zero-waste lifestyle with these simple tips.',
+    url: '#',
+    date: '2026-01-06',
+  },
+  {
+    id: '5',
+    title: 'The Benefits of Plant-Based Eating',
+    excerpt: 'Explore the health and environmental benefits of a plant-based diet.',
+    url: '#',
+    date: '2026-01-07',
+  },
+  {
+    id: '6',
+    title: 'Renewable Energy at Home',
+    excerpt: 'How to get started with solar, wind, and other renewable energy sources for your home.',
+    url: '#',
+    date: '2026-01-08',
+  },
+];
 
 export function LatestPosts() {
-  const [posts, setPosts] = useState<Post[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    // TODO: Replace with real API endpoint
-    fetch('/api/posts')
-      .then((res) => {
-        if (!res.ok) throw new Error('Failed to fetch posts');
-        return res.json();
-      })
-      .then((data) => {
-        setPosts(data.posts || []);
-        setLoading(false);
-      })
-      .catch((err) => {
-        setError(err.message);
-        setLoading(false);
-      });
-  }, []);
+  // For placeholder/demo, skip loading and error states
+  const posts = placeholderPosts;
 
   return (
     <section className="latest-posts-root">
       <div className="latest-posts-container">
         <h2 className="latest-posts-title">Latest Posts</h2>
-        {loading && <Spinner label="Loading posts..." />}
-        {error && <div className="latest-posts-error" role="alert">{error}</div>}
         <div className="latest-posts-list">
           {posts.map((post) => (
             <div key={post.id} className="latest-posts-card">
+              <div className="latest-posts-date">{new Date(post.date).toLocaleDateString()}</div>
               <a href={post.url} className="latest-posts-title-link">{post.title}</a>
               <p className="latest-posts-excerpt">{post.excerpt}</p>
-              <a href={post.url} className="latest-posts-readmore">Read more</a>
+              <Button as="a" href={post.url} className="latest-posts-readmore" appearance="secondary" size="small">Read more</Button>
             </div>
           ))}
-          {!loading && !error && posts.length === 0 && (
-            <div className="latest-posts-info" role="status">No posts found.</div>
-          )}
         </div>
       </div>
     </section>

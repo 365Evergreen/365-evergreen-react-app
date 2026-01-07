@@ -1,16 +1,21 @@
-
 import { Button } from '@fluentui/react-components';
 import '../Header.css';
-
-
-
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => {
+      setScrolled(window.scrollY > 10);
+    };
+    window.addEventListener('scroll', onScroll);
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   return (
-    <header className="header-root">
+    <header className={`header-root${scrolled ? ' header-root--scrolled' : ''}`}>
       <div className="header-container">
         <img src="/vite.svg" alt="Logo" className="header-logo" />
         <nav className={`header-nav${menuOpen ? ' header-nav--open' : ''}`}>
