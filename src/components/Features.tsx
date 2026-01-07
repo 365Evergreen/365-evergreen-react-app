@@ -8,17 +8,16 @@ const features = [
   { icon: <Cloud24Regular className="features-icon" />, title: 'Cloud Ready', description: 'Deployed on Azure for global scale.' },
 ];
 
-
 export function Features() {
   return (
     <section className="features-root">
       <div className="features-container">
-        <h2>Features</h2>
+        <h2 className="fluent-title2">Features</h2>
         <div className="features-cards">
           {features.map((feature, i) => (
             <Card key={i} className="features-card">
               {feature.icon}
-              <span className="features-title">{feature.title}</span>
+              <span className="features-title fluent-title3">{feature.title}</span>
               <span className="features-desc">{feature.description}</span>
             </Card>
           ))}

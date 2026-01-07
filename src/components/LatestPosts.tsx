@@ -61,12 +61,12 @@ export function LatestPosts() {
   return (
     <section className="latest-posts-root">
       <div className="latest-posts-container">
-        <h2 className="latest-posts-title">Latest Posts</h2>
+        <h2 className="latest-posts-title fluent-title2">Latest Posts</h2>
         <div className="latest-posts-list">
           {posts.map((post) => (
             <div key={post.id} className="latest-posts-card">
               <div className="latest-posts-date">{new Date(post.date).toLocaleDateString()}</div>
-              <a href={post.url} className="latest-posts-title-link">{post.title}</a>
+              <a href={post.url} className="latest-posts-title-link fluent-title3">{post.title}</a>
               <p className="latest-posts-excerpt">{post.excerpt}</p>
               <Button as="a" href={post.url} className="latest-posts-readmore" appearance="secondary" size="small">Read more</Button>
             </div>

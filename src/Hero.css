@@ -23,7 +23,7 @@
   }
 }
 .hero-title {
-  color: var(--themePrimary);
+  color: var(--neutralPrimary);
 }
 .hero-desc {
   color: var(--neutralPrimary);

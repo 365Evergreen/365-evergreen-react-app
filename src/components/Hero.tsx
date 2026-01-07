@@ -4,7 +4,7 @@ import '../Hero.css';
 export function Hero() {
   return (
     <section className="hero-root">
-      <h1 className="hero-title">Welcome to 365 Evergreen</h1>
+      <h1 className="hero-title fluent-display">Welcome to 365 Evergreen</h1>
       <p className="hero-desc">
         Modern, scalable web solutions for your business.
       </p>

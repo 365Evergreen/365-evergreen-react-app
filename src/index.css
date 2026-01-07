@@ -1,16 +1,120 @@
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Segoe UI', 'SegoeUI', 'Helvetica Neue', Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
   background-color: #242424;
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  --themePrimary: #007814;
+  --themeLighterAlt: #f0faf1;
+  --themeLighter: #c4e9ca;
+  --themeLight: #96d6a1;
+  --themeTertiary: #46ae57;
+  --themeSecondary: #108824;
+  --themeDarkAlt: #006c12;
+  --themeDark: #005b0f;
+  --themeDarker: #00430b;
+  --neutralLighterAlt: #faf9f8;
+  --neutralLighter: #f3f2f1;
+  --neutralLight: #edebe9;
+  --neutralQuaternaryAlt: #e1dfdd;
+  --neutralQuaternary: #d0d0d0;
+  --neutralTertiaryAlt: #c8c6c4;
+  --neutralTertiary: #a19f9d;
+  --neutralSecondary: #605e5c;
+  --neutralPrimaryAlt: #3b3a39;
+  --neutralPrimary: #323130;
+  --neutralDark: #201f1e;
+  --black: #000000;
+  --white: #ffffff;
+}
+
+/* Fluent UI Typography Styles */
+.fluent-caption2 {
+  font-size: 10px;
+  line-height: 14px;
+  font-weight: 400;
+}
+.fluent-caption2Strong {
+  font-size: 10px;
+  line-height: 14px;
+  font-weight: 600;
+}
+.fluent-caption1 {
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 400;
+}
+.fluent-caption1Strong {
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 600;
+}
+.fluent-caption1Stronger {
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 700;
+}
+.fluent-body1 {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 400;
+}
+.fluent-body1Strong {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+}
+.fluent-body1Stronger {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 700;
+}
+.fluent-subtitle2 {
+  font-size: 16px;
+  line-height: 22px;
+  font-weight: 600;
+}
+.fluent-subtitle2Stronger {
+  font-size: 16px;
+  line-height: 22px;
+  font-weight: 700;
+}
+.fluent-subtitle1 {
+  font-size: 20px;
+  line-height: 26px;
+  font-weight: 600;
+}
+.fluent-title3 {
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: 600;
+}
+.fluent-title2 {
+  font-size: 28px;
+  line-height: 36px;
+  font-weight: 600;
+}
+.fluent-title1 {
+  font-size: 32px;
+  line-height: 40px;
+  font-weight: 600;
+}
+.fluent-largeTitle {
+  font-size: 40px;
+  line-height: 52px;
+  font-weight: 600;
+}
+.fluent-display {
+  font-size: 68px;
+  line-height: 92px;
+  font-weight: 600;
+  color: inherit;
 }
 
 a {
@@ -30,9 +134,36 @@ body {
   min-height: 100vh;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+
+h1, .fluent-title1 {
+  font-size: 32px;
+  line-height: 40px;
+  font-weight: 600;
+}
+h2, .fluent-title2 {
+  font-size: 28px;
+  line-height: 36px;
+  font-weight: 600;
+}
+h3, .fluent-title3 {
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: 600;
+}
+h4, .fluent-subtitle1 {
+  font-size: 20px;
+  line-height: 26px;
+  font-weight: 600;
+}
+h5, .fluent-subtitle2 {
+  font-size: 16px;
+  line-height: 22px;
+  font-weight: 600;
+}
+h6, .fluent-body1Strong {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
 }
 
 button {
@@ -42,16 +173,17 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: var(--themePrimary);
+  color: var(--white);
   cursor: pointer;
-  transition: border-color 0.25s;
+  transition: border-color 0.25s, background-color 0.25s;
 }
 button:hover {
-  border-color: #646cff;
+  background-color: var(--themeDarkAlt);
 }
 button:focus,
 button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  outline: 4px auto var(--themeSecondary);
 }
 
 @media (prefers-color-scheme: light) {
