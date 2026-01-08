@@ -1,7 +1,8 @@
 /* Hero styles */
 .hero-root {
   background: url('https://365evergreen.com/wp-content/uploads/2025/12/plant-cover-1440-900.webp') center/cover no-repeat;
-  min-height: 480px;
+  min-height: 70vh;
+  height: 70vh;
   padding: 0 0 4rem 4vw;
   position: relative;
   z-index: 1;
@@ -9,7 +10,7 @@
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  margin-top: calc(0px - var(--header-height, 80px));
+  margin-top: calc(0px - (var(--header-height, 44px) + 1.2rem + 1.2rem));
   text-align: left;
 }
 .hero-title, .hero-desc {
@@ -19,7 +20,10 @@
 @media (max-width: 900px) {
   .hero-root {
     min-height: 320px;
+    height: 320px;
+    background-position: 60% 30%;
     padding: 0 0 2rem 2vw;
+    margin-top: calc(0px - (var(--header-height, 44px) + 1.2rem + 1.2rem));
   }
 }
 .hero-title {

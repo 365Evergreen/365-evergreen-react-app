@@ -1,3 +1,4 @@
+import { Routes, Route } from 'react-router-dom';
 import './App.css';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
@@ -9,6 +10,7 @@ import { LatestPosts } from './components/LatestPosts';
 import { CopilotChat } from './components/CopilotChat';
 import { ChatBubble } from './components/ChatBubble';
 import { useState } from 'react';
+import { PageView } from './components/PageView';
 
 
 function App() {
@@ -17,13 +19,20 @@ function App() {
     <>
       <Header />
       <main>
-        <Hero />
-        <Features />
-        <CTA />
-        <ContactForm />
+        <Routes>
+          <Route path="/" element={
+            <>
+              <Hero />
+              <Features />
+              <CTA />
+              <ContactForm />
+              <LatestPosts />
+            </>
+          } />
+          <Route path="/:slug" element={<PageView />} />
+        </Routes>
         <CopilotChat open={chatOpen} onClose={() => setChatOpen(false)} />
       </main>
-      <LatestPosts />
       <Footer />
       {!chatOpen && <ChatBubble onClick={() => setChatOpen(true)} />}
     </>

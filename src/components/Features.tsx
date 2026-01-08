@@ -1,26 +1,31 @@
-import { Card } from '@fluentui/react-components';
-import { Rocket24Regular, Shield24Regular, Cloud24Regular } from '@fluentui/react-icons';
 import '../Features.css';
-
-const features = [
-  { icon: <Rocket24Regular className="features-icon" />, title: 'Fast', description: 'Lightning-fast load times and performance.' },
-  { icon: <Shield24Regular className="features-icon" />, title: 'Secure', description: 'Enterprise-grade security and privacy.' },
-  { icon: <Cloud24Regular className="features-icon" />, title: 'Cloud Ready', description: 'Deployed on Azure for global scale.' },
-];
+import { useSiteFeatures } from '../lib/useSiteFeatures';
+import { PeopleTeamToolbox24Regular } from '@fluentui/react-icons';
+import { Button } from '@fluentui/react-components';
+import { useNavigate } from 'react-router-dom';
 
 export function Features() {
+  const features = useSiteFeatures();
+  const feature = features[0]; // Only display the first card as requested
+  const navigate = useNavigate();
+
+  if (!feature) return null;
+
+  const handleView = () => {
+    navigate(`/feature/${feature.slug}`);
+  };
+
   return (
     <section className="features-root">
-      <div className="features-container">
-        <h2 className="fluent-title2">Features</h2>
-        <div className="features-cards">
-          {features.map((feature, i) => (
-            <Card key={i} className="features-card">
-              {feature.icon}
-              <span className="features-title fluent-title3">{feature.title}</span>
-              <span className="features-desc">{feature.description}</span>
-            </Card>
-          ))}
+      <h2 className="fluent-title2">Features</h2>
+      <div className="features-grid">
+        <div className="features-card">
+          <span className="features-icon"><PeopleTeamToolbox24Regular /></span>
+          <span className="features-title fluent-title3">{feature.siteFeature.title || feature.title}</span>
+          <div className="features-desc fluent-body1">{feature.siteFeature.blurb}</div>
+          <Button appearance="primary" onClick={handleView} className="features-link">
+            {feature.siteFeature.link?.title || 'Learn more'}
+          </Button>
         </div>
       </div>
     </section>

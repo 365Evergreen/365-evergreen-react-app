@@ -8,10 +8,10 @@
   background: transparent;
   transition: background 0.3s, box-shadow 0.3s;
   box-shadow: none;
-  padding-top: 1.2rem;
-  padding-bottom: 1.2rem;
   --header-height: 44px;
   height: var(--header-height);
+  padding-top: 1rem;
+  padding-bottom: 1rem;
 }
 .header-root--scrolled {
   background: #fff;
@@ -20,7 +20,7 @@
 .header-container {
   width: 100%;
   margin: 0;
-  padding: 0 0 0 4vw;
+  padding: 0 4vw 0 4vw;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -127,12 +127,6 @@
 }
 @media (max-width: 900px) {
   .header-container {
-    padding: 0 0 0 2vw;
-  }
-}
-@media (min-width: 600px) {
-  .header-root {
-    --header-height: 88px;
-    height: var(--header-height);
+    padding: 0 2vw 0 2vw;
   }
 }

@@ -1,7 +1,7 @@
 ## Navigation
 
 query glbNav {
-  menus(where: {location: PRIMARY}) {
+  menus(where: {location: MENU_1}) {
     nodes {
       menuItems {
         nodes {
