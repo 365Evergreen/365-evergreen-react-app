@@ -17,12 +17,13 @@ interface PageBlocksProps {
   blocks?: Block[];
 }
 
+
 const PageBlocks: React.FC<PageBlocksProps> = ({ blocks }) => {
   if (!blocks?.length) return null;
   return (
     <>
       {blocks.map((block, idx) => {
-        let content = null;
+        let content: React.ReactNode = null;
         switch (block.name) {
           case 'core/paragraph':
             content = <p dangerouslySetInnerHTML={{ __html: block.attributes?.content || block.innerHTML || '' }} />;
@@ -57,12 +58,31 @@ const PageBlocks: React.FC<PageBlocksProps> = ({ blocks }) => {
               <a href={toLocalUrl(block.attributes?.url)}>{block.attributes?.label}</a>
             );
             break;
+          // Grouping/structural blocks: render children only, optionally with a container
+          case 'core/group':
+          case 'core/template-part':
+          case 'core/cover':
+          case 'core/columns':
+          case 'core/column':
+          case 'core/post-content':
+          case 'core/buttons':
+            content = null; // just render children below
+            break;
           // Add more block types as needed
           default:
-            content = <div dangerouslySetInnerHTML={{ __html: block.innerHTML || '' }} />;
+            // Fallback: show block name and any raw HTML
+            content = (
+              <div style={{ border: '1px dashed #ccc', margin: '8px 0', padding: 4 }}>
+                <small style={{ color: '#888' }}>{block.name}</small>
+                {block.innerHTML && (
+                  <div dangerouslySetInnerHTML={{ __html: block.innerHTML }} />
+                )}
+              </div>
+            );
         }
+        // Always render children if present
         return (
-          <div key={idx}>
+          <div key={idx} style={block.name.startsWith('core/group') || block.name === 'core/template-part' ? { margin: '12px 0' } : {}}>
             {content}
             {block.innerBlocks && block.innerBlocks.length > 0 && (
               <PageBlocks blocks={block.innerBlocks} />
