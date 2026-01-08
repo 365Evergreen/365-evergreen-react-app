@@ -1,20 +1,19 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Breadcrumb, BreadcrumbItem } from '@fluentui/react-components';
-import { usePageBlocks } from '../lib/usePageBlocks';
+import { usePageBySlug } from '../lib/usePageBySlug';
 import { PageBlocks } from './PageBlocks';
 
 export const PageView: React.FC = () => {
   const { slug } = useParams<{ slug?: string }>();
 
-  // For demo: use a hardcoded page ID (replace with dynamic lookup by slug as needed)
-  const pageId = 'cG9zdDozNjM=';
-  const page = usePageBlocks(pageId);
+  // Fetch page by slug (dynamic)
+  const page = usePageBySlug(slug);
 
   // Placeholder: In the future, build this from WPGraphQL parent/child data
   const breadcrumbItems = [
     { text: 'Home', href: '/' },
-    { text: page?.title || 'Page', href: `/page/${slug}` },
+    { text: page?.title || (slug || 'Page'), href: `/${slug}` },
   ];
 
   return (

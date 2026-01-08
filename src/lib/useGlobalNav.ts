@@ -14,7 +14,7 @@ export function useGlobalNav() {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        query: `query glbNav {\n  menus(where: {location: MENU_1}) {\n    nodes {\n      menuItems {\n        nodes {\n          label\n          url\n        }\n      }\n    }\n  }\n}`
+        query: `query glbNav {\n  menus(where: {location: PRIMARY}) {\n    nodes {\n      menuItems {\n        nodes {\n          label\n          url\n        }\n      }\n    }\n  }\n}`
       })
     })
       .then(res => res.json())

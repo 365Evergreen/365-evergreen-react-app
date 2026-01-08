@@ -3,22 +3,33 @@ import type { PageBlock } from '../lib/usePageBlocks';
 export function PageBlocks({ blocks }: { blocks: PageBlock[] }) {
   if (!blocks?.length) return null;
   return (
-    <div className="page-blocks">
+    <>
       {blocks.map((block, idx) => {
+        let content = null;
         switch (block.name) {
           case 'core/paragraph':
-            return <p key={idx} dangerouslySetInnerHTML={{ __html: block.attributes?.content || block.innerHTML || '' }} />;
+            content = <p dangerouslySetInnerHTML={{ __html: block.attributes?.content || block.innerHTML || '' }} />;
+            break;
           case 'core/heading':
             const Tag = `h${block.attributes?.level || 2}` as keyof JSX.IntrinsicElements;
-            return <Tag key={idx} dangerouslySetInnerHTML={{ __html: block.attributes?.content || block.innerHTML || '' }} />;
+            content = <Tag dangerouslySetInnerHTML={{ __html: block.attributes?.content || block.innerHTML || '' }} />;
+            break;
           case 'core/image':
-            return <img key={idx} src={block.attributes?.url} alt={block.attributes?.alt || ''} style={{ maxWidth: '100%' }} />;
+            content = <img src={block.attributes?.url} alt={block.attributes?.alt || ''} style={{ maxWidth: '100%' }} />;
+            break;
           // Add more block types as needed
           default:
-            // Fallback: render raw HTML
-            return <div key={idx} dangerouslySetInnerHTML={{ __html: block.innerHTML || '' }} />;
+            content = <div dangerouslySetInnerHTML={{ __html: block.innerHTML || '' }} />;
         }
+        return (
+          <div key={idx}>
+            {content}
+            {block.innerBlocks && block.innerBlocks.length > 0 && (
+              <PageBlocks blocks={block.innerBlocks} />
+            )}
+          </div>
+        );
       })}
-    </div>
+    </>
   );
 }
