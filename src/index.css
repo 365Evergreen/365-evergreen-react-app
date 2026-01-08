@@ -186,6 +186,12 @@ button:focus-visible {
   outline: 4px auto var(--themeSecondary);
 }
 
+main {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;

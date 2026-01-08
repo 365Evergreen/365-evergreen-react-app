@@ -13,7 +13,7 @@ query glbNav {
   }
 }
 
-## Services
+## Features
 
 query services {
   services {
@@ -27,6 +27,27 @@ query services {
         node {
           sourceUrl
         }
+      }
+    }
+  }
+}
+
+## All posts
+
+query allPosts {
+  posts {
+    edges {
+      node {
+        id
+        title
+        date
+        featuredImage {
+          node {
+            sourceUrl
+          }
+        }
+        slug
+        content(format: RENDERED)
       }
     }
   }

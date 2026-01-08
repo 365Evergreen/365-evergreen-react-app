@@ -2,10 +2,14 @@
 .features-root {
   background-color: var(--white);
   padding: 3rem 0 3rem 4vw;
+  padding-left: 4vw;
+  padding-right: 4vw;
 }
 @media (max-width: 900px) {
   .features-root {
     padding: 2rem 0 2rem 2vw;
+    padding-left: 2vw;
+    padding-right: 2vw;
   }
 }
 .features-container {
@@ -13,6 +17,18 @@
   margin: 0;
   text-align: center;
   box-sizing: border-box;
+}
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  width: 100%;
+}
+@media (max-width: 900px) {
+  .features-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
 }
 .features-cards {
   display: flex;
@@ -22,23 +38,30 @@
   margin-top: 32px;
 }
 .features-card {
-  width: 240px;
-  align-items: center;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  padding: 2rem;
   display: flex;
   flex-direction: column;
-  padding: 24px;
-  background: var(--neutralLighter);
-  border-radius: 8px;
-  box-shadow: 0 1px 4px #0001;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 100%; /* Ensure card fills the grid column */
+  box-sizing: border-box;
 }
 .features-icon {
   color: var(--themeSecondary);
   margin-bottom: 12px;
-  font-size: 32px;
+  font-size: 2rem;
 }
 .features-title {
   margin: 1rem 0 0.5rem;
+  margin-bottom: 0.5rem;
 }
 .features-desc {
   color: var(--neutralSecondary);
+  margin-bottom: 1.5rem;
+}
+.features-link {
+  align-self: flex-start;
 }

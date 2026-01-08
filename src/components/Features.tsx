@@ -1,32 +1,37 @@
 import '../Features.css';
 import { useSiteFeatures } from '../lib/useSiteFeatures';
+import type { SiteFeature } from '../lib/useSiteFeatures';
 import { PeopleTeamToolbox24Regular } from '@fluentui/react-icons';
 import { Button } from '@fluentui/react-components';
 import { useNavigate } from 'react-router-dom';
 
 export function Features() {
-  const features = useSiteFeatures();
-  const feature = features[0]; // Only display the first card as requested
+  const features = useSiteFeatures() as SiteFeature[];
   const navigate = useNavigate();
 
-  if (!feature) return null;
+  // Sort features by siteFeature.sortOrder (ascending)
+  const sortedFeatures = [...features].sort((a, b) => {
+    const aOrder = Number(a.siteFeature?.sortOrder) || 0;
+    const bOrder = Number(b.siteFeature?.sortOrder) || 0;
+    return aOrder - bOrder;
+  });
 
-  const handleView = () => {
-    navigate(`/feature/${feature.slug}`);
-  };
+  if (!sortedFeatures.length) return null;
 
   return (
     <section className="features-root">
       <h2 className="fluent-title2">Features</h2>
       <div className="features-grid">
-        <div className="features-card">
-          <span className="features-icon"><PeopleTeamToolbox24Regular /></span>
-          <span className="features-title fluent-title3">{feature.siteFeature.title || feature.title}</span>
-          <div className="features-desc fluent-body1">{feature.siteFeature.blurb}</div>
-          <Button appearance="primary" onClick={handleView} className="features-link">
-            {feature.siteFeature.link?.title || 'Learn more'}
-          </Button>
-        </div>
+        {sortedFeatures.map(feature => (
+          <div className="features-card" key={feature.id}>
+            <span className="features-icon"><PeopleTeamToolbox24Regular /></span>
+            <span className="features-title fluent-title3">{feature.siteFeature.title || feature.title}</span>
+            <div className="features-desc fluent-body1">{feature.siteFeature.blurb}</div>
+            <Button appearance="primary" onClick={() => navigate(`/feature/${feature.slug}`)} className="features-link">
+              {feature.siteFeature.link?.title || 'Learn more'}
+            </Button>
+          </div>
+        ))}
       </div>
     </section>
   );
