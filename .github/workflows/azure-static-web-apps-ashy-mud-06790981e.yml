@@ -19,6 +19,10 @@ jobs:
         with:
           submodules: true
           lfs: false
+      - name: Ensure .git/config is writable
+        run: chmod u+w .git/config || true
+      - name: Remove extraheader from git config
+        run: git config --local --unset-all http.https://github.com/.extraheader || true
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
