@@ -2,7 +2,7 @@ import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Breadcrumb, BreadcrumbItem } from '@fluentui/react-components';
 import { usePageBySlug } from '../lib/usePageBySlug';
-import { PageBlocks } from './PageBlocks';
+import PageBlocks from './PageBlocks';
 
 export const PageView: React.FC = () => {
   const { slug } = useParams<{ slug?: string }>();

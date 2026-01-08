@@ -1,6 +1,23 @@
-import type { PageBlock } from '../lib/usePageBlocks';
+import React from 'react';
 
-export function PageBlocks({ blocks }: { blocks: PageBlock[] }) {
+// Utility to convert absolute URLs to relative
+function toLocalUrl(url?: string) {
+  if (!url) return '';
+  return url.replace(/^https?:\/\/(www\.)?365evergreen\.com/, '');
+}
+
+type Block = {
+  name: string;
+  attributes?: Record<string, any>;
+  innerHTML?: string;
+  innerBlocks?: Block[];
+};
+
+interface PageBlocksProps {
+  blocks?: Block[];
+}
+
+const PageBlocks: React.FC<PageBlocksProps> = ({ blocks }) => {
   if (!blocks?.length) return null;
   return (
     <>
@@ -10,12 +27,35 @@ export function PageBlocks({ blocks }: { blocks: PageBlock[] }) {
           case 'core/paragraph':
             content = <p dangerouslySetInnerHTML={{ __html: block.attributes?.content || block.innerHTML || '' }} />;
             break;
-          case 'core/heading':
-            const Tag = `h${block.attributes?.level || 2}` as keyof JSX.IntrinsicElements;
-            content = <Tag dangerouslySetInnerHTML={{ __html: block.attributes?.content || block.innerHTML || '' }} />;
+          case 'core/heading': {
+            const level = block.attributes?.level || 2;
+            const tag = `h${level}`;
+            if (/^h[1-6]$/.test(tag)) {
+              content = React.createElement(tag, {
+                dangerouslySetInnerHTML: { __html: block.attributes?.content || block.innerHTML || '' }
+              });
+            } else {
+              content = <h2 dangerouslySetInnerHTML={{ __html: block.attributes?.content || block.innerHTML || '' }} />;
+            }
             break;
+          }
           case 'core/image':
             content = <img src={block.attributes?.url} alt={block.attributes?.alt || ''} style={{ maxWidth: '100%' }} />;
+            break;
+          case 'core/button':
+            content = (
+              <a
+                href={toLocalUrl(block.attributes?.url)}
+                style={{ display: 'inline-block', padding: '0.5em 1.5em', background: block.attributes?.backgroundColor || 'black', color: block.attributes?.textColor || 'white', textDecoration: 'none', fontWeight: 700 }}
+              >
+                {block.attributes?.content}
+              </a>
+            );
+            break;
+          case 'core/navigation-link':
+            content = (
+              <a href={toLocalUrl(block.attributes?.url)}>{block.attributes?.label}</a>
+            );
             break;
           // Add more block types as needed
           default:
@@ -32,4 +72,6 @@ export function PageBlocks({ blocks }: { blocks: PageBlock[] }) {
       })}
     </>
   );
-}
+};
+
+export default PageBlocks;
