@@ -31,7 +31,13 @@ export const PageView: React.FC = () => {
       </Breadcrumb>
       <h2>{page?.title || 'Loading...'}</h2>
       <div>
-        {page ? <PageBlocks blocks={page.blocks} /> : <em>Loading page content…</em>}
+        {page ? (
+          page.blocks && page.blocks.length > 0 ? (
+            <PageBlocks blocks={page.blocks} />
+          ) : page.content ? (
+            <div dangerouslySetInnerHTML={{ __html: page.content }} />
+          ) : <em>No content found…</em>
+        ) : <em>Loading page content…</em>}
       </div>
     </section>
   );

@@ -5,6 +5,7 @@ export interface PageData {
   id: string;
   title: string;
   blocks: PageBlock[];
+  content: string;
 }
 
 export function usePageBySlug(slug: string | undefined): PageData | null {
@@ -15,7 +16,7 @@ export function usePageBySlug(slug: string | undefined): PageData | null {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        query: `query GetPageBySlug {\n  pageBy(uri: \"${slug}\") {\n    id\n    title\n    blocks\n  }\n}`
+        query: `query GetPageBySlug {\n  pageBy(uri: \"${slug}\") {\n    id\n    title\n    blocks\n    content\n  }\n}`
       })
     })
       .then(res => res.json())
@@ -27,7 +28,7 @@ export function usePageBySlug(slug: string | undefined): PageData | null {
         } catch {
           blocks = [];
         }
-        setData(page ? { id: page.id, title: page.title, blocks } : null);
+        setData(page ? { id: page.id, title: page.title, blocks, content: page.content } : null);
       });
   }, [slug]);
   return data;
