@@ -1,0 +1,40 @@
+.banner {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 3000;
+  background: var(--neutralLight, #f3f2f1);
+  color: var(--neutralPrimary, #181828);
+  box-shadow: 0 -2px 16px rgba(0,0,0,0.08);
+  padding: 1.25rem 4vw 1.25rem 4vw;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  font-size: 1.05rem;
+}
+.text {
+  flex: 1 1 320px;
+  min-width: 220px;
+}
+.link {
+  color: var(--themePrimary, #256c3c);
+  text-decoration: underline;
+}
+.actions {
+  display: flex;
+  gap: 0.75rem;
+}
+@media (max-width: 600px) {
+  .banner {
+    flex-direction: column;
+    align-items: stretch;
+    font-size: 0.98rem;
+    padding: 1rem 2vw;
+  }
+  .actions {
+    justify-content: flex-end;
+  }
+}

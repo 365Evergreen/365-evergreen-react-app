@@ -6,6 +6,7 @@ import { Features } from './components/Features';
 import { CTA } from './components/CTA';
 import { ContactForm } from './components/ContactForm';
 import { Footer } from './components/Footer';
+import { CookieConsent } from './components/CookieConsent';
 import { LatestPosts } from './components/LatestPosts';
 import { CopilotChat } from './components/CopilotChat';
 import { ChatBubble } from './components/ChatBubble';
@@ -33,6 +34,7 @@ function App() {
         </Routes>
         <CopilotChat open={chatOpen} onClose={() => setChatOpen(false)} />
       </main>
+      <CookieConsent />
       <Footer />
       {!chatOpen && <ChatBubble onClick={() => setChatOpen(true)} />}
     </>
