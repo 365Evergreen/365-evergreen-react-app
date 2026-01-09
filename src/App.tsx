@@ -12,6 +12,7 @@ import { CopilotChat } from './components/CopilotChat';
 import { ChatBubble } from './components/ChatBubble';
 import { useState } from 'react';
 import { PageView } from './components/PageView';
+import { FeatureView } from './components/FeatureView';
 
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
               <LatestPosts />
             </>
           } />
+          <Route path="/feature/:slug" element={<FeatureView />} />
           <Route path="/:slug" element={<PageView />} />
         </Routes>
         <CopilotChat open={chatOpen} onClose={() => setChatOpen(false)} />
