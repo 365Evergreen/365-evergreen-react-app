@@ -16,7 +16,7 @@ export function ContactForm() {
     setError(null);
     try {
       const response = await fetch(
-        'https://prod-16.westeurope.logic.azure.com:443/workflows/f8619180-9ae0-451c-9b70-f775f1e3e4b1/triggers/manual/paths/invoke?api-version=2016-10-01',
+        'https://ee9ffbbcb17ae277b5341496799d04.c5.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/98236e1f3e914723bb2edd16e60e463a/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=rO8yE4CSKoLtlYQ6ppTgB2geUhA_PfpkHkipXfhVV1k',
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
