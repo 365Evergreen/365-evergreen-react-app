@@ -10,12 +10,32 @@ export function ContactForm() {
   const [message, setMessage] = useState('');
   const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [error, setError] = useState<string | null>(null);
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
-    // TODO: Integrate with backend/email service
+    setError(null);
+    try {
+      const response = await fetch(
+        'https://prod-16.westeurope.logic.azure.com:443/workflows/f8619180-9ae0-451c-9b70-f775f1e3e4b1/triggers/manual/paths/invoke?api-version=2016-10-01',
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, email, subject, message })
+        }
+      );
+      if (!response.ok) {
+        throw new Error('Failed to send. Please try again.');
+      }
+      setSubmitted(true);
+      setName('');
+      setEmail('');
+      setSubject('');
+      setMessage('');
+    } catch (err: any) {
+      setError(err.message || 'An error occurred.');
+    }
   };
-
+  
   return (
     <section id="contact" className="contact-root">
       <div className="contact-wrapper">
@@ -54,6 +74,11 @@ export function ContactForm() {
           {submitted && (
             <div className="contact-success" role="status">
               Thank you for reaching out! We'll get back to you soon. <button type="button" className="contact-dismiss" onClick={() => setSubmitted(false)}>Dismiss</button>
+            </div>
+          )}
+          {error && (
+            <div className="contact-error" role="alert">
+              {error} <button type="button" className="contact-dismiss" onClick={() => setError(null)}>Dismiss</button>
             </div>
           )}
           <form onSubmit={handleSubmit} className="contact-form">

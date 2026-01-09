@@ -2,7 +2,6 @@ import '../Features.css';
 import { useSiteFeatures } from '../lib/useSiteFeatures';
 import type { SiteFeature } from '../lib/useSiteFeatures';
 import { PeopleTeamToolbox24Regular } from '@fluentui/react-icons';
-import { Button } from '@fluentui/react-components';
 import { useNavigate } from 'react-router-dom';
 
 export function Features() {
@@ -27,9 +26,17 @@ export function Features() {
             <span className="features-icon"><PeopleTeamToolbox24Regular /></span>
             <span className="features-title fluent-title3">{feature.siteFeature.title || feature.title}</span>
             <div className="features-desc fluent-body1">{feature.siteFeature.blurb}</div>
-            <Button appearance="primary" onClick={() => navigate(`/feature/${feature.slug}`)} className="features-link">
+            <a
+              href={`/feature/${feature.slug}`}
+              className="features-link"
+              onClick={e => {
+                if (e.ctrlKey || e.metaKey || e.button === 1) return;
+                e.preventDefault();
+                navigate(`/feature/${feature.slug}`);
+              }}
+            >
               {feature.siteFeature.link?.title || 'Learn more'}
-            </Button>
+            </a>
           </div>
         ))}
       </div>
