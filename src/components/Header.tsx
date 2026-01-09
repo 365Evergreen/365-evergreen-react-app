@@ -1,4 +1,5 @@
 import { Button } from '@fluentui/react-components';
+import { ChevronDown24Regular } from '@fluentui/react-icons';
 import '../Header.css';
 import { useState, useEffect } from 'react';
 import { useGlobalNav } from '../lib/useGlobalNav';
@@ -7,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [openSubmenus, setOpenSubmenus] = useState<{ [key: string]: boolean }>({});
   const navItems = useGlobalNav();
   const navigate = useNavigate();
 
@@ -28,18 +30,53 @@ export function Header() {
     }
   };
 
+  const handleSubmenuToggle = (id: string) => {
+    setOpenSubmenus((prev) => ({ ...prev, [id]: !prev[id] }));
+  };
+
   return (
     <header className={`header-root${scrolled ? ' header-root--scrolled' : ''}`}>
-      <div className="header-container">
-        <img src="https://365evergreen.com/wp-content/uploads/2025/07/cropped-Evergreen_Logo__2110.webp" alt="365 Evergreen Logo" className="header-logo" />
+      <div className="header-container" style={{ display: 'flex', alignItems: 'center' }}>
+        <a href="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
+          <img src="https://365evergreen.com/wp-content/uploads/2025/07/cropped-Evergreen_Logo__2110.webp" alt="365 Evergreen Logo" className="header-logo" />
+          <h1 style={{ margin: '0 0 0 0.75em', fontSize: '2rem', fontWeight: 400, color: 'inherit', lineHeight: 1, display: 'flex', alignItems: 'center' }}>365 Evergreen</h1>
+        </a>
         <nav className={`header-nav${menuOpen ? ' header-nav--open' : ''}`}>
           {navItems.length > 0 ? (
-            navItems.map(item => (
-              <Button as="a" href={item.url} className="header-nav-btn" appearance="transparent" key={item.url}
-                onClick={e => { e.preventDefault(); handleNav(item.url.startsWith('/') ? item.url : `/${item.label.toLowerCase().replace(/\s+/g, '-')}`); }}>
-                {item.label}
-              </Button>
-            ))
+            navItems.map(item => {
+              const hasChildren = item.children && item.children.length > 0;
+              const isOpen = !!openSubmenus[item.id];
+              return (
+                <div className="header-nav-item" key={item.id} style={{ position: 'relative', display: 'inline-block' }}>
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <Button as="a" href={item.url} className="header-nav-btn" appearance="transparent"
+                      onClick={e => { e.preventDefault(); handleNav(item.url.startsWith('/') ? item.url : `/${item.label.toLowerCase().replace(/\s+/g, '-')}`); }}>
+                      {item.label}
+                    </Button>
+                    {hasChildren && (
+                      <button
+                        type="button"
+                        aria-label={isOpen ? `Collapse submenu for ${item.label}` : `Expand submenu for ${item.label}`}
+                        onClick={() => handleSubmenuToggle(item.id)}
+                        style={{ background: 'none', border: 'none', padding: '0 0.25em', cursor: 'pointer', display: 'flex', alignItems: 'center' }}
+                      >
+                        <ChevronDown24Regular style={{ marginLeft: 4, marginRight: 4, transition: 'transform 0.2s', transform: isOpen ? 'rotate(180deg)' : 'none', color: 'inherit' }} />
+                      </button>
+                    )}
+                  </div>
+                  {hasChildren && isOpen && (
+                    <div className="header-nav-submenu" style={{ position: 'absolute', left: 0, top: '100%', background: '#fff', minWidth: 180, zIndex: 10, boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }}>
+                      {item.children?.map(sub => (
+                        <Button as="a" href={sub.url} className="header-nav-btn header-nav-btn--submenu" appearance="transparent" key={sub.id}
+                          onClick={e => { e.preventDefault(); handleNav(sub.url.startsWith('/') ? sub.url : `/${sub.label.toLowerCase().replace(/\s+/g, '-')}`); }}>
+                          {sub.label}
+                        </Button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              );
+            })
           ) : (
             <Button as="a" href="/" className="header-nav-btn" appearance="transparent">Home</Button>
           )}
