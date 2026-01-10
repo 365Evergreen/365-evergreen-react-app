@@ -37,11 +37,11 @@ export function Header() {
   return (
     <header className={`header-root${scrolled ? ' header-root--scrolled' : ''}`}>
       <div className="header-container" style={{ display: 'flex', alignItems: 'center' }}>
-        <a href="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
+        <a href="/" className="header-logo-link">
           <img src="https://365evergreen.com/wp-content/uploads/2025/07/cropped-Evergreen_Logo__2110.webp" alt="365 Evergreen Logo" className="header-logo" />
-          <h1 style={{ margin: '0 0 0 0.75em', fontSize: '2rem', fontWeight: 400, color: 'inherit', lineHeight: 1, display: 'flex', alignItems: 'center' }}>365 Evergreen</h1>
+          <h1 className={`header-title${scrolled ? ' header-title--scrolled' : ''}`}>365 Evergreen</h1>
         </a>
-        <nav className={`header-nav${menuOpen ? ' header-nav--open' : ''}`}>
+        <nav className={`header-nav${menuOpen ? ' header-nav--open' : ''}`}> 
           {navItems.length > 0 ? (
             navItems.map(item => {
               const hasChildren = item.children && item.children.length > 0;
@@ -58,9 +58,9 @@ export function Header() {
                         type="button"
                         aria-label={isOpen ? `Collapse submenu for ${item.label}` : `Expand submenu for ${item.label}`}
                         onClick={() => handleSubmenuToggle(item.id)}
-                        style={{ background: 'none', border: 'none', padding: '0 0.25em', cursor: 'pointer', display: 'flex', alignItems: 'center' }}
+                        className="header-chevron-btn"
                       >
-                        <ChevronDown24Regular style={{ marginLeft: 4, marginRight: 4, transition: 'transform 0.2s', transform: isOpen ? 'rotate(180deg)' : 'none', color: 'inherit' }} />
+                        <ChevronDown24Regular className="header-chevron-icon" style={{ marginLeft: 4, marginRight: 4, transition: 'transform 0.2s', transform: isOpen ? 'rotate(180deg)' : 'none' }} />
                       </button>
                     )}
                   </div>
@@ -80,18 +80,19 @@ export function Header() {
           ) : (
             <Button as="a" href="/" className="header-nav-btn" appearance="transparent">Home</Button>
           )}
-        </nav>
-        <button
-          className="header-hamburger"
-          aria-label="Open menu"
-          aria-expanded={menuOpen}
-          onClick={() => setMenuOpen((open) => !open)}
-        >
-          <span className="header-hamburger-bar" />
-          <span className="header-hamburger-bar" />
-          <span className="header-hamburger-bar" />
-        </button>
-      </div>
-    </header>
+        <Button as="a" href="#contact" className="header-contact-btn">Get in touch</Button>
+      </nav>
+      <button
+        className="header-hamburger"
+        aria-label="Open menu"
+        aria-expanded={menuOpen}
+        onClick={() => setMenuOpen((open) => !open)}
+      >
+        <span className="header-hamburger-bar" />
+        <span className="header-hamburger-bar" />
+        <span className="header-hamburger-bar" />
+      </button>
+    </div>
+  </header>
   );
 }

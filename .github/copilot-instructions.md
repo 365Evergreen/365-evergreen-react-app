@@ -1,4 +1,9 @@
+
 # Copilot Instructions for 365 Evergreen React App
+
+## GPT-5.1-Codex-Max Enablement
+**Enable GPT-5.1-Codex-Max for all clients.**
+
 
 ## Project Overview
 - **Stack:** React (TypeScript), Vite, CSS modules
@@ -14,10 +19,10 @@
 - **Theme:** All UI should use the Fluent theme from src/fluent-theme.ts for consistency.
 
 ## Developer Workflows
-- **Build:** pnpm build (uses Vite)
-- **Dev server:** pnpm dev (hot reload)
-- **Lint:** pnpm lint (ESLint, see eslint.config.js)
-- **Type-check:** pnpm typecheck (if configured)
+- **Build:** `pnpm build` (uses Vite)
+- **Dev server:** `pnpm dev` (hot reload)
+- **Lint:** `pnpm lint` (ESLint, see eslint.config.js)
+- **Type-check:** `pnpm typecheck` (if configured)
 - **No test setup** by default; add your own if needed.
 
 ## Conventions & Practices
@@ -45,6 +50,9 @@
 - src/fluent-theme.ts: Theme definitions
 - eslint.config.js: Linting rules
 - README.md: Project setup and conventions
+
+---
+If you encounter unclear or missing conventions, ask the user for clarification before making assumptions.
 
 ---
 If you encounter unclear or missing conventions, ask the user for clarification before making assumptions.

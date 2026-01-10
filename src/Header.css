@@ -1,3 +1,56 @@
+/* Site title color transitions */
+.header-title {
+  margin: 0 0 0 0.75em;
+  font-size: 2rem;
+  font-weight: 400;
+  color: #fff;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  transition: color 0.3s;
+}
+.header-title--scrolled {
+  color: var(--neutralPrimary, #222);
+}
+
+/* Logo link for accessibility */
+.header-logo-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+/* Chevron color matches menu font */
+.header-chevron-btn {
+  background: none;
+  border: none;
+  padding: 0 0.25em;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+.header-chevron-icon {
+  color: inherit;
+  transition: color 0.3s;
+}
+
+/* Get in touch button */
+.header-contact-btn {
+  background: var(--themePrimary, #0078d4);
+  color: #fff;
+  border-radius: 5%;
+  font-weight: 600;
+  margin-left: 2rem;
+  padding: 0.5em 1.5em;
+  font-size: 1rem;
+  border: none;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  transition: background 0.2s, color 0.2s;
+}
+.header-contact-btn:hover, .header-contact-btn:focus {
+  background: var(--themeSecondary, #005fa3);
+  color: #fff;
+}
 /* Header styles */
 .header-root {
   position: sticky;
