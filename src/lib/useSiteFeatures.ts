@@ -12,6 +12,7 @@ export interface SiteFeature {
     icon: string;
     title: string;
     sortOrder?: number;
+    buttonText?: string;
     link?: {
       target?: string;
       title?: string;
@@ -27,7 +28,7 @@ export function useSiteFeatures() {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        query: `query siteFeatures {\n  features {\n    nodes {\n      id\n      title\n      content\n      slug\n      featuredImage { node { sourceUrl } }\n      siteFeature {\n        fieldGroupName\n        blurb\n        icon\n        title\n        sortOrder\n        link { target title url }\n      }\n    }\n  }\n}`
+        query: `query siteFeatures {\n  features {\n    nodes {\n      id\n      title\n      content\n      slug\n      featuredImage { node { sourceUrl } }\n      siteFeature {\n        fieldGroupName\n        blurb\n        icon\n        title\n        sortOrder\n        buttonText\n        link { target title url }\n      }\n    }\n  }\n}`
       })
     })
       .then(res => res.json())

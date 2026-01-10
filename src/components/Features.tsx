@@ -35,7 +35,7 @@ export function Features() {
                 navigate(`/feature/${feature.slug}`);
               }}
             >
-              {feature.siteFeature.link?.title || 'Learn more'}
+              {feature.siteFeature.buttonText || feature.siteFeature.link?.title || 'Learn more'}
             </a>
           </div>
         ))}
