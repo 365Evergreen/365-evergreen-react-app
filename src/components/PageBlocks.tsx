@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import '../PageBlocks.css';
 
 // Utility to convert absolute URLs to relative
 function toLocalUrl(url?: string) {
@@ -41,13 +42,13 @@ const PageBlocks: React.FC<PageBlocksProps> = ({ blocks }) => {
             break;
           }
           case 'core/image':
-            content = <img src={block.attributes?.url} alt={block.attributes?.alt || ''} style={{ maxWidth: '100%' }} />;
+            content = <img src={block.attributes?.url} alt={block.attributes?.alt || ''} style={{ maxWidth: '100%', borderRadius: 8 }} />;
             break;
           case 'core/button':
             content = (
               <a
                 href={toLocalUrl(block.attributes?.url)}
-                style={{ display: 'inline-block', padding: '0.5em 1.5em', background: block.attributes?.backgroundColor || 'black', color: block.attributes?.textColor || 'white', textDecoration: 'none', fontWeight: 700 }}
+                style={{ display: 'inline-block', padding: '0.5em 1.5em', background: block.attributes?.backgroundColor || 'black', color: block.attributes?.textColor || 'white', textDecoration: 'none', fontWeight: 700, borderRadius: 6 }}
               >
                 {block.attributes?.content}
               </a>
@@ -58,16 +59,63 @@ const PageBlocks: React.FC<PageBlocksProps> = ({ blocks }) => {
               <a href={toLocalUrl(block.attributes?.url)}>{block.attributes?.label}</a>
             );
             break;
-          // Grouping/structural blocks: render children only, optionally with a container
+          case 'core/columns':
+            // Render columns as flex row, with background and padding
+            content = (
+              <div
+                className="wp-columns"
+                style={{
+                  background: block.attributes?.backgroundColor || undefined,
+                  borderRadius: block.attributes?.borderRadius || undefined,
+                  boxShadow: block.attributes?.boxShadow || undefined,
+                  padding: block.attributes?.style?.spacing?.padding || '2.5rem 2rem',
+                  minHeight: 200,
+                  margin: '1.5rem 0',
+                  ...block.attributes?.style?.custom,
+                }}
+              >
+                {block.innerBlocks?.map((col, i) => (
+                  <div className="wp-column" key={i} style={{ flex: 1, minWidth: 0 }}>
+                    <PageBlocks blocks={[col]} />
+                  </div>
+                ))}
+              </div>
+            );
+            break;
+          case 'core/column':
+            // Render column content only
+            content = (
+              <div className="wp-column">
+                {block.innerBlocks && <PageBlocks blocks={block.innerBlocks} />}
+              </div>
+            );
+            break;
           case 'core/group':
           case 'core/template-part':
           case 'core/cover':
-          case 'core/columns':
-          case 'core/column':
           case 'core/post-content':
           case 'core/buttons':
             content = null; // just render children below
             break;
+          // Simple accordion block (example: core/accordion or custom)
+          case 'core/accordion': {
+            // Basic accordion logic for demo
+            const [open, setOpen] = useState(false);
+            content = (
+              <div className="wp-accordion">
+                <div className="wp-accordion-title" onClick={() => setOpen(o => !o)}>
+                  {block.attributes?.title || 'Accordion'}
+                  <span>{open ? '-' : '+'}</span>
+                </div>
+                {open && (
+                  <div className="wp-accordion-content">
+                    <PageBlocks blocks={block.innerBlocks || []} />
+                  </div>
+                )}
+              </div>
+            );
+            break;
+          }
           // Add more block types as needed
           default:
             // Fallback: show block name and any raw HTML

@@ -3,10 +3,12 @@ import { useParams, Link } from 'react-router-dom';
 import { Breadcrumb, BreadcrumbItem } from '@fluentui/react-components';
 import { useFeatureBySlug } from '../lib/useFeatureBySlug';
 import PageBlocks from './PageBlocks';
+import { useAzureAccordions } from '../lib/useAzureAccordions';
+import { DynamicAccordion } from './DynamicAccordion';
 
-export const FeatureView: React.FC = () => {
   const { slug } = useParams<{ slug?: string }>();
   const feature = useFeatureBySlug(slug);
+  const accordions = useAzureAccordions();
 
   const breadcrumbItems = [
     { text: 'Home', href: '/' },
@@ -42,6 +44,12 @@ export const FeatureView: React.FC = () => {
           ) : <em>No content found…</em>
         ) : <em>Loading feature content…</em>}
       </div>
+      {/* Demo: Render Azure accordions below WP content */}
+      {accordions.length > 0 && (
+        <div style={{ marginTop: '3rem' }}>
+          <DynamicAccordion items={accordions} />
+        </div>
+      )}
     </section>
   );
 };
