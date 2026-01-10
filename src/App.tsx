@@ -12,7 +12,7 @@ import { CopilotChat } from './components/CopilotChat';
 import { ChatBubble } from './components/ChatBubble';
 import { useState } from 'react';
 import { PageView } from './components/PageView';
-import { FeatureView } from './components/FeatureView';
+import FeatureView from './components/FeatureView';
 
 
 function App() {

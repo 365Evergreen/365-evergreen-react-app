@@ -10,6 +10,7 @@ export interface AccordionGroupData {
   description?: string;
   header?: string;
   image?: string;
+  parentFeature?: string;
   panels: AccordionPanelData[];
 }
 
@@ -28,6 +29,7 @@ export function useAzureAccordions(): AccordionGroupData[] {
         description: acc.Blurb,
         header: acc.Header,
         image: acc.ImageUrl,
+        parentFeature: acc.ParentFeature,
         panels: items
           .filter(item => item.Accordion === acc.Title)
           .sort((a, b) => (a.SortOrder || 0) - (b.SortOrder || 0))

@@ -6,9 +6,18 @@ import PageBlocks from './PageBlocks';
 import { useAzureAccordions } from '../lib/useAzureAccordions';
 import { DynamicAccordion } from './DynamicAccordion';
 
+const FeatureView: React.FC = () => {
   const { slug } = useParams<{ slug?: string }>();
   const feature = useFeatureBySlug(slug);
   const accordions = useAzureAccordions();
+
+  // Filter accordions to only those matching the current feature title (case-insensitive)
+  // Filter accordions by ParentFeature property (case-insensitive)
+  const filteredAccordions = feature && feature.title
+    ? accordions.filter(acc =>
+        acc.parentFeature && acc.parentFeature.trim().toLowerCase() === feature.title.trim().toLowerCase()
+      )
+    : [];
 
   const breadcrumbItems = [
     { text: 'Home', href: '/' },
@@ -41,15 +50,21 @@ import { DynamicAccordion } from './DynamicAccordion';
             <PageBlocks blocks={feature.blocks} />
           ) : feature.content ? (
             <div dangerouslySetInnerHTML={{ __html: feature.content }} />
-          ) : <em>No content found…</em>
-        ) : <em>Loading feature content…</em>}
+          ) : (
+            <em>No content found…</em>
+          )
+        ) : (
+          <em>Loading feature content…</em>
+        )}
       </div>
-      {/* Demo: Render Azure accordions below WP content */}
-      {accordions.length > 0 && (
+      {/* Render only accordions relevant to this feature */}
+      {filteredAccordions.length > 0 && (
         <div style={{ marginTop: '3rem' }}>
-          <DynamicAccordion items={accordions} />
+          <DynamicAccordion items={filteredAccordions} />
         </div>
       )}
     </section>
   );
 };
+
+export default FeatureView;
