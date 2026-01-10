@@ -245,3 +245,62 @@
   text-align: left;
   resize: vertical;
 }
+
+/* Responsive fixes for mobile */
+@media (max-width: 900px) {
+  .hero-root,
+  .features-root,
+  .features-card,
+  .drawerContentBox,
+  .drawerContent,
+  .surveyOption,
+  .surveyOptionFullWidth {
+    width: 100vw !important;
+    min-width: 0 !important;
+    max-width: 100vw !important;
+    box-sizing: border-box;
+  }
+  .hero-root {
+    padding: 2rem 1rem 1rem 1rem;
+    background-size: cover !important;
+    background-position: center !important;
+  }
+  .hero-title, .fluent-display {
+    font-size: 2.2rem !important;
+    line-height: 2.6rem !important;
+    word-break: break-word;
+  }
+  .hero-desc {
+    font-size: 1.1rem !important;
+    line-height: 1.5rem !important;
+    word-break: break-word;
+  }
+  .features-title, .features-root h2 {
+    font-size: 1.5rem !important;
+    line-height: 2rem !important;
+    margin-top: 1.5rem !important;
+  }
+  .features-card {
+    padding: 1.2rem 0.7rem !important;
+    border-radius: 10px !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08) !important;
+    margin-bottom: 1.2rem !important;
+  }
+  .drawerContent {
+    padding: 1.2rem 0.7rem !important;
+  }
+  .surveyOption {
+    padding: 1rem 0.7rem !important;
+    font-size: 1rem !important;
+    min-height: 3rem !important;
+  }
+  .surveyNextBtn, .surveyBackBtn {
+    font-size: 1rem !important;
+    padding: 0.8rem 0 !important;
+  }
+  .surveyTextArea {
+    font-size: 1rem !important;
+    padding: 0.8rem !important;
+    min-height: 70px !important;
+  }
+}
