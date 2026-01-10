@@ -24,7 +24,7 @@ export function LatestPosts() {
   return (
     <section className="latest-posts-root">
       <div className="latest-posts-container">
-        <h2 className="latest-posts-title fluent-title2">Latest Posts</h2>
+        <h2 className="latest-posts-title fluent-title2">365 Evergreen insights</h2>
         <div className="latest-posts-list">
           {sortedPosts.map((post) => (
             <div key={post.id} className="latest-posts-card">

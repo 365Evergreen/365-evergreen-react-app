@@ -20,6 +20,7 @@ export function Hero({ onOpenDrawer }: { onOpenDrawer: () => void }) {
             appearance="primary"
             className="hero-btn"
             onClick={() => setModalOpen(true)}
+            style={{ display: 'none' }}
           >
             Let's see how we can help
           </Button>
@@ -28,7 +29,7 @@ export function Hero({ onOpenDrawer }: { onOpenDrawer: () => void }) {
             className="hero-btn"
             onClick={onOpenDrawer}
           >
-            Open Panel
+            Start your journey
           </Button>
         </div>
       </div>

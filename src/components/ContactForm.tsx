@@ -40,10 +40,10 @@ export function ContactForm() {
     <section id="contact" className="contact-root">
       <div className="contact-wrapper">
         <div className="contact-info">
-          <button className="contact-info-cta">Get in Touch</button>
-          <h2 className="contact-info-title fluent-title2">Let's Start a Conversation</h2>
+        {/* <button className="contact-info-cta">Get in Touch</button> */}
+          <h2 className="contact-info-title fluent-title2">How can we help you today?</h2>
           <p className="contact-info-desc">
-            Have questions about sustainable living? Want to join our community? <br />
+            Ask a question or tell us how you'd like to start your team's journey to success<br />
             We'd love to hear from you.
           </p>
           <div className="contact-info-list">
