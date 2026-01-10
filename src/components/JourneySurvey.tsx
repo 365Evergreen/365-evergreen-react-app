@@ -36,7 +36,7 @@ export const JourneySurvey: React.FC<JourneySurveyProps> = ({ questions, onCompl
     } else {
       setSubmitting(true);
       try {
-        await fetch('https://ee9ffbbcb17ae277b5341496799d04.c5.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/c7552ccbe28e465db77ea1332e034e14/triggers/manual/paths/invoke?api-version=1', {
+        await fetch('https://ee9ffbbcb17ae277b5341496799d04.c5.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/c7552ccbe28e465db77ea1332e034e14/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=npLT9YLSsYCKi-DpiHletPFmCnQOVGJ81nkFtICg2eo', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
