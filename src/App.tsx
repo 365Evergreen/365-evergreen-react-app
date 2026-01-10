@@ -31,8 +31,8 @@ function App() {
               <Hero onOpenDrawer={() => setDrawerOpen(true)} />
               <Features />
               <CTA />
-              <ContactForm />
               <LatestPosts />
+              <ContactForm />
             </>
           } />
           <Route path="/feature/:slug" element={<FeatureView />} />
