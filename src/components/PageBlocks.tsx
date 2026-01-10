@@ -80,9 +80,69 @@ const PageBlocks: React.FC<PageBlocksProps> = ({ blocks }) => {
               </div>
             );
         }
-        // Always render children if present
+        // Determine if this is a container block that should use background/text color
+        const isContainer = [
+          'core/group',
+          'core/cover',
+          'core/columns',
+          'core/column',
+          'core/template-part',
+        ].some(type => block.name.startsWith(type));
+
+        // Compose style for container
+        const hasBgOrOverlay = !!(block.attributes?.backgroundColor || block.attributes?.overlayColor);
+        const containerStyle: React.CSSProperties = isContainer
+          ? {
+              margin: '12px 0',
+              background: block.attributes?.backgroundColor || undefined,
+              color: block.attributes?.textColor || undefined,
+              borderRadius: block.attributes?.borderRadius || undefined,
+              padding: block.attributes?.style?.spacing?.padding || (hasBgOrOverlay ? '2.5rem 2rem' : undefined),
+              minHeight: hasBgOrOverlay ? 200 : undefined,
+              display: hasBgOrOverlay ? 'flex' : undefined,
+              flexDirection: hasBgOrOverlay ? 'column' : undefined,
+              alignItems: hasBgOrOverlay ? 'center' : undefined,
+              justifyContent: hasBgOrOverlay ? 'center' : undefined,
+              position: undefined, // will be set below if overlay
+            }
+          : {};
+
+        // Overlay support
+        let overlay: React.ReactNode = null;
+        if (isContainer && block.attributes?.overlayColor) {
+          // Accept overlayOpacity as 0-1 or 0-100
+          let opacity = 0.5;
+          if (typeof block.attributes.overlayOpacity === 'number') {
+            opacity = block.attributes.overlayOpacity > 1 ? block.attributes.overlayOpacity / 100 : block.attributes.overlayOpacity;
+          }
+          overlay = (
+            <div
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                pointerEvents: 'none',
+                zIndex: 1,
+                background: block.attributes.overlayColor,
+                opacity,
+                borderRadius: block.attributes?.borderRadius || undefined,
+              }}
+              aria-hidden="true"
+            />
+          );
+        }
+
         return (
-          <div key={idx} style={block.name.startsWith('core/group') || block.name === 'core/template-part' ? { margin: '12px 0' } : {}}>
+          <div
+            key={idx}
+            style={{
+              ...containerStyle,
+              position: overlay ? 'relative' : containerStyle.position,
+            }}
+          >
+            {overlay}
             {content}
             {block.innerBlocks && block.innerBlocks.length > 0 && (
               <PageBlocks blocks={block.innerBlocks} />
