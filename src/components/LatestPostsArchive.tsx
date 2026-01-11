@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, Select, Option, Label } from '@fluentui/react-components';
+import { Button, Select, Label } from '@fluentui/react-components';
 import '../LatestPostsArchive.css';
 import { useLatestPosts } from '../lib/useLatestPosts';
 
@@ -34,19 +34,19 @@ export function LatestPostsArchive() {
           <div className="latest-posts-archive-filter-group">
             <Label htmlFor="type-filter" className="latest-posts-archive-filter-label">Type of content</Label>
             <Select id="type-filter" value={typeFilter} onChange={(_, data: any) => setTypeFilter(data.value)} style={{ minWidth: 180 }}>
-              <Option value="">All types</Option>
-              <Option value="Blog post">Blog post</Option>
-              <Option value="Updates">Updates</Option>
-              <Option value="Tutorials">Tutorials</Option>
+              <option value="">All types</option>
+              <option value="Blog post">Blog post</option>
+              <option value="Updates">Updates</option>
+              <option value="Tutorials">Tutorials</option>
             </Select>
           </div>
           <div className="latest-posts-archive-filter-group">
             <Label htmlFor="category-filter" className="latest-posts-archive-filter-label">Category</Label>
             <Select id="category-filter" value={categoryFilter} onChange={(_, data: any) => setCategoryFilter(data.value)} style={{ minWidth: 180 }}>
-              <Option value="">All categories</Option>
-              <Option value="placeholder1">Placeholder 1</Option>
-              <Option value="placeholder2">Placeholder 2</Option>
-              <Option value="placeholder3">Placeholder 3</Option>
+              <option value="">All categories</option>
+              <option value="placeholder1">Placeholder 1</option>
+              <option value="placeholder2">Placeholder 2</option>
+              <option value="placeholder3">Placeholder 3</option>
             </Select>
           </div>
         </div>
