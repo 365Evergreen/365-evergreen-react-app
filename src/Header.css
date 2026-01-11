@@ -22,12 +22,19 @@
 
 /* Chevron color matches menu font */
 .header-chevron-btn {
-  background: none;
+  background: none !important;
   border: none;
   padding: 0 0.25em;
   cursor: pointer;
   display: flex;
   align-items: center;
+  color: inherit;
+}
+.header-chevron-btn:focus,
+.header-chevron-btn:active {
+  background: none !important;
+  color: inherit;
+  outline: 2px solid var(--themeSecondary, #108824);
 }
 .header-chevron-icon {
   color: inherit;
