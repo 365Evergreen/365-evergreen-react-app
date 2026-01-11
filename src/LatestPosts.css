@@ -10,28 +10,14 @@
   box-sizing: border-box;
 }
 .latest-posts-title {
-  text-align: center;
+  text-align: left;
   margin-bottom: 2rem;
 }
-.latest-posts-list {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(2, auto);
-  gap: 2rem;
-  justify-items: center;
-}
-.latest-posts-card {
-  background: var(--neutralLighter);
-  border-radius: 8px;
-  box-shadow: 0 1px 4px #0001;
-  padding: 1.5rem;
-  width: 100%;
-  max-width: 340px;
-  min-width: 220px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
+/* Use Features grid and card styles for LatestPosts */
+/* Remove custom card width constraints */
+/* .latest-posts-list styles replaced by .features-grid in TSX */
+
+/* Remove .latest-posts-card styles, use .features-card from Features.css */
 .latest-posts-date {
   color: var(--neutralSecondary);
   font-size: 0.9rem;

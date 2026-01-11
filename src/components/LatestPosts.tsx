@@ -25,9 +25,9 @@ export function LatestPosts() {
     <section className="latest-posts-root">
       <div className="latest-posts-container">
         <h2 className="latest-posts-title fluent-title2">365 Evergreen insights</h2>
-        <div className="latest-posts-list">
+        <div className="features-grid">
           {sortedPosts.map((post) => (
-            <div key={post.id} className="latest-posts-card">
+            <div key={post.id} className="features-card selectable-card">
               <div className="latest-posts-date">{new Date(post.date).toLocaleDateString()}</div>
               <a href={"/post/" + post.slug} className="latest-posts-title-link fluent-title3">{post.title}</a>
               <p className="latest-posts-excerpt">{getExcerpt(post)}</p>
