@@ -1,7 +1,7 @@
 /* Hero styles */
 .hero-root {
   background: url('https://365evergreen.com/wp-content/uploads/2025/12/plant-cover-1440-900.webp') center/cover no-repeat;
-  min-height: 750px;
+  min-height: 750px; /* Adjusted background position */
   height: 750px;
   padding: 0 0 4rem 4vw;
   position: relative;
@@ -14,6 +14,7 @@
   margin-top: calc(0px - (var(--header-height, 44px) + 2rem));
   text-align: left;
   overflow: hidden;
+  background-position: center calc(100% - 0px); /* Adjusted focal point */
 }
 
 .hero-gradient {
