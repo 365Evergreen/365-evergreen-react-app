@@ -6,8 +6,8 @@
 .drawerTitle {
   font-size: 2rem;
   
-  font-weight: 300;
-  line-height: 1.6;
+  font-weight: normal;
+  line-height: normal;
   margin-bottom: 1.25rem;
   word-break: break-word;
   max-width: 95%;
@@ -160,7 +160,7 @@
   display: flex;
   align-items: center;
   font-size: 1.15rem;
-  font-weight: 500;
+  font-weight: lighter;
   padding: 1.1rem 1.5rem;
   border-radius: 16px;
   border: 2px solid #d9d9d9;
@@ -170,6 +170,7 @@
   min-height: 3.5rem;
   box-sizing: border-box;
   margin-bottom: 1.1rem;
+  line-height: normal;
 }
 .surveyOption:last-child {
   margin-bottom: 0;
