@@ -50,21 +50,21 @@ export function ContactForm() {
             <div className="contact-info-item">
               <span className="contact-info-icon"><Mail24Regular /></span>
               <div>
-                <div className="contact-info-label fluent-body1Strong">Email Us</div>
+                <div className="contact-info-label fluent-body1Strong">Email us</div>
                 <div className="contact-info-text">hello@365evergreen.com</div>
               </div>
             </div>
             <div className="contact-info-item">
               <span className="contact-info-icon"><People24Regular /></span>
-              <div>
+              {/* <div>
                 <div className="contact-info-label fluent-body1Strong">Join Our Community</div>
                 <div className="contact-info-text">Connect with 50,000+ eco-conscious members</div>
-              </div>
+              </div> */}
             </div>
             <div className="contact-info-item">
               <span className="contact-info-icon"><Chat24Regular /></span>
               <div>
-                <div className="contact-info-label fluent-body1Strong">Response Time</div>
+                <div className="contact-info-label fluent-body1Strong">Response time</div>
                 <div className="contact-info-text">We typically respond within 24 hours</div>
               </div>
             </div>
