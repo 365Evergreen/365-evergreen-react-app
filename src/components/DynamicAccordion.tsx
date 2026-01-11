@@ -1,5 +1,7 @@
 
+
 import * as React from 'react';
+import styles from './DynamicAccordion.module.css';
 import {
   Accordion,
   AccordionItem,
@@ -19,38 +21,52 @@ interface DynamicAccordionProps {
   items: AccordionItem[];
 }
 
+
 export const DynamicAccordion: React.FC<DynamicAccordionProps> = ({ items }) => {
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+    <div className={styles.dynamicAccordionRoot}>
       {items.map((item, idx) => (
         <section
           key={item.title + idx}
-          style={{
-            display: 'flex',
-            flexDirection: idx % 2 === 1 ? 'row-reverse' : 'row',
-            alignItems: 'flex-start',
-            gap: '2rem',
-            marginBottom: '2rem',
-          }}
+          className={
+            styles.dynamicAccordionSection +
+            (idx % 2 === 1 ? ' ' + styles.rowReverse : '')
+          }
         >
-          <div style={{ flex: 1 }}>
-            <h2 style={{ margin: 0, fontSize: '1.5rem', fontWeight: 600 }}>{item.title}</h2>
-            {item.description && <p style={{ margin: '0.5rem 0 1.5rem 0' }}>{item.description}</p>}
-            <Accordion collapsible multiple>
-              {item.panels.map((panel, pidx) => (
-                <AccordionItem value={panel.title + pidx} key={panel.title + pidx}>
-                  <AccordionHeader>{panel.title}</AccordionHeader>
-                  <AccordionPanel>{panel.content}</AccordionPanel>
-                </AccordionItem>
-              ))}
-            </Accordion>
+          <div className={styles.dynamicAccordionText}>
+            <h2 className={styles.dynamicAccordionTitle}>{item.title}</h2>
+            {item.description && (
+              <p className={styles.dynamicAccordionDescription}>{item.description}</p>
+            )}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              <Accordion collapsible multiple style={{ background: 'none', boxShadow: 'none' }}>
+                {item.panels.map((panel, pidx) => (
+                  <div key={panel.title + pidx} style={{ border: '1px solid var(--neutralQuaternary)', borderRadius: 8, marginBottom: 0, background: 'var(--neutralLighter)' }}>
+                    <AccordionItem value={panel.title + pidx}>
+                      <AccordionHeader
+                        style={{
+                          fontWeight: 700,
+                          fontSize: '1.18rem',
+                          background: 'var(--neutralLighter)',
+                          color: 'var(--neutralPrimary)',
+                          borderRadius: 8,
+                        }}
+                      >
+                        {panel.title}
+                      </AccordionHeader>
+                      <AccordionPanel>{panel.content}</AccordionPanel>
+                    </AccordionItem>
+                  </div>
+                ))}
+              </Accordion>
+            </div>
           </div>
           {item.image && (
-            <div style={{ flex: '0 0 240px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <div className={styles.dynamicAccordionImageCol}>
               <img
                 src={item.image}
                 alt={item.imageAlt || item.title}
-                style={{ maxWidth: 220, maxHeight: 180, borderRadius: 12 }}
+                className={styles.dynamicAccordionImage}
               />
             </div>
           )}

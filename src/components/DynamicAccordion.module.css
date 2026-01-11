@@ -1,3 +1,75 @@
+/* Force Fluent UI AccordionHeader font and background using ::part and high specificity */
+.fui-AccordionHeader,
+.fui-AccordionHeader__button,
+.fui-AccordionHeader[aria-expanded="true"],
+.fui-AccordionHeader__button[aria-expanded="true"],
+.fui-AccordionHeader[data-state="open"],
+.fui-AccordionHeader__button[data-state="open"],
+.fui-AccordionHeader__button:focus,
+.fui-AccordionHeader__button:hover {
+  background: #f3f2f1 !important;
+  font-size: 1.18rem !important;
+  font-weight: 700 !important;
+  color: var(--neutralPrimary) !important;
+  box-shadow: none !important;
+}
+
+/* For web components using ::part (Fluent UI v9) */
+.fui-AccordionHeader__button::part(root),
+.fui-AccordionHeader__button::part(button) {
+  font-size: 1.18rem !important;
+  font-weight: 700 !important;
+  color: var(--neutralPrimary) !important;
+  background: #f3f2f1 !important;
+  box-shadow: none !important;
+}
+/* Root styles from src/DynamicAccordion.module.css */
+.dynamicAccordionRoot {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.dynamicAccordionSection {
+  display: flex;
+  align-items: flex-start;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.dynamicAccordionSection.rowReverse {
+  flex-direction: row-reverse;
+}
+
+.dynamicAccordionText {
+  flex: 1;
+  min-width: 0;
+}
+
+.dynamicAccordionTitle {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.dynamicAccordionDescription {
+  margin: 0.5rem 0 1.5rem 0;
+}
+
+.dynamicAccordionImageCol {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+}
+
+.dynamicAccordionImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+}
 .accordionList {
   display: flex;
   flex-direction: column;
@@ -69,8 +141,8 @@
 .panelTitle {
   width: 100%;
   text-align: left;
-  font-size: 1.1rem;
-  font-weight: 600;
+  font-size: 1.18rem !important;
+  font-weight: 800 !important;
   background: #f5f5f5;
   border: none;
   outline: none;
@@ -84,8 +156,38 @@
   color: var(--neutralPrimary);
 }
 
+/* Force override Fluent UI AccordionHeader background and font for all states */
+.fui-AccordionHeader,
+.fui-AccordionHeader__button {
+  background: #f5f5f5 !important;
+  font-size: 1.18rem !important;
+  font-weight: 1000 !important;
+  color: var(--neutralPrimary) !important;
+}
+.fui-AccordionHeader:hover,
+.fui-AccordionHeader__button:hover,
+.fui-AccordionHeader:focus,
+.fui-AccordionHeader__button:focus,
+.fui-AccordionHeader[aria-expanded="true"],
+.fui-AccordionHeader__button[aria-expanded="true"],
+.fui-AccordionHeader[data-state="open"],
+.fui-AccordionHeader__button[data-state="open"] {
+  background: #f3f2f1 !important;
+  font-size: 1.18rem !important;
+  font-weight: 600 !important;
+  color: var(--neutralPrimary) !important;
+}
+
+/* Override Fluent UI AccordionHeader selected/expanded/active background */
+.fui-AccordionHeader[data-state="open"],
+.fui-AccordionHeader[aria-expanded="true"],
+.fui-AccordionHeader.fui-AccordionHeader__button:active,
+.fui-AccordionHeader.fui-AccordionHeader__button:focus {
+  background: #f3f2f1 !important;
+}
+
 .panelTitle:hover, .panelTitle:focus {
-  background: #e9e9e9;
+  background: #f3f2f1; /* neutralLighter from theme.json */
 }
 
 .panelIcon {
