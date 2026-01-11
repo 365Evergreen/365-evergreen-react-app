@@ -5,6 +5,7 @@ import { Hero } from './components/Hero';
 import { Features } from './components/Features';
 import { CTA } from './components/CTA';
 import { ContactForm } from './components/ContactForm';
+import FeatureView from './components/FeatureView';
 import { Footer } from './components/Footer';
 import { CookieConsent } from './components/CookieConsent';
 import { LatestPosts } from './components/LatestPosts';
@@ -16,7 +17,8 @@ import { JourneySurvey } from './components/JourneySurvey';
 import questionsData from '../CTAJourneyQuestions.json';
 import { PageView } from './components/PageView';
 import { LatestPostsArchive } from './components/LatestPostsArchive';
-import FeatureView from './components/FeatureView';
+
+import VanillaAccordionDemoPage from './components/VanillaAccordionDemoPage';
 
 
 function App() {
@@ -39,6 +41,7 @@ function App() {
           <Route path="/feature/:slug" element={<FeatureView />} />
           <Route path="/latest-posts" element={<LatestPostsArchive />} />
           <Route path="/:slug" element={<PageView />} />
+          <Route path="/vanilla-accordion-demo" element={<VanillaAccordionDemoPage />} />
         </Routes>
         <CopilotChat open={chatOpen} onClose={() => setChatOpen(false)} />
       </main>

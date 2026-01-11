@@ -4,7 +4,7 @@ import { Breadcrumb, BreadcrumbItem } from '@fluentui/react-components';
 import { useFeatureBySlug } from '../lib/useFeatureBySlug';
 import PageBlocks from './PageBlocks';
 import { useAzureAccordions } from '../lib/useAzureAccordions';
-import { DynamicAccordion } from './DynamicAccordion';
+import { VanillaAccordion } from './VanillaAccordion';
 
 const FeatureView: React.FC = () => {
   const { slug } = useParams<{ slug?: string }>();
@@ -60,7 +60,7 @@ const FeatureView: React.FC = () => {
       {/* Render only accordions relevant to this feature */}
       {filteredAccordions.length > 0 && (
         <div style={{ marginTop: '3rem' }}>
-          <DynamicAccordion items={filteredAccordions} />
+          <VanillaAccordion items={filteredAccordions} />
         </div>
       )}
     </section>
