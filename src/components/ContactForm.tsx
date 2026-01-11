@@ -56,10 +56,10 @@ export function ContactForm() {
             </div>
             <div className="contact-info-item">
               <span className="contact-info-icon"><People24Regular /></span>
-              {/* <div>
+            <div>
                 <div className="contact-info-label fluent-body1Strong">Join Our Community</div>
                 <div className="contact-info-text">Connect with 50,000+ eco-conscious members</div>
-              </div> */}
+              </div> 
             </div>
             <div className="contact-info-item">
               <span className="contact-info-icon"><Chat24Regular /></span>

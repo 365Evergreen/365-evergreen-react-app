@@ -1,58 +1,50 @@
 
+
 # Copilot Instructions for 365 Evergreen React App
 
-## GPT-5.1-Codex-Max Enablement
-**Enable GPT-5.1-Codex-Max for all clients.**
+## Overview & Architecture
+- **Stack:** React (TypeScript), Vite, CSS Modules, Fluent UI theme
+- **SPA:** No routing; all logic flows through [src/App.tsx](src/App.tsx) and its children
+- **Component Structure:** All UI components in [src/components/](src/components/), each with a matching CSS module in [src/](src/)
+- **Theme:** Use [src/fluent-theme.ts](src/fluent-theme.ts) for all UI styling; do not use inline styles or global CSS except [src/index.css](src/index.css)
+- **Data:** No backend/API by default; all data is local or static unless you add your own logic
 
-
-## Project Overview
-- **Stack:** React (TypeScript), Vite, CSS modules
-- **Entry Point:** src/main.tsx (mounts App.tsx)
-- **Component Structure:** All UI components are in src/components/, each with its own CSS file in src/.
-- **Theme:** Custom Fluent theme in src/fluent-theme.ts
-
-## Architecture & Patterns
-- **Single-page app:** No routing by default; all logic is in App.tsx and child components.
-- **Component communication:** Props are the only pattern; there is no global state manager (Redux, Zustand, etc.) or React Context.
-- **Styling:** Use CSS modules (e.g., Header.css, Features.css). Avoid inline styles and global CSS except for index.css.
-- **Assets:** Static files are in src/assets/ and public/.
-- **Theme:** All UI should use the Fluent theme from src/fluent-theme.ts for consistency.
+## Communication & Patterns
+- **Props-only:** Components communicate strictly via props; no Redux, Zustand, or React Context
+- **No global state:** All state is local to components
+- **No service abstraction:** Data fetching logic is not present; add your own if needed
+- **No React Compiler:** Not enabled (see [README.md](README.md))
 
 ## Developer Workflows
-- **Build:** `pnpm build` (uses Vite)
+- **Build:** `pnpm build` (Vite)
 - **Dev server:** `pnpm dev` (hot reload)
-- **Lint:** `pnpm lint` (ESLint, see eslint.config.js)
+- **Lint:** `pnpm lint` (see [eslint.config.js](eslint.config.js))
 - **Type-check:** `pnpm typecheck` (if configured)
-- **No test setup** by default; add your own if needed.
+- **No tests:** No test setup by default
 
 ## Conventions & Practices
-- **TypeScript:** All components and logic use TypeScript (.tsx for components).
-- **Component location:** Place new components in src/components/ and their styles in src/ as [Component].css.
-- **Theme usage:** Always import and use the Fluent theme from src/fluent-theme.ts.
-- **No React Compiler:** Not enabled for performance reasons (see README.md for details).
-- **ESLint:** Type-aware linting is recommended; see README.md for expanding config.
-- **No backend/API integration** is present; add your own data fetching logic as needed.
-- **No global state or context provider**; use props for all data flow.
+- **TypeScript:** Use `.tsx` for components, `.ts` for logic
+- **Component location:** Place new components in [src/components/](src/components/) and styles in [src/](src/)
+- **Theme usage:** Always import and use the Fluent theme from [src/fluent-theme.ts](src/fluent-theme.ts)
+- **Assets:** Use [src/assets/](src/assets/) and [public/](public/) for static files
+- **ESLint:** Type-aware linting recommended; see [README.md](README.md) for config
 
 ## Integration Points
-- **External dependencies:** Managed via package.json and installed with pnpm.
-- **No API layer or service abstraction**; all data is local or static unless you add your own logic.
+- **External dependencies:** Managed in [package.json](package.json), installed with pnpm
+- **No API/service layer:** All data is local/static unless you add your own
 
 ## Examples
-- To add a new feature section:
-  1. Create src/components/NewFeature.tsx and src/NewFeature.css.
-  2. Import and use in App.tsx.
-- To update the theme, edit src/fluent-theme.ts and re-import in components.
+- **Add a feature section:**
+  1. Create [src/components/NewFeature.tsx](src/components/NewFeature.tsx) and [src/NewFeature.css](src/NewFeature.css)
+  2. Import and use in [src/App.tsx](src/App.tsx)
+- **Update theme:** Edit [src/fluent-theme.ts](src/fluent-theme.ts) and re-import in components
 
 ## Key Files
-- src/App.tsx: Main app logic and layout
-- src/components/: All UI components
-- src/fluent-theme.ts: Theme definitions
-- eslint.config.js: Linting rules
-- README.md: Project setup and conventions
+- [src/App.tsx](src/App.tsx): Main app logic and layout
+- [src/components/](src/components/): All UI components
+- [src/fluent-theme.ts](src/fluent-theme.ts): Theme definitions
+- [eslint.config.js](eslint.config.js): Linting rules
+- [README.md](README.md): Project setup and conventions
 
 ---
-If you encounter unclear or missing conventions, ask the user for clarification before making assumptions.
-
----
-If you encounter unclear or missing conventions, ask the user for clarification before making assumptions.
+If conventions or patterns are unclear, ask the user for clarification before making assumptions.
