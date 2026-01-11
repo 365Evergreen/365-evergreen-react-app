@@ -15,6 +15,7 @@ import { FloatingDrawer } from './components/FloatingDrawer';
 import { JourneySurvey } from './components/JourneySurvey';
 import questionsData from '../CTAJourneyQuestions.json';
 import { PageView } from './components/PageView';
+import { LatestPostsArchive } from './components/LatestPostsArchive';
 import FeatureView from './components/FeatureView';
 
 
@@ -36,6 +37,7 @@ function App() {
             </>
           } />
           <Route path="/feature/:slug" element={<FeatureView />} />
+          <Route path="/latest-posts" element={<LatestPostsArchive />} />
           <Route path="/:slug" element={<PageView />} />
         </Routes>
         <CopilotChat open={chatOpen} onClose={() => setChatOpen(false)} />
