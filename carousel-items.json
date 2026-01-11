@@ -1,0 +1,30 @@
+ [
+        {
+            "Title": "free modern workplace",
+            "Blurb": null,
+            "image": "https://fabricweb.azureedge.net/fabric-website/assets/images/swatch-picker/park-full-img.jpg",
+            "CTA": null,
+            "dsplay": false
+        },
+        {
+            "Title": "An app in a week",
+            "Blurb": "Get a custom business app built in just one week — fast, focused, and ready to test.",
+            "image": "  \"https://fabricweb.azureedge.net/fabric-website/assets/images/swatch-picker/bridge-full-img.jpg\",",
+            "CTA": "Get your app",
+            "dsplay": true
+        },
+        {
+            "Title": "Governance health check",
+            "Blurb": "Ensure your environment meets compliance standards with a free health check",
+            "image": "  \"https://fabricweb.azureedge.net/fabric-website/assets/images/swatch-picker/sea-full-img.jpg\",",
+            "CTA": "Get your free health check",
+            "dsplay": true
+        },
+        {
+            "Title": "Collaboration kickstart",
+            "Blurb": "Boost team productivity with a free collaboration kickstart workshop",
+            "image": "https://fabricweb.azureedge.net/fabric-website/assets/images/swatch-picker/park-full-img.jpg",
+            "CTA": "Get your free kickstart",
+            "dsplay": true
+        }
+    ]
