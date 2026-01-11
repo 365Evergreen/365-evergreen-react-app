@@ -1,7 +1,20 @@
+.ctaButtons :global(.cta-override-btn) {
+  background: transparent !important;
+  color: #fff !important;
+  border: 2px solid #fff !important;
+  font-weight: 600;
+  transition: background 0.2s, color 0.2s, border 0.2s;
+}
+.ctaButtons :global(.cta-override-btn):hover,
+.ctaButtons :global(.cta-override-btn):focus {
+  background: rgba(255,255,255,0.12) !important;
+  color: #fff !important;
+  border: 2px solid #fff !important;
+}
 /* CTA Section - new design (CSS Module) */
 .ctaSection {
   width: 100%;
-  background: #f9fbfa;
+  background: #213d2f;
   padding: 64px 0 64px 0;
   display: flex;
   justify-content: center;
@@ -58,14 +71,14 @@
 .headline {
   font-size: 2.8rem;
   font-weight: 700;
-  color: #1a2e22;
+  color: #ebebeb;
   margin: 0 0 18px 0;
   line-height: 1.1;
 }
 
 .description {
   font-size: 1.18rem;
-  color: #3a4d3c;
+  color: #efefef;
   margin-bottom: 28px;
   max-width: 500px;
 }
@@ -79,11 +92,11 @@
   display: flex;
   align-items: center;
   font-size: 1.08rem;
-  color: #2d4739;
+  color: #efefef;
   margin-bottom: 10px;
 }
 .bulletIcon {
-  color: #3a7c4a;
+  color: #efefef;
   margin-right: 10px;
   font-size: 1.2em;
 }
@@ -106,7 +119,7 @@
 
 .trustedLine {
   font-size: 0.98rem;
-  color: #6b7c6a;
+  color: #efefef;
   margin-top: 10px;
   display: flex;
   align-items: center;
@@ -128,7 +141,8 @@
   position: absolute;
   width: 340px;
   min-height: 90px;
-  background: #fff;
+  border: 1px solid #efefef;
+  background: #ececec;
   border-radius: 18px;
   box-shadow: 0 6px 32px 0 rgba(44, 62, 80, 0.10);
   display: flex;
@@ -136,10 +150,11 @@
   padding: 24px 28px 20px 24px;
   margin-bottom: 18px;
   z-index: 1;
-  transition: box-shadow 0.2s;
+  transition: box-shadow 0.2s, transform 0.2s;
 }
 .featureCard:hover {
-  box-shadow: 0 10px 40px 0 rgba(44, 62, 80, 0.16);
+  box-shadow: 0 16px 48px 0 rgba(44, 62, 80, 0.18);
+  transform: translateY(-6px) scale(1.025);
 }
 .cardIconWrap {
   width: 48px;

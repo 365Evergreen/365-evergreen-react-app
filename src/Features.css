@@ -1,6 +1,6 @@
 /* Features styles */
 .features-root {
-  background-color: var(--white);
+  background-color: var(--neutralLightestAlt);
   padding: 3rem 0 3rem 4vw;
   padding-left: 4vw;
   padding-right: 4vw;
@@ -58,10 +58,10 @@
 .features-card:focus,
 .features-card:hover {
   box-shadow: 0 4px 18px rgba(0,0,0,0.13);
-  background: #f6faf6;
+  background: #b5d2b5;
   transform: translateY(-2px) scale(1.012);
 }
-.selectable-card {
+.selectable-card {border-radius: 0px;
   /* For clarity, can be used for further custom styles */
 }
 .features-header-row {
@@ -96,6 +96,6 @@
   transition: color 0.15s;
 }
 .features-link:hover, .features-link:focus {
-  color: #0078d4;
+  color: #111;
   text-decoration: underline;
 }

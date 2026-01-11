@@ -1,24 +1,26 @@
-import { Routes, Route } from 'react-router-dom';
-import './App.css';
+
+import { useState } from 'react';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
-import { Features } from './components/Features';
 import { CTA } from './components/CTA';
+import { Features } from './components/Features';
+import { LatestPosts } from './components/LatestPosts';
 import { ContactForm } from './components/ContactForm';
 import FeatureView from './components/FeatureView';
 import { Footer } from './components/Footer';
 import { CookieConsent } from './components/CookieConsent';
-import { LatestPosts } from './components/LatestPosts';
 import { CopilotChat } from './components/CopilotChat';
 import { ChatBubble } from './components/ChatBubble';
-import { useState } from 'react';
 import { FloatingDrawer } from './components/FloatingDrawer';
 import { JourneySurvey } from './components/JourneySurvey';
 import questionsData from '../CTAJourneyQuestions.json';
 import { PageView } from './components/PageView';
 import { LatestPostsArchive } from './components/LatestPostsArchive';
-
 import VanillaAccordionDemoPage from './components/VanillaAccordionDemoPage';
+import { AnimatePresence, motion } from 'framer-motion';
+import { fadeVariants } from './components/motionPresets';
+
+import { Routes, Route } from 'react-router-dom';
 
 
 function App() {
@@ -30,13 +32,53 @@ function App() {
       <main>
         <Routes>
           <Route path="/" element={
-            <>
-              <Hero onOpenDrawer={() => setDrawerOpen(true)} />
-              <Features />
-              <CTA />
-              <LatestPosts />
-              <ContactForm />
-            </>
+            <AnimatePresence mode="wait">
+              <motion.div
+                key="hero"
+                variants={fadeVariants}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+              >
+                <Hero onOpenDrawer={() => setDrawerOpen(true)} />
+              </motion.div>
+              <motion.div
+                key="cta"
+                variants={fadeVariants}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+              >
+                <CTA />
+              </motion.div>
+              <motion.div
+                key="features"
+                variants={fadeVariants}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+              >
+                <Features />
+              </motion.div>
+              <motion.div
+                key="latestposts"
+                variants={fadeVariants}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+              >
+                <LatestPosts />
+              </motion.div>
+              <motion.div
+                key="contactform"
+                variants={fadeVariants}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+              >
+                <ContactForm />
+              </motion.div>
+            </AnimatePresence>
           } />
           <Route path="/feature/:slug" element={<FeatureView />} />
           <Route path="/latest-posts" element={<LatestPostsArchive />} />
