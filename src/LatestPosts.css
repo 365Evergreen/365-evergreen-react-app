@@ -1,3 +1,16 @@
+/* Thumbnail image for latest posts */
+.latest-posts-featured-image {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+  object-position: center top;
+  border-radius: 12px;
+  margin-bottom: 0.75rem;
+  display: block;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  background: #f6f6f6;
+}
 /* LatestPosts styles */
 .latest-posts-root {
   background: #fff;

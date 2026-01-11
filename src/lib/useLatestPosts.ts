@@ -7,16 +7,18 @@ export interface LatestPost {
   slug: string;
   content?: string;
   featuredImage?: { node: { sourceUrl: string } };
+  categories?: { edges: { node: { id: string; name: string; slug: string } }[] };
 }
 
-export function useLatestPosts(limit = 6): LatestPost[] {
+export function useLatestPosts(limit?: number): LatestPost[] {
   const [posts, setPosts] = useState<LatestPost[]>([]);
   useEffect(() => {
+    const postLimit = typeof limit === 'number' ? limit : 100; // fetch more for archive
     fetch('https://365evergreen.com/graphql', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        query: `query allPosts {\n  posts(first: ${limit}, where: {orderby: {field: DATE, order: DESC}}) {\n    edges {\n      node {\n        id\n        title\n        date\n        content(format: RENDERED)\n        featuredImage { node { sourceUrl } }\n        slug\n      }\n    }\n  }\n}`
+        query: `query allPosts {\n  posts(first: ${postLimit}, where: {orderby: {field: DATE, order: DESC}}) {\n    edges {\n      node {\n        id\n        title\n        date\n        content(format: RENDERED)\n        featuredImage { node { sourceUrl } }\n        slug\n        categories { edges { node { id name slug } } }\n      }\n    }\n  }\n}`
       })
     })
       .then(res => res.json())

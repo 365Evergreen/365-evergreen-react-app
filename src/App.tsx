@@ -4,7 +4,7 @@ import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { CTA } from './components/CTA';
 import { Features } from './components/Features';
-import { LatestPosts } from './components/LatestPosts';
+import LatestPosts from './components/LatestPosts';
 import { ContactForm } from './components/ContactForm';
 import FeatureView from './components/FeatureView';
 import { Footer } from './components/Footer';
@@ -15,7 +15,9 @@ import { FloatingDrawer } from './components/FloatingDrawer';
 import { JourneySurvey } from './components/JourneySurvey';
 import questionsData from '../CTAJourneyQuestions.json';
 import { PageView } from './components/PageView';
-import { LatestPostsArchive } from './components/LatestPostsArchive';
+import LatestPostsArchive from './components/LatestPostsArchive';
+// import Carousel from './components/Carousel';
+import FluentCarousel from './components/FluentCarousel';
 import VanillaAccordionDemoPage from './components/VanillaAccordionDemoPage';
 import { AnimatePresence, motion } from 'framer-motion';
 import { fadeVariants } from './components/motionPresets';
@@ -41,6 +43,15 @@ function App() {
                 exit="exit"
               >
                 <Hero onOpenDrawer={() => setDrawerOpen(true)} />
+              </motion.div>
+              <motion.div
+                key="fluentcarousel"
+                variants={fadeVariants}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+              >
+                <FluentCarousel />
               </motion.div>
               <motion.div
                 key="cta"
@@ -82,6 +93,8 @@ function App() {
           } />
           <Route path="/feature/:slug" element={<FeatureView />} />
           <Route path="/latest-posts" element={<LatestPostsArchive />} />
+          <Route path="/category/:category" element={<LatestPostsArchive />} />
+          <Route path="/category/:category/:slug" element={<PageView />} />
           <Route path="/:slug" element={<PageView />} />
           <Route path="/vanilla-accordion-demo" element={<VanillaAccordionDemoPage />} />
         </Routes>

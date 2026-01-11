@@ -3,7 +3,7 @@
   width: 100%;
   background: #f9fbfa;
   padding: 64px 0 64px 0;
-  display: flex;
+  display: none;
   justify-content: center;
   align-items: center;
 }

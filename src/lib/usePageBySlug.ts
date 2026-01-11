@@ -6,6 +6,8 @@ export interface PageData {
   title: string;
   blocks: PageBlock[];
   content: string;
+  featuredImage?: { node: { sourceUrl: string } };
+  categories?: { edges: { node: { id: string; name: string; slug: string } }[] };
 }
 
 export function usePageBySlug(slug: string | undefined): PageData | null {
@@ -16,19 +18,29 @@ export function usePageBySlug(slug: string | undefined): PageData | null {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        query: `query GetPageBySlug {\n  pageBy(uri: \"${slug}\") {\n    id\n    title\n    blocks\n    content\n  }\n}`
+        query: `query postContent {\n  postBy(uri: \"${slug}\") {\n    id\n    title\n    blocks\n    content(format: RENDERED)\n    featuredImage { node { sourceUrl(size: MEDIUM) } }\n    categories { edges { node { id name slug } } }\n  }\n}`
       })
     })
       .then(res => res.json())
       .then(result => {
-        const page = result?.data?.pageBy;
+        const page = result?.data?.postBy;
         let blocks: PageBlock[] = [];
         try {
           blocks = page?.blocks ? JSON.parse(page.blocks) : [];
         } catch {
           blocks = [];
         }
-        setData(page ? { id: page.id, title: page.title, blocks, content: page.content } : null);
+        setData(page
+          ? {
+              id: page.id,
+              title: page.title,
+              blocks,
+              content: page.content,
+              featuredImage: page.featuredImage,
+              categories: page.categories,
+            }
+          : null
+        );
       });
   }, [slug]);
   return data;

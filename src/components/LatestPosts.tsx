@@ -1,10 +1,13 @@
 
+import React from 'react';
 import { Button } from '@fluentui/react-components';
 import '../LatestPosts.css';
 import { useLatestPosts } from '../lib/useLatestPosts';
+import { useNavigate } from 'react-router-dom';
 
-export function LatestPosts() {
+const LatestPosts: React.FC = () => {
   const posts = useLatestPosts(6);
+  const navigate = useNavigate();
 
   // Sort by date descending (should already be, but ensure)
   const sortedPosts = [...posts].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
@@ -26,16 +29,75 @@ export function LatestPosts() {
       <div className="latest-posts-container">
         <h2 className="latest-posts-title fluent-title2">Latest by 365 Evergreen</h2>
         <div className="features-grid">
-          {sortedPosts.map((post) => (
-            <div key={post.id} className="features-card selectable-card">
-              <div className="latest-posts-date">{new Date(post.date).toLocaleDateString()}</div>
-              <a href={"/post/" + post.slug} className="latest-posts-title-link fluent-title3">{post.title}</a>
-              <p className="latest-posts-excerpt">{getExcerpt(post)}</p>
-              <Button as="a" href={"/post/" + post.slug} className="latest-posts-readmore" appearance="secondary" size="small">Read more</Button>
-            </div>
-          ))}
+          {sortedPosts.map((post) => {
+            const primaryCategory = post.categories?.edges?.[0]?.node?.slug || 'post';
+            const postUrl = `/category/${primaryCategory}/${post.slug}`;
+            return (
+              <div
+                key={post.id}
+                className="features-card selectable-card"
+                onClick={() => navigate(postUrl)}
+                style={{ cursor: 'pointer' }}
+              >
+                {post.featuredImage?.node?.sourceUrl && (
+                  <span className="latest-posts-image-link">
+                    <img
+                      src={post.featuredImage.node.sourceUrl}
+                      alt={post.title}
+                      className="latest-posts-featured-image"
+                      loading="lazy"
+                    />
+                  </span>
+                )}
+                {/* Category tags */}
+                {(post.categories?.edges?.length ?? 0) > 0 && (
+                  <div style={{ marginBottom: '0.5rem', display: 'flex', flexWrap: 'wrap', gap: '0.5em' }}>
+                    {(post.categories?.edges ?? []).map((cat: any) => (
+                      <span
+                        key={cat.node.slug}
+                        className="latest-posts-category-tag"
+                        style={{
+                          background: '#e6f2e6',
+                          color: '#2d6a2d',
+                          fontSize: '0.85em',
+                          borderRadius: '6px',
+                          padding: '0.15em 0.7em',
+                          cursor: 'pointer',
+                        }}
+                        onClick={e => {
+                          e.stopPropagation();
+                          navigate(`/category/${cat.node.slug}`);
+                        }}
+                      >
+                        {cat.node.name}
+                      </span>
+                    ))}
+                  </div>
+                )}
+                <div className="latest-posts-date">{new Date(post.date).toLocaleDateString()}</div>
+                <span className="latest-posts-title-link fluent-title3">{post.title}</span>
+                <p className="latest-posts-excerpt">{getExcerpt(post)}</p>
+                <Button
+                  as="a"
+                  href={postUrl}
+                  className="latest-posts-readmore"
+                  appearance="secondary"
+                  size="small"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    navigate(postUrl);
+                  }}
+                >
+                  Read more
+                </Button>
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>
   );
-}
+};
+
+export default LatestPosts;

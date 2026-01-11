@@ -10,10 +10,14 @@ export const PageView: React.FC = () => {
   // Fetch page by slug (dynamic)
   const page = usePageBySlug(slug);
 
-  // Placeholder: In the future, build this from WPGraphQL parent/child data
+
+  // Build breadcrumb: Home / Category (if present) / Post Title
+  const params = useParams<{ slug?: string; category?: string }>();
+  const category = params.category;
   const breadcrumbItems = [
     { text: 'Home', href: '/' },
-    { text: page?.title || (slug || 'Page'), href: `/${slug}` },
+    ...(category ? [{ text: category.charAt(0).toUpperCase() + category.slice(1), href: `/${category}` }] : []),
+    { text: page?.title || (params.slug || 'Page'), href: `/${category ? category + '/' : ''}${params.slug || ''}` },
   ];
 
   return (
@@ -22,7 +26,10 @@ export const PageView: React.FC = () => {
         {breadcrumbItems.map((item, idx) => (
           <BreadcrumbItem key={item.href}>
             {idx < breadcrumbItems.length - 1 ? (
-              <Link to={item.href}>{item.text}</Link>
+              <>
+                <Link to={item.href}>{item.text}</Link>
+                <span style={{ margin: '0 0.5em', color: '#888' }}>/</span>
+              </>
             ) : (
               <span>{item.text}</span>
             )}
