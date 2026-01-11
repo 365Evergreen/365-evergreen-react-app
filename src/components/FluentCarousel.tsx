@@ -11,7 +11,6 @@ import {
   CarouselNavContainer,
   CarouselSlider,
   CarouselViewport,
-  Image,
   makeStyles,
   tokens,
   typographyStyles,
