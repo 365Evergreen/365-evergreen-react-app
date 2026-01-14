@@ -25,13 +25,12 @@ export function useAzureAccordions(): AccordionGroupData[] {
       const accordions = Array.isArray(accordionMeta) ? accordionMeta : [accordionMeta];
       const items = Array.isArray(accordionItems) ? accordionItems : [accordionItems];
       const grouped = accordions.map(acc => ({
-        title: acc.Title,
+        title: acc.Label,
         description: acc.Blurb,
-        header: acc.Header,
-        image: acc.ImageUrl,
+        image: acc.Image,
         parentFeature: acc.ParentFeature,
         panels: items
-          .filter(item => item.Accordion === acc.Title)
+          .filter(item => item.Accordion === acc.Label)
           .sort((a, b) => (a.SortOrder || 0) - (b.SortOrder || 0))
           .map(item => ({
             title: item.Title,

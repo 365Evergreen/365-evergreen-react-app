@@ -1,31 +1,93 @@
 [
-    {
-        "ID": 1,
-        "Title": "All your information, all the time",
-        "Blurb": "We help your team members create, connect, and collaborate securely from anywhere.",
-        "SortOrder": 1,
-        "Accordion": "Work from anywhere"
-    },
-    {
-        "ID": 2,
-        "Title": "Work with any device",
-        "Blurb": "Deliver a seamless user experience whether your team is on desktop, tablet, or mobile — same tools, same interface, same productivity.",
-        "SortOrder": 2,
-        "Accordion": "Work from anywhere"
-    },
-    {
-        "ID": 3,
-        "Title": "Work in the cloud and offline",
-        "Blurb": "Store, sync, and share documents effortlessly with cloud storage that's always up-to-date and accessible anywhere.",
-        "SortOrder": 3,
-        "Accordion": "Work from anywhere"
-    },
-    {
-        "ID": 4,
-        "Title": "Assured governance",
-        "Blurb": "Maintain control and meet regulatory requirements with comprehensive governance policies and automated compliance checks.",
-        "SortOrder": 4,
-        "Accordion": "Work from anywhere"
-    }
-]
-
+        {
+            "Title": "Work from anywhere",
+            "Blurb": "We help your team members create, connect, and collaborate securely from anywhere.",
+            "ImageURL": "https://365evergreen.com/wp-content/uploads/2025/07/francesco-gallarotti-ruQHpukrN7c-unsplash-1536x1024.jpg",
+            "feature": "Modern workplace",
+            "Id": 1
+        },
+        {
+            "Title": "Communicate with ease",
+            "Blurb": "We help your team members create, connect, and collaborate securely from anywhere.",
+            "ImageURL": "https://365evergreen.com/wp-content/uploads/2025/07/francesco-gallarotti-ruQHpukrN7c-unsplash-1536x1024.jpg",
+            "feature": "Modern workplace",
+            "Id": 2
+        },
+        {
+            "Title": "Collaborate seamlessly",
+            "Blurb": "We help your team members create, connect, and collaborate securely from anywhere.",
+            "ImageURL": "https://365evergreen.com/wp-content/uploads/2025/07/francesco-gallarotti-ruQHpukrN7c-unsplash-1536x1024.jpg",
+            "feature": "Modern workplace",
+            "Id": 3
+        },
+        {
+            "Title": "Engage your teams",
+            "Blurb": "We help your team members create, connect, and collaborate securely from anywhere.",
+            "ImageURL": "https://365evergreen.com/wp-content/uploads/2025/07/francesco-gallarotti-ruQHpukrN7c-unsplash-1536x1024.jpg",
+            "feature": "Modern workplace",
+            "Id": 4
+        },
+        {
+            "Title": "Replace the effort",
+            "Blurb": "Automate repetitive tasks and streamline business processes with custom workflows\n",
+            "ImageURL": "https://365evergreen.com/wp-content/uploads/2025/07/francesco-gallarotti-ruQHpukrN7c-unsplash-1536x1024.jpg",
+            "feature": "Automated processes",
+            "Id": 5
+        },
+        {
+            "Title": "Be more efficient",
+            "Blurb": "We help your team members create, connect, and collaborate securely from anywhere.",
+            "ImageURL": "https://365evergreen.com/wp-content/uploads/2025/07/francesco-gallarotti-ruQHpukrN7c-unsplash-1536x1024.jpg",
+            "feature": "Automated processes",
+            "Id": 6
+        },
+        {
+            "Title": "Connect your apps",
+            "Blurb": "We help your team members create, connect, and collaborate securely from anywhere.",
+            "ImageURL": "https://365evergreen.com/wp-content/uploads/2025/07/francesco-gallarotti-ruQHpukrN7c-unsplash-1536x1024.jpg",
+            "feature": "Automated processes",
+            "Id": 7
+        },
+        {
+            "Title": "Scale",
+            "Blurb": null,
+            "ImageURL": null,
+            "feature": "Automated processes",
+            "Id": 8
+        },
+        {
+            "Title": "Flow with confidence",
+            "Blurb": "We will help your team to scale automation to the next level ",
+            "ImageURL": null,
+            "feature": "Automated processes",
+            "Id": 9
+        },
+        {
+            "Title": "Build rapidly",
+            "Blurb": "Together, we can turn your idea into a working app in the blink of an eye",
+            "ImageURL": "https://365evergreen.com/wp-content/uploads/2025/07/francesco-gallarotti-ruQHpukrN7c-unsplash-1536x1024.jpg",
+            "feature": "Business apps",
+            "Id": 10
+        },
+        {
+            "Title": "Empower your team",
+            "Blurb": "Let us train your team members build and extend apps that they understand",
+            "ImageURL": "https://365evergreen.com/wp-content/uploads/2025/07/francesco-gallarotti-ruQHpukrN7c-unsplash-1536x1024.jpg",
+            "feature": "Business apps",
+            "Id": 11
+        },
+        {
+            "Title": "Manage for data",
+            "Blurb": "Let us train your team members build and extend apps that they understand",
+            "ImageURL": "https://365evergreen.com/wp-content/uploads/2025/07/francesco-gallarotti-ruQHpukrN7c-unsplash-1536x1024.jpg",
+            "feature": "Business apps",
+            "Id": 12
+        },
+        {
+            "Title": "Scale with ease",
+            "Blurb": "We can take you from beginner to enterprise-level experts",
+            "ImageURL": "https://365evergreen.com/wp-content/uploads/2025/07/francesco-gallarotti-ruQHpukrN7c-unsplash-1536x1024.jpg",
+            "feature": "Business apps",
+            "Id": 13
+        }
+    ]

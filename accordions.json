@@ -1,8 +1,93 @@
-{
-    "ID": 1,
-    "Title": "Work from anywhere",
-    "Blurb": "We help your team members create, connect, and collaborate securely from anywhere.",
-    "Header": "Modern workplace",
-    "ImageUrl": "https://365evergreen.com/wp-content/uploads/2025/07/francesco-gallarotti-ruQHpukrN7c-unsplash-1536x1024.jpg",
-    "ParentFeature": "Modern workplace"
-}
+[
+    {
+        "ID": 1,
+        "Label": "Work from anywhere",
+        "Blurb": "We help your team members create, connect, and collaborate securely from anywhere.",
+        "Image": "https://365evergreen.com/wp-content/uploads/2025/07/francesco-gallarotti-ruQHpukrN7c-unsplash-1536x1024.jpg",
+        "ParentFeature": "Modern workplace"
+    },
+    {
+        "ID": 2,
+        "Label": "Communicate with ease",
+        "Blurb": "We help your team members create, connect, and collaborate securely from anywhere.",
+        "Image": "https://365evergreen.com/wp-content/uploads/2025/07/francesco-gallarotti-ruQHpukrN7c-unsplash-1536x1024.jpg",
+        "ParentFeature": "Modern workplace"
+    },
+    {
+        "ID": 3,
+        "Label": "Collaborate seamlessly",
+        "Blurb": "We help your team members create, connect, and collaborate securely from anywhere.",
+        "Image": "https://365evergreen.com/wp-content/uploads/2025/07/francesco-gallarotti-ruQHpukrN7c-unsplash-1536x1024.jpg",
+        "ParentFeature": "Modern workplace"
+    },
+    {
+        "ID": 4,
+        "Label": "Engage your teams",
+        "Blurb": "We help your team members create, connect, and collaborate securely from anywhere.",
+        "Image": "https://365evergreen.com/wp-content/uploads/2025/07/francesco-gallarotti-ruQHpukrN7c-unsplash-1536x1024.jpg",
+        "ParentFeature": "Modern workplace"
+    },
+    {
+        "ID": 5,
+        "Label": "Replace the effort",
+        "Blurb": "Automate repetitive tasks and streamline business processes with custom workflows\n",
+        "Image": "https://365evergreen.com/wp-content/uploads/2025/07/francesco-gallarotti-ruQHpukrN7c-unsplash-1536x1024.jpg",
+        "ParentFeature": "Automated processes"
+    },
+    {
+        "ID": 6,
+        "Label": "Be more efficient",
+        "Blurb": "We help your team members create, connect, and collaborate securely from anywhere.",
+        "Image": "https://365evergreen.com/wp-content/uploads/2025/07/francesco-gallarotti-ruQHpukrN7c-unsplash-1536x1024.jpg",
+        "ParentFeature": "Automated processes"
+    },
+    {
+        "ID": 7,
+        "Label": "Connect your apps",
+        "Blurb": "We help your team members create, connect, and collaborate securely from anywhere.",
+        "Image": "https://365evergreen.com/wp-content/uploads/2025/07/francesco-gallarotti-ruQHpukrN7c-unsplash-1536x1024.jpg",
+        "ParentFeature": "Automated processes"
+    },
+    {
+        "ID": 8,
+        "Label": "Scale",
+        "Blurb": null,
+        "Image": null,
+        "ParentFeature": "Automated processes"
+    },
+    {
+        "ID": 9,
+        "Label": "Flow with confidence",
+        "Blurb": "We will help your team to scale automation to the next level ",
+        "Image": null,
+        "ParentFeature": "Automated processes"
+    },
+    {
+        "ID": 10,
+        "Label": "Build rapidly",
+        "Blurb": "Together, we can turn your idea into a working app in the blink of an eye",
+        "Image": "https://365evergreen.com/wp-content/uploads/2025/07/francesco-gallarotti-ruQHpukrN7c-unsplash-1536x1024.jpg",
+        "ParentFeature": "Business apps"
+    },
+    {
+        "ID": 11,
+        "Label": "Empower your team",
+        "Blurb": "Let us train your team members build and extend apps that they understand",
+        "Image": "https://365evergreen.com/wp-content/uploads/2025/07/francesco-gallarotti-ruQHpukrN7c-unsplash-1536x1024.jpg",
+        "ParentFeature": "Business apps"
+    },
+    {
+        "ID": 12,
+        "Label": "Manage for data",
+        "Blurb": "Let us train your team members build and extend apps that they understand",
+        "Image": "https://365evergreen.com/wp-content/uploads/2025/07/francesco-gallarotti-ruQHpukrN7c-unsplash-1536x1024.jpg",
+        "ParentFeature": "Business apps"
+    },
+    {
+        "ID": 13,
+        "Label": "Scale with ease",
+        "Blurb": "We can take you from beginner to enterprise-level experts",
+        "Image": "https://365evergreen.com/wp-content/uploads/2025/07/francesco-gallarotti-ruQHpukrN7c-unsplash-1536x1024.jpg",
+        "ParentFeature": "Business apps"
+    }
+]
