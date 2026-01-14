@@ -8,24 +8,28 @@
   border-radius: 12px;
   margin-bottom: 0.75rem;
   display: block;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
   background: #f6f6f6;
 }
+
 /* LatestPosts styles */
 .latest-posts-root {
   background: #fff;
   padding: 3rem 0;
   padding-left: 4vw;
 }
+
 .latest-posts-container {
   width: 100%;
   margin: 0;
   box-sizing: border-box;
 }
+
 .latest-posts-title {
   text-align: left;
   margin-bottom: 2rem;
 }
+
 /* Use Features grid and card styles for LatestPosts */
 /* Remove custom card width constraints */
 /* .latest-posts-list styles replaced by .features-grid in TSX */
@@ -36,6 +40,7 @@
   font-size: 0.9rem;
   margin-bottom: 0.5rem;
 }
+
 .latest-posts-title-link {
   color: var(--themePrimary);
   font-weight: 600;
@@ -43,14 +48,17 @@
   margin-bottom: 0.5rem;
   font-size: 1.1rem;
 }
+
 .latest-posts-title-link:hover {
   text-decoration: underline;
 }
+
 .latest-posts-excerpt {
   color: var(--neutralPrimary);
   font-size: 1rem;
   margin-bottom: 1rem;
 }
+
 .latest-posts-readmore {
   margin-top: auto;
   color: var(--themeSecondary);
@@ -58,15 +66,19 @@
   font-weight: 500;
   font-size: 0.98rem;
 }
+
 .latest-posts-readmore:hover {
   text-decoration: underline;
 }
+
 @media (max-width: 900px) {
   .latest-posts-list {
     grid-template-columns: 1fr;
     grid-template-rows: none;
   }
+
   .latest-posts-root {
-    padding-left: 2vw;
+    padding: 0 4vw 0 4vw;
+    background: var(--themeNeutralLightest, #f5f7fa);
   }
 }

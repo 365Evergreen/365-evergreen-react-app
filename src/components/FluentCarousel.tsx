@@ -86,11 +86,23 @@ const BannerCard: React.FC<BannerCardProps> = ({ image, title, blurb, cta }) => 
         <div className={classes.title}>{title}</div>
         {blurb && <div className={classes.subtext}>{blurb}</div>}
         {cta && (
-          <div>
-            <Button size="small" shape="square" appearance="primary">
+          <a
+            href="#"
+            className="features-link"
+            style={{ textDecoration: 'none', marginTop: '1em', display: 'inline-block' }}
+            tabIndex={0}
+            onClick={e => {
+              e.preventDefault();
+              // Add navigation or action here if needed
+            }}
+          >
+            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4em', fontSize: '1rem' }}>
               {cta}
-            </Button>
-          </div>
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ marginLeft: '0.1em' }}>
+                <path d="M7.5 5L12.5 10L7.5 15" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </span>
+          </a>
         )}
       </div>
     </CarouselCard>

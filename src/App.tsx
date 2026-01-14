@@ -54,15 +54,6 @@ function App() {
                 <FluentCarousel />
               </motion.div>
               <motion.div
-                key="cta"
-                variants={fadeVariants}
-                initial="hidden"
-                animate="visible"
-                exit="exit"
-              >
-                <CTA />
-              </motion.div>
-              <motion.div
                 key="features"
                 variants={fadeVariants}
                 initial="hidden"

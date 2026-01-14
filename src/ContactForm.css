@@ -1,10 +1,11 @@
 /* ContactForm styles */
 .contact-root {
   background: #fff;
-  padding: 3rem 0;
+  padding: 0 4vw 0 4vw;
   display: flex;
   justify-content: center;
 }
+
 .contact-wrapper {
   display: flex;
   gap: 3rem;
@@ -12,33 +13,39 @@
   margin: 0 auto;
   width: 100%;
 }
+
 .contact-info {
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
+
 .contact-info-title {
   font-size: 2.8rem;
   font-weight: 700;
   margin-bottom: 1rem;
   color: #181828;
 }
+
 .contact-info-desc {
   font-size: 1.1rem;
   color: #555;
   margin-bottom: 2rem;
 }
+
 .contact-info-list {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
 }
+
 .contact-info-item {
   display: flex;
   align-items: center;
   gap: 1rem;
 }
+
 .contact-info-icon {
   background: #f3f3f6;
   border-radius: 12px;
@@ -50,39 +57,47 @@
   font-size: 1.5rem;
   color: #181828;
 }
+
 .contact-info-label {
   font-weight: 600;
   color: #181828;
 }
+
 .contact-info-text {
   color: #555;
   font-size: 1rem;
 }
+
 .contact-container {
   flex: 1;
   background: #fff;
   border-radius: 18px;
-  box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08);
   padding: 2.5rem 2rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
+
 .contact-title {
   text-align: center;
   margin-bottom: 1.5rem;
 }
+
 .contact-form {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
 }
+
 .contact-label {
   font-weight: 600;
   color: #181828;
   margin-bottom: 0.5rem;
 }
-.contact-input, .contact-message {
+
+.contact-input,
+.contact-message {
   background: #f3f3f6;
   border: 1px solid #e5e5ea;
   border-radius: 12px;
@@ -92,37 +107,31 @@
   width: 100%;
   box-sizing: border-box;
 }
-.contact-input:focus, .contact-message:focus {
+
+.contact-input:focus,
+.contact-message:focus {
   outline: 2px solid #181828;
   border-color: #181828;
 }
-.contact-submit {
-  background: #181828 !important;
-  color: #fff !important;
-  border-radius: 12px !important;
-  font-weight: 600;
-  font-size: 1.1rem;
-  padding: 1rem 0;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  margin-top: 1rem;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-}
-.contact-form-root {
+
+/*
+.contact-root {
+  background: var(--themeNeutralLightest, #f5f7fa);
   padding-left: 4vw;
-}
+}*/
+
 @media (max-width: 900px) {
   .contact-wrapper {
     flex-direction: column;
     gap: 2rem;
   }
+
   .contact-container {
     padding: 2rem 1rem;
   }
-  .contact-form-root {
+
+  .contact-root {
+    background: var(--themeNeutralLightest, #f5f7fa);
     padding-left: 2vw;
   }
 }
