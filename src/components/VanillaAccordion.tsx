@@ -37,7 +37,7 @@ export const VanillaAccordion: React.FC<VanillaAccordionProps> = ({ items }) => 
             <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
               {item.panels.map((panel, pidx) => (
                 <VanillaAccordionPanel
-                  key={panel.title + pidx}
+                  key={(panel as any).key ?? panel.title + '-' + pidx}
                   title={panel.title}
                   content={panel.content}
                 />

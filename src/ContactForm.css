@@ -1,3 +1,33 @@
+/* Send Message button styles */
+.contact-submit {
+  background: transparent !important;
+  color: #181828 !important;
+  border: 1px solid #181828 !important;
+  width: 100%;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 12px;
+  padding: 1rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.contact-submit svg {
+  color: #181828 !important;
+}
+
+.contact-submit:hover, .contact-submit:focus {
+  background: #181828 !important;
+  color: #fff !important;
+  border-color: #181828 !important;
+}
+
+.contact-submit:hover svg, .contact-submit:focus svg {
+  color: #fff !important;
+}
 /* ContactForm styles */
 .contact-root {
   background: #fff;
@@ -80,6 +110,10 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+.contact-root {
+ /* border: 2px dashed #b5d2b5;*/
+  padding-bottom: 2.5rem;
 }
 
 .contact-title {

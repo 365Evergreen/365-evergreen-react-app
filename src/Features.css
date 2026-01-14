@@ -1,9 +1,15 @@
+/* Outer wrapper for features section */
+.features-outer {
+  background-color: var(--neutralLightestAlt);
+  transition: background 0.3s;
+}
 /* Features styles */
 .features-root {
   background-color: var(--neutralLightestAlt);
-  padding:0 4vw 0 4vw;
+  padding: 0 4vw 0 4vw;
   padding-left: 4vw;
   padding-right: 4vw;
+  padding-bottom: 2.5rem;
 }
 @media (max-width: 900px) {
   .features-root {
@@ -79,6 +85,11 @@
   align-items: center;
   gap: 0.75rem;
   margin-bottom: 0.5rem;
+}
+
+.features-root {
+  /*border: 2px dashed #b5d2b5;*/
+  padding-bottom: 2.5rem;
 }
 .features-icon {
   color: var(--themeSecondary);

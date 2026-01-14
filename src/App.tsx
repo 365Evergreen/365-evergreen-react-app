@@ -53,33 +53,41 @@ function App() {
               >
                 <FluentCarousel />
               </motion.div>
-              <motion.div
-                key="features"
-                variants={fadeVariants}
-                initial="hidden"
-                animate="visible"
-                exit="exit"
-              >
-                <Features />
-              </motion.div>
-              <motion.div
-                key="latestposts"
-                variants={fadeVariants}
-                initial="hidden"
-                animate="visible"
-                exit="exit"
-              >
-                <LatestPosts />
-              </motion.div>
-              <motion.div
-                key="contactform"
-                variants={fadeVariants}
-                initial="hidden"
-                animate="visible"
-                exit="exit"
-              >
-                <ContactForm />
-              </motion.div>
+              <div className="bg-default">
+                <motion.div
+                  key="features"
+                  variants={fadeVariants}
+                  initial="hidden"
+                  animate="visible"
+                  exit="exit"
+                >
+                  <div className="features-outer">
+                    <Features />
+                  </div>
+                </motion.div>
+              </div>
+              <div className="bg-alt">
+                <motion.div
+                  key="latestposts"
+                  variants={fadeVariants}
+                  initial="hidden"
+                  animate="visible"
+                  exit="exit"
+                >
+                  <LatestPosts />
+                </motion.div>
+              </div>
+              <div className="bg-default">
+                <motion.div
+                  key="contactform"
+                  variants={fadeVariants}
+                  initial="hidden"
+                  animate="visible"
+                  exit="exit"
+                >
+                  <ContactForm />
+                </motion.div>
+              </div>
             </AnimatePresence>
           } />
           <Route path="/feature/:slug" element={<FeatureView />} />

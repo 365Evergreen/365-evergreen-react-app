@@ -78,38 +78,38 @@ export function ContactForm() {
           <form onSubmit={handleSubmit} className="contact-form contact-form-grid">
             <div className="contact-form-row">
               <div>
-                <label className="contact-label fluent-body1" htmlFor="contact-name">First name</label>
+                <label className="contact-label fluent-body1" htmlFor="contact-name">First name <span aria-hidden="true" style={{color: 'red'}}>*</span></label>
                 <Input id="contact-name" className="contact-input" required value={name} onChange={(_, d) => setName(d.value)} placeholder="John" />
               </div>
               <div>
-                <label className="contact-label fluent-body1" htmlFor="contact-surname">Surname</label>
+                <label className="contact-label fluent-body1" htmlFor="contact-surname">Surname <span aria-hidden="true" style={{color: 'red'}}>*</span></label>
                 <Input id="contact-surname" className="contact-input" required value={surname} onChange={(_, d) => setSurname(d.value)} placeholder="Doe" />
               </div>
             </div>
             <div className="contact-form-row">
               <div>
-                <label className="contact-label fluent-body1" htmlFor="contact-organisation">Organisation name</label>
+                <label className="contact-label fluent-body1" htmlFor="contact-organisation">Organisation name <span aria-hidden="true" style={{color: 'red'}}>*</span></label>
                 <Input id="contact-organisation" className="contact-input" required value={organisation} onChange={(_, d) => setOrganisation(d.value)} placeholder="Company or organisation" />
               </div>
               <div>
-                <label className="contact-label fluent-body1" htmlFor="contact-position">Position title</label>
+                <label className="contact-label fluent-body1" htmlFor="contact-position">Position title <span aria-hidden="true" style={{color: 'red'}}>*</span></label>
                 <Input id="contact-position" className="contact-input" required value={position} onChange={(_, d) => setPosition(d.value)} placeholder="Your role or title" />
               </div>
             </div>
             <div className="contact-form-row">
               <div>
-                <label className="contact-label fluent-body1" htmlFor="contact-email">Email address</label>
+                <label className="contact-label fluent-body1" htmlFor="contact-email">Email address <span aria-hidden="true" style={{color: 'red'}}>*</span></label>
                 <Input id="contact-email" className="contact-input" type="email" required value={email} onChange={(_, d) => setEmail(d.value)} placeholder="john@example.com" />
               </div>
               <div>
-                <label className="contact-label fluent-body1" htmlFor="contact-phone">Phone number</label>
+                <label className="contact-label fluent-body1" htmlFor="contact-phone">Phone number <span aria-hidden="true" style={{color: 'red'}}>*</span></label>
                 <Input id="contact-phone" className="contact-input" type="tel" inputMode="numeric" pattern="0[0-9]{9}" maxLength={10} required value={phone} onChange={(_, d) => setPhone(d.value.replace(/\D/g, ''))} placeholder="0412345678" />
                 {phoneError && <div className="contact-error" role="alert">{phoneError}</div>}
               </div>
             </div>
             <div className="contact-form-row">
               <div style={{ gridColumn: '1 / span 2' }}>
-                <label className="contact-label fluent-body1" htmlFor="contact-subject">How can we help?</label>
+                <label className="contact-label fluent-body1" htmlFor="contact-subject">How can we help? <span aria-hidden="true" style={{color: 'red'}}>*</span></label>
                 <select id="contact-subject" className="contact-input" required value={subject} onChange={e => setSubject(e.target.value)}>
                   <option value="" disabled>Select a subject</option>
                   <option value="Communication">Communication</option>
@@ -122,7 +122,7 @@ export function ContactForm() {
             </div>
             <div className="contact-form-row">
               <div style={{ gridColumn: '1 / span 2' }}>
-                <label className="contact-label fluent-body1" htmlFor="contact-message">Message</label>
+                <label className="contact-label fluent-body1" htmlFor="contact-message">Message <span aria-hidden="true" style={{color: 'red'}}>*</span></label>
                 <Textarea id="contact-message" className="contact-message" required rows={4} value={message} onChange={(_, d) => setMessage(d.value)} placeholder="Tell us more about your inquiry..." />
               </div>
             </div>

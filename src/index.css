@@ -1,3 +1,10 @@
+/* Alternating section backgrounds */
+.bg-default {
+  background: var(--neutralLightestAlt, #ffffff);
+}
+.bg-alt {
+  background: var(--themeNeutralLightest, #f5f7fa);
+}
 /* Consistent paragraph font for all content */
 p {
   font-family: 'Segoe UI', 'SegoeUI', 'Helvetica Neue', Arial, sans-serif;
