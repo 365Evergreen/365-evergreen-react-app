@@ -15,4 +15,19 @@ export default defineConfig({
       ]
     })
   ],
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          react: [
+            'react',
+            'react-dom',
+            'react-router-dom',
+            '@fluentui/react-components',
+            'framer-motion'
+          ]
+        }
+      }
+    }
+  }
 });

@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
-import { CTA } from './components/CTA';
+// import { CTA } from './components/CTA';
 import { Features } from './components/Features';
 import LatestPosts from './components/LatestPosts';
 import { ContactForm } from './components/ContactForm';

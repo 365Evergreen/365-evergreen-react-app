@@ -3,7 +3,6 @@ import carouselItems from '../../carousel-items.json';
 import * as React from "react";
 
 import {
-  Button,
   Carousel,
   CarouselCard,
   CarouselNav,
