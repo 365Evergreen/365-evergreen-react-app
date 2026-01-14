@@ -1,3 +1,9 @@
+/* Override Fluent UI Select border color to use themePrimary */
+.fui-Select:focus-within, .fui-Select:focus-visible, .fui-Select[data-focus-visible], .fui-Select:active {
+  --fui-select-borderColor--focus: #007814 !important;
+  border-color: #007814 !important;
+  box-shadow: 0 0 0 2px #00781422 !important;
+}
 /* Archive filter row styles (moved from LatestPosts.css) */
 .latest-posts-archive-filters-row {
   display: flex;

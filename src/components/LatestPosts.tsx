@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Button } from '@fluentui/react-components';
+// Removed unused Button import from Fluent UI
 import '../LatestPosts.css';
 import { useLatestPosts } from '../lib/useLatestPosts';
 import { useNavigate } from 'react-router-dom';
@@ -39,6 +39,7 @@ const LatestPosts: React.FC = () => {
                 onClick={() => navigate(postUrl)}
                 style={{ cursor: 'pointer' }}
               >
+                <span className="latest-posts-title-link fluent-title3" style={{ color: '#000', marginBottom: '0.5rem', display: 'block' }}>{post.title}</span>
                 {post.featuredImage?.node?.sourceUrl && (
                   <span className="latest-posts-image-link">
                     <img
@@ -75,22 +76,23 @@ const LatestPosts: React.FC = () => {
                   </div>
                 )}
                 <div className="latest-posts-date">{new Date(post.date).toLocaleDateString()}</div>
-                <span className="latest-posts-title-link fluent-title3">{post.title}</span>
                 <p className="latest-posts-excerpt">{getExcerpt(post)}</p>
-                <Button
-                  as="a"
+                <a
                   href={postUrl}
-                  className="latest-posts-readmore"
-                  appearance="secondary"
-                  size="small"
-                  onClick={(e) => {
+                  className="features-link"
+                  style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4em', fontWeight: 600, color: '#111', textDecoration: 'none', marginTop: '0.5em' }}
+                  onClick={e => {
                     e.stopPropagation();
                     e.preventDefault();
                     navigate(postUrl);
                   }}
+                  tabIndex={0}
                 >
                   Read more
-                </Button>
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ marginLeft: '0.1em' }}>
+                    <path d="M7.5 5L12.5 10L7.5 15" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </a>
               </div>
             );
           })}

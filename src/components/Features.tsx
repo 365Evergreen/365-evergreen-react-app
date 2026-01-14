@@ -38,7 +38,13 @@ export function Features() {
             }}
           >
             <div className="features-header-row">
-              <span className="features-icon"><PeopleTeamToolbox24Regular /></span>
+              <span className="features-icon">
+                {feature.siteFeature.icon ? (
+                  <img src={feature.siteFeature.icon} alt="Feature icon" style={{ width: 32, height: 32, objectFit: 'contain' }} />
+                ) : (
+                  <PeopleTeamToolbox24Regular />
+                )}
+              </span>
               <span className="features-title fluent-title3">{feature.siteFeature.title || feature.title}</span>
             </div>
             <div className="features-desc fluent-body1">{feature.siteFeature.blurb}</div>
