@@ -24,19 +24,23 @@ export function useAzureAccordions(): AccordionGroupData[] {
     ]).then(([accordionMeta, accordionItems]) => {
       const accordions = Array.isArray(accordionMeta) ? accordionMeta : [accordionMeta];
       const items = Array.isArray(accordionItems) ? accordionItems : [accordionItems];
-      const grouped = accordions.map(acc => ({
-        title: acc.Label,
-        description: acc.Blurb,
-        image: acc.Image,
-        parentFeature: acc.ParentFeature,
-        panels: items
-          .filter(item => item.Accordion === acc.Label)
-          .sort((a, b) => (a.SortOrder || 0) - (b.SortOrder || 0))
+      const grouped = accordions.map(acc => {
+        // Find panels where parentId matches this accordion's ID
+        const panels = items
+          .filter(item => item.parentId === acc.ID)
+          .sort((a, b) => (a.order || 0) - (b.order || 0))
           .map(item => ({
-            title: item.Title,
-            content: item.Blurb
-          }))
-      }));
+            title: item.label,
+            content: item.blurb
+          }));
+        return {
+          title: acc.Label,
+          description: acc.Blurb,
+          image: acc.Image,
+          parentFeature: acc.ParentFeature,
+          panels
+        };
+      });
       setData(grouped);
     });
   }, []);

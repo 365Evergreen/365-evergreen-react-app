@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import { Input, Textarea, Button } from '@fluentui/react-components';
-import { Mail24Regular, People24Regular, Chat24Regular, Send24Regular } from '@fluentui/react-icons';
+import { Send24Regular } from '@fluentui/react-icons';
 import '../ContactForm.css';
 
 
 export function ContactForm() {
   const [name, setName] = useState('');
   const [surname, setSurname] = useState('');
+  const [organisation, setOrganisation] = useState('');
+  const [position, setPosition] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [subject, setSubject] = useState('');
@@ -36,7 +38,7 @@ export function ContactForm() {
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name, surname, email, phone, subject, message })
+          body: JSON.stringify({ name, surname, organisation, position, email, phone, subject, message })
         }
       );
       if (!response.ok) {
@@ -45,6 +47,8 @@ export function ContactForm() {
       setSubmitted(true);
       setName('');
       setSurname('');
+      setOrganisation('');
+      setPosition('');
       setEmail('');
       setPhone('');
       setSubject('');
@@ -58,35 +62,7 @@ export function ContactForm() {
     <section id="contact" className="contact-root">
       <div className="contact-wrapper">
         <div className="contact-info">
-          {/* <button className="contact-info-cta">Get in Touch</button> */}
-          <h2 className="contact-info-title fluent-title2">How can we help you today?</h2>
-          <p className="contact-info-desc">
-            Ask a question or tell us how you'd like to start your team's journey to success<br />
-            We'd love to hear from you.
-          </p>
-          <div className="contact-info-list">
-            <div className="contact-info-item">
-              <span className="contact-info-icon"><Mail24Regular /></span>
-              <div>
-                <div className="contact-info-label fluent-body1Strong">Email us</div>
-                <div className="contact-info-text">hello@365evergreen.com</div>
-              </div>
-            </div>
-            <div className="contact-info-item">
-              <span className="contact-info-icon"><People24Regular /></span>
-              <div>
-                <div className="contact-info-label fluent-body1Strong">Join Our Community</div>
-                <div className="contact-info-text">Connect with 50,000+ eco-conscious members</div>
-              </div>
-            </div>
-            <div className="contact-info-item">
-              <span className="contact-info-icon"><Chat24Regular /></span>
-              <div>
-                <div className="contact-info-label fluent-body1Strong">Response time</div>
-                <div className="contact-info-text">We typically respond within 24 hours</div>
-              </div>
-            </div>
-          </div>
+          <h2 className="fluent-title2" style={{ textAlign: 'left', width: '100%' }}>How can we help?</h2>
         </div>
         <div className="contact-container">
           {submitted && (
@@ -99,36 +75,64 @@ export function ContactForm() {
               {error} <button type="button" className="contact-dismiss" onClick={() => setError(null)}>Dismiss</button>
             </div>
           )}
-          <form onSubmit={handleSubmit} className="contact-form">
-            <label className="contact-label fluent-body1" htmlFor="contact-name">First name</label>
-            <Input id="contact-name" className="contact-input" required value={name} onChange={(_, d) => setName(d.value)} placeholder="John" />
-
-            <label className="contact-label fluent-body1" htmlFor="contact-surname">Surname</label>
-            <Input id="contact-surname" className="contact-input" required value={surname} onChange={(_, d) => setSurname(d.value)} placeholder="Doe" />
-
-            <label className="contact-label fluent-body1" htmlFor="contact-email">Email address</label>
-            <Input id="contact-email" className="contact-input" type="email" required value={email} onChange={(_, d) => setEmail(d.value)} placeholder="john@example.com" />
-
-            <label className="contact-label fluent-body1" htmlFor="contact-phone">Phone number</label>
-            <Input id="contact-phone" className="contact-input" type="tel" inputMode="numeric" pattern="0[0-9]{9}" maxLength={10} required value={phone} onChange={(_, d) => setPhone(d.value.replace(/\D/g, ''))} placeholder="0412345678" />
-            {phoneError && <div className="contact-error" role="alert">{phoneError}</div>}
-
-            <label className="contact-label fluent-body1" htmlFor="contact-subject">How can we help?</label>
-            <select id="contact-subject" className="contact-input" required value={subject} onChange={e => setSubject(e.target.value)}>
-              <option value="" disabled>Select a subject</option>
-              <option value="Communication">Communication</option>
-              <option value="Collaboration">Collaboration</option>
-              <option value="Business apps">Business apps</option>
-              <option value="Process automation">Process automation</option>
-              <option value="Governance and security">Governance and security</option>
-            </select>
-
-            <label className="contact-label fluent-body1" htmlFor="contact-message">Message</label>
-            <Textarea id="contact-message" className="contact-message" required rows={4} value={message} onChange={(_, d) => setMessage(d.value)} placeholder="Tell us more about your inquiry..." />
-
-            <Button className="contact-submit" appearance="primary" type="submit">
-              Send Message <Send24Regular />
-            </Button>
+          <form onSubmit={handleSubmit} className="contact-form contact-form-grid">
+            <div className="contact-form-row">
+              <div>
+                <label className="contact-label fluent-body1" htmlFor="contact-name">First name</label>
+                <Input id="contact-name" className="contact-input" required value={name} onChange={(_, d) => setName(d.value)} placeholder="John" />
+              </div>
+              <div>
+                <label className="contact-label fluent-body1" htmlFor="contact-surname">Surname</label>
+                <Input id="contact-surname" className="contact-input" required value={surname} onChange={(_, d) => setSurname(d.value)} placeholder="Doe" />
+              </div>
+            </div>
+            <div className="contact-form-row">
+              <div>
+                <label className="contact-label fluent-body1" htmlFor="contact-organisation">Organisation name</label>
+                <Input id="contact-organisation" className="contact-input" required value={organisation} onChange={(_, d) => setOrganisation(d.value)} placeholder="Company or organisation" />
+              </div>
+              <div>
+                <label className="contact-label fluent-body1" htmlFor="contact-position">Position title</label>
+                <Input id="contact-position" className="contact-input" required value={position} onChange={(_, d) => setPosition(d.value)} placeholder="Your role or title" />
+              </div>
+            </div>
+            <div className="contact-form-row">
+              <div>
+                <label className="contact-label fluent-body1" htmlFor="contact-email">Email address</label>
+                <Input id="contact-email" className="contact-input" type="email" required value={email} onChange={(_, d) => setEmail(d.value)} placeholder="john@example.com" />
+              </div>
+              <div>
+                <label className="contact-label fluent-body1" htmlFor="contact-phone">Phone number</label>
+                <Input id="contact-phone" className="contact-input" type="tel" inputMode="numeric" pattern="0[0-9]{9}" maxLength={10} required value={phone} onChange={(_, d) => setPhone(d.value.replace(/\D/g, ''))} placeholder="0412345678" />
+                {phoneError && <div className="contact-error" role="alert">{phoneError}</div>}
+              </div>
+            </div>
+            <div className="contact-form-row">
+              <div style={{ gridColumn: '1 / span 2' }}>
+                <label className="contact-label fluent-body1" htmlFor="contact-subject">How can we help?</label>
+                <select id="contact-subject" className="contact-input" required value={subject} onChange={e => setSubject(e.target.value)}>
+                  <option value="" disabled>Select a subject</option>
+                  <option value="Communication">Communication</option>
+                  <option value="Collaboration">Collaboration</option>
+                  <option value="Business apps">Business apps</option>
+                  <option value="Process automation">Process automation</option>
+                  <option value="Governance and security">Governance and security</option>
+                </select>
+              </div>
+            </div>
+            <div className="contact-form-row">
+              <div style={{ gridColumn: '1 / span 2' }}>
+                <label className="contact-label fluent-body1" htmlFor="contact-message">Message</label>
+                <Textarea id="contact-message" className="contact-message" required rows={4} value={message} onChange={(_, d) => setMessage(d.value)} placeholder="Tell us more about your inquiry..." />
+              </div>
+            </div>
+            <div className="contact-form-row">
+              <div style={{ gridColumn: '1 / span 2', textAlign: 'center' }}>
+                <Button className="contact-submit" appearance="primary" type="submit">
+                  Send Message <Send24Regular />
+                </Button>
+              </div>
+            </div>
           </form>
         </div>
       </div>

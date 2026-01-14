@@ -1,93 +1,138 @@
-[
+ [
         {
-            "Title": "Work from anywhere",
-            "Blurb": "We help your team members create, connect, and collaborate securely from anywhere.",
-            "ImageURL": "https://365evergreen.com/wp-content/uploads/2025/07/francesco-gallarotti-ruQHpukrN7c-unsplash-1536x1024.jpg",
-            "feature": "Modern workplace",
-            "Id": 1
+            "id": 1,
+            "parent": "Work from anywhere",
+            "parentId": 1,
+            "label": "All your information, all the time",
+            "blurb": "We help your team members create, connect, and collaborate securely from anywhere.",
+            "order": 1
         },
         {
-            "Title": "Communicate with ease",
-            "Blurb": "We help your team members create, connect, and collaborate securely from anywhere.",
-            "ImageURL": "https://365evergreen.com/wp-content/uploads/2025/07/francesco-gallarotti-ruQHpukrN7c-unsplash-1536x1024.jpg",
-            "feature": "Modern workplace",
-            "Id": 2
+            "id": 2,
+            "parent": "Work from anywhere",
+            "parentId": 1,
+            "label": "Work with any device",
+            "blurb": "Deliver a seamless user experience whether your team is on desktop, tablet, or mobile — same tools, same interface, same productivity.",
+            "order": 2
         },
         {
-            "Title": "Collaborate seamlessly",
-            "Blurb": "We help your team members create, connect, and collaborate securely from anywhere.",
-            "ImageURL": "https://365evergreen.com/wp-content/uploads/2025/07/francesco-gallarotti-ruQHpukrN7c-unsplash-1536x1024.jpg",
-            "feature": "Modern workplace",
-            "Id": 3
+            "id": 3,
+            "parent": "Work from anywhere",
+            "parentId": 1,
+            "label": "Work in the cloud and offline",
+            "blurb": "Store, sync, and share documents effortlessly with cloud storage that's always up-to-date and accessible anywhere.",
+            "order": 3
         },
         {
-            "Title": "Engage your teams",
-            "Blurb": "We help your team members create, connect, and collaborate securely from anywhere.",
-            "ImageURL": "https://365evergreen.com/wp-content/uploads/2025/07/francesco-gallarotti-ruQHpukrN7c-unsplash-1536x1024.jpg",
-            "feature": "Modern workplace",
-            "Id": 4
+            "id": 4,
+            "parent": "Work from anywhere",
+            "parentId": 1,
+            "label": "Assured governance",
+            "blurb": "Maintain control and meet regulatory requirements with comprehensive governance policies and automated compliance checks.",
+            "order": 4
         },
         {
-            "Title": "Replace the effort",
-            "Blurb": "Automate repetitive tasks and streamline business processes with custom workflows\n",
-            "ImageURL": "https://365evergreen.com/wp-content/uploads/2025/07/francesco-gallarotti-ruQHpukrN7c-unsplash-1536x1024.jpg",
-            "feature": "Automated processes",
-            "Id": 5
+            "id": 5,
+            "parent": "Communicate with ease",
+            "parentId": 2,
+            "label": "Keep informed",
+            "blurb": "Enable users to access SharePoint resources in the flow of work, including email, Microsoft Teams, and Microsoft Viva.",
+            "order": 1
         },
         {
-            "Title": "Be more efficient",
-            "Blurb": "We help your team members create, connect, and collaborate securely from anywhere.",
-            "ImageURL": "https://365evergreen.com/wp-content/uploads/2025/07/francesco-gallarotti-ruQHpukrN7c-unsplash-1536x1024.jpg",
-            "feature": "Automated processes",
-            "Id": 6
+            "id": 7,
+            "parent": "Communicate with ease",
+            "parentId": 2,
+            "label": "Chat and meet with anyone",
+            "blurb": "Enable users to access SharePoint resources in the flow of work, including email, Microsoft Teams, and Microsoft Viva.",
+            "order": 2
         },
         {
-            "Title": "Connect your apps",
-            "Blurb": "We help your team members create, connect, and collaborate securely from anywhere.",
-            "ImageURL": "https://365evergreen.com/wp-content/uploads/2025/07/francesco-gallarotti-ruQHpukrN7c-unsplash-1536x1024.jpg",
-            "feature": "Automated processes",
-            "Id": 7
+            "id": 8,
+            "parent": "Communicate with ease",
+            "parentId": 2,
+            "label": "Targetted news and updates",
+            "blurb": "Enable users to access SharePoint resources in the flow of work, including email, Microsoft Teams, and Microsoft Viva.",
+            "order": 3
         },
         {
-            "Title": "Scale",
-            "Blurb": null,
-            "ImageURL": null,
-            "feature": "Automated processes",
-            "Id": 8
+            "id": 9,
+            "parent": "Communicate with ease",
+            "parentId": 2,
+            "label": "Push updates to your team",
+            "blurb": "Enable users to access SharePoint resources in the flow of work, including email, Microsoft Teams, and Microsoft Viva.",
+            "order": 4
         },
         {
-            "Title": "Flow with confidence",
-            "Blurb": "We will help your team to scale automation to the next level ",
-            "ImageURL": null,
-            "feature": "Automated processes",
-            "Id": 9
+            "id": 10,
+            "parent": "Collaborate seamlessly",
+            "parentId": 3,
+            "label": "Rich canvases for your collaborators",
+            "blurb": "Enable users to access SharePoint resources in the flow of work, including email, Microsoft Teams, and Microsoft Viva.",
+            "order": 1
         },
         {
-            "Title": "Build rapidly",
-            "Blurb": "Together, we can turn your idea into a working app in the blink of an eye",
-            "ImageURL": "https://365evergreen.com/wp-content/uploads/2025/07/francesco-gallarotti-ruQHpukrN7c-unsplash-1536x1024.jpg",
-            "feature": "Business apps",
-            "Id": 10
+            "id": 11,
+            "parent": "Collaborate seamlessly",
+            "parentId": 3,
+            "label": "The right spaces for the right documents",
+            "blurb": "Enable users to access SharePoint resources in the flow of work, including email, Microsoft Teams, and Microsoft Viva.",
+            "order": 2
         },
         {
-            "Title": "Empower your team",
-            "Blurb": "Let us train your team members build and extend apps that they understand",
-            "ImageURL": "https://365evergreen.com/wp-content/uploads/2025/07/francesco-gallarotti-ruQHpukrN7c-unsplash-1536x1024.jpg",
-            "feature": "Business apps",
-            "Id": 11
+            "id": 12,
+            "parent": "Collaborate seamlessly",
+            "parentId": 3,
+            "label": "Coauthoring",
+            "blurb": "Enable users to access SharePoint resources in the flow of work, including email, Microsoft Teams, and Microsoft Viva.",
+            "order": 3
         },
         {
-            "Title": "Manage for data",
-            "Blurb": "Let us train your team members build and extend apps that they understand",
-            "ImageURL": "https://365evergreen.com/wp-content/uploads/2025/07/francesco-gallarotti-ruQHpukrN7c-unsplash-1536x1024.jpg",
-            "feature": "Business apps",
-            "Id": 12
+            "id": 13,
+            "parent": "Collaborate seamlessly",
+            "parentId": 3,
+            "label": "Changes as the happen",
+            "blurb": "Enable users to access SharePoint resources in the flow of work, including email, Microsoft Teams, and Microsoft Viva.",
+            "order": 4
         },
         {
-            "Title": "Scale with ease",
-            "Blurb": "We can take you from beginner to enterprise-level experts",
-            "ImageURL": "https://365evergreen.com/wp-content/uploads/2025/07/francesco-gallarotti-ruQHpukrN7c-unsplash-1536x1024.jpg",
-            "feature": "Business apps",
-            "Id": 13
+            "id": 14,
+            "parent": "Engage your teams",
+            "parentId": 4,
+            "label": "Beautiful sites and workspaces",
+            "blurb": "Enable users to access SharePoint resources in the flow of work, including email, Microsoft Teams, and Microsoft Viva.",
+            "order": 1
+        },
+        {
+            "id": 15,
+            "parent": "Engage your teams",
+            "parentId": 4,
+            "label": "Build communities",
+            "blurb": "Enable users to access SharePoint resources in the flow of work, including email, Microsoft Teams, and Microsoft Viva.",
+            "order": 2
+        },
+        {
+            "id": 16,
+            "parent": "Engage your teams",
+            "parentId": 4,
+            "label": "Foster relationships",
+            "blurb": "Enable users to access SharePoint resources in the flow of work, including email, Microsoft Teams, and Microsoft Viva.",
+            "order": 3
+        },
+        {
+            "id": 17,
+            "parent": "Engage your teams",
+            "parentId": 4,
+            "label": "Personalised content and dashboards",
+            "blurb": "Enable users to access SharePoint resources in the flow of work, including email, Microsoft Teams, and Microsoft Viva.",
+            "order": 4
+        },
+        {
+            "id": 18,
+            "parent": "Replace the effort",
+            "parentId": 5,
+            "label": "Automate the repetitive",
+            "blurb": "Enable users to access SharePoint resources in the flow of work, including email, Microsoft Teams, and Microsoft Viva.",
+            "order": 1
         }
     ]
