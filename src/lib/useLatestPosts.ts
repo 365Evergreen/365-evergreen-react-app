@@ -20,7 +20,7 @@ export const COMPONENTS_BLOB_URL = 'https://pauli.blob.core.windows.net/365-ever
 export function useLatestPosts(limit: number = 100): LatestPost[] {
   const [posts, setPosts] = useState<LatestPost[]>([]);
   useEffect(() => {
-    fetch('https://365evergreen.com/wpgraphql', {
+    fetch('https://365evergreen.com/graphql', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
