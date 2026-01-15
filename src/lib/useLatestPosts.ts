@@ -12,11 +12,20 @@ export interface LatestPost {
   categories?: { edges: { node: { id: string; name: string; slug: string } }[] };
 }
 
+
+// Utility for dynamic blob URLs (supports subfolders/files)
+export function getBlobUrl(path: string): string {
+  const base = import.meta.env.VITE_BLOB_BASE_URL || 'https://pauli.blob.core.windows.net/365-evergreen/';
+  // Ensure no double slashes
+  return base.replace(/\/+$/, '') + '/' + path.replace(/^\/+/, '');
+}
+
 export function useLatestPosts(limit?: number): LatestPost[] {
   const [posts, setPosts] = useState<LatestPost[]>([]);
   useEffect(() => {
-    const postLimit = typeof limit === 'number' ? limit : 100; // fetch more for archive
-    fetch('https://365evergreen.com/graphql', {
+    const postLimit = typeof limit === 'number' ? limit : 100;
+    const WPGRAPHQL_URL = import.meta.env.VITE_WPGRAPHQL_URL || 'https://365evergreen.com/wpgraphql';
+    fetch(WPGRAPHQL_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
