@@ -13,6 +13,10 @@ const LatestPostsArchive: React.FC = () => {
   const [catDropdownOpen, setCatDropdownOpen] = useState(false);
   const catDropdownRef = useRef<HTMLDivElement>(null);
 
+  // Endpoint config
+  const WPGRAPHQL_URL = import.meta.env.VITE_WPGRAPHQL_URL || 'https://365evergreen.com/wpgraphql';
+  const BLOB_BASE_URL = import.meta.env.VITE_BLOB_BASE_URL || 'https://pauli.blob.core.windows.net/365-evergreen/';
+
   // Close dropdown on outside click
   useEffect(() => {
     function handleClick(e: MouseEvent) {
@@ -32,7 +36,7 @@ const LatestPostsArchive: React.FC = () => {
   useEffect(() => {
     async function fetchCategories() {
       try {
-        const res = await fetch('/wpgraphql', {
+        const res = await fetch(WPGRAPHQL_URL, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -50,7 +54,21 @@ const LatestPostsArchive: React.FC = () => {
             }`
           })
         });
-        const json = await res.json();
+        if (!res.ok) {
+          // eslint-disable-next-line no-console
+          console.warn('WPGraphQL endpoint not found or returned error:', WPGRAPHQL_URL, res.status);
+          setCategories([]);
+          return;
+        }
+        let json = null;
+        try {
+          json = await res.json();
+        } catch (err) {
+          // eslint-disable-next-line no-console
+          console.warn('WPGraphQL endpoint did not return JSON:', WPGRAPHQL_URL);
+          setCategories([]);
+          return;
+        }
         const flat = (json?.data?.categories?.edges || []).map((e: any) => e.node);
         // Group by parent
         const parents = flat.filter((cat: any) => !cat.parent || !cat.parent.node);
@@ -62,11 +80,13 @@ const LatestPostsArchive: React.FC = () => {
         }));
         setCategories(grouped);
       } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error('Failed to fetch categories from WPGraphQL', e);
         setCategories([]);
       }
     }
     fetchCategories();
-  }, []);
+  }, [WPGRAPHQL_URL]);
   const navigate = useNavigate();
 
   const posts = useLatestPosts() || [];
@@ -94,12 +114,18 @@ const LatestPostsArchive: React.FC = () => {
     async function fetchHero() {
       try {
         let data: any;
+        // Try to fetch from Azure blob storage (allow for subfolders)
         try {
-          const res = await fetch('/page-components.json');
+          const res = await fetch(BLOB_BASE_URL + 'page-components.json');
           data = await res.json();
         } catch (e) {
-          const res = await fetch('/azureblob/page-components.json');
-          data = await res.json();
+          // fallback: try root if not found
+          try {
+            const res = await fetch(BLOB_BASE_URL + '/page-components.json');
+            data = await res.json();
+          } catch (e2) {
+            data = null;
+          }
         }
         const heroConfig = (data?.body || []).find((c: any) => c.page === 'latest-posts') || null;
         if (mounted) setHero(heroConfig);
@@ -113,7 +139,7 @@ const LatestPostsArchive: React.FC = () => {
     return () => {
       mounted = false;
     };
-  }, []);
+  }, [BLOB_BASE_URL]);
 
   // Filtering
   let filteredPosts = posts;
