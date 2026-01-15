@@ -5,11 +5,13 @@ import React, { useEffect, useState, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import heroConfig from '../../page-components.json';
 import { useLatestPosts } from '../lib/useLatestPosts';
+import { useAllCategories } from '../lib/useAllCategories';
 import '../LatestPostsArchive.css';
 
 
 
 const LatestPostsArchive: React.FC = () => {
+	const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
 	// Find the hero config for the archive page
 	const hero = Array.isArray(heroConfig.body)
 		? heroConfig.body.find((b: any) => b.page === 'latest-posts')
@@ -24,18 +26,42 @@ const LatestPostsArchive: React.FC = () => {
 	const catDropdownSummaryRef = useRef<HTMLDivElement>(null);
 	const [dropdownPos, setDropdownPos] = useState<{ top: number; left: number; width: number }>({ top: 0, left: 0, width: 220 });
 
-	// Derive unique categories from posts
+	// Fetch all categories from WPGraphQL
+	const { categories: allCategories } = useAllCategories();
+	// Group categories by parent, sort alphabetically, avoid duplicates
 	const categories = React.useMemo(() => {
-		const cats: { id: string; name: string; slug: string }[] = [];
-		posts.forEach(post => {
-			(post.categories?.edges || []).forEach(edge => {
-				if (!cats.find(c => c.id === edge.node.id)) {
-					cats.push(edge.node);
-				}
-			});
+		// Map of id to category
+		const catMap: Record<string, typeof allCategories[0]> = {};
+		allCategories.forEach(cat => { catMap[cat.id] = cat; });
+		// Build parent/child structure
+		const parentGroups: Record<string, typeof allCategories[0][]> = {};
+		allCategories.forEach(cat => {
+			const parentId = cat.parent?.node?.id || 'root';
+			if (!parentGroups[parentId]) parentGroups[parentId] = [];
+			parentGroups[parentId].push(cat);
 		});
-		return cats.sort((a, b) => a.name.localeCompare(b.name));
-	}, [posts]);
+		// Sort each group alphabetically
+		Object.values(parentGroups).forEach(group => group.sort((a, b) => a.name.localeCompare(b.name)));
+		// Only show root categories at top level, and nest children under their parent
+		const result: {
+			slug: string;
+			parent: typeof allCategories[0];
+			children: typeof allCategories[0][];
+		}[] = [];
+		(parentGroups['root'] || []).forEach(parentCat => {
+			const children = parentGroups[parentCat.id] || [];
+			result.push({ slug: parentCat.slug, parent: parentCat, children });
+		});
+		// Also show orphaned children (whose parent is not in the list)
+		Object.entries(parentGroups).forEach(([parentId, group]) => {
+			if (parentId !== 'root' && !catMap[parentId]) {
+				group.forEach(cat => {
+					result.push({ slug: cat.slug, parent: cat, children: [] });
+				});
+			}
+		});
+		return result;
+	}, [allCategories]);
 
 	// Close dropdown on outside click
 	useEffect(() => {
@@ -69,234 +95,303 @@ const LatestPostsArchive: React.FC = () => {
 		return null;
 	}
 
-	return (
-		<section
-			className="hero-root-archive"
-			style={{
-				minHeight: 160,
-				height: 320,
-				position: 'relative',
-				overflow: 'hidden',
-				background: hero.backgroundImage
-					? `url(${hero.backgroundImage}) center/cover no-repeat, ${hero.backgroundColour || '#222'}`
-					: hero.backgroundColour || '#222',
-				color: '#fff',
-				display: 'flex',
-				alignItems: 'center',
-				justifyContent: 'center',
-			}}
-		>
-			<div
-				className="hero-content-archive"
-				style={{
-					position: 'relative',
-					zIndex: 2,
-					width: '100%',
-					maxWidth: 900,
-					margin: '0 auto',
-					textAlign: 'center',
-					background: 'rgba(0,0,0,0.35)',
-					borderRadius: 16,
-					padding: '2.5rem 1.5rem',
-				}}
+	return (<>
+		   <section
+			   className="hero-root-archive"
+			   style={{
+				   background: hero.backgroundImage
+					   ? `url(${hero.backgroundImage}) center/cover no-repeat, ${hero.backgroundColour || '#222'}`
+					   : hero.backgroundColour || '#222',
+			   }}
+		   >			   <div className="hero-gradient-archive" aria-hidden="true"></div>
+
+			   <div className="hero-content-archive"
 			>
-				<h1 className="hero-title archive" style={{ color: '#fff', fontWeight: 400, fontSize: 40, marginBottom: 12 }}>
+				   <h1 className="hero-title-archive">
 					{hero.title}
 				</h1>
-				{hero.blurb && (
-					<p className="hero-desc-archive" style={{ color: '#fff', fontWeight: 300, fontSize: 20, margin: 0, marginBottom: 24 }}>
-						{hero.blurb}
-					</p>
-				)}
-				<div className="latest-posts-archive-filters-row" style={{ justifyContent: 'center', marginTop: 24 }}>
+				   {hero.blurb && (
+					   <p className="hero-desc-archive">
+						   {hero.blurb}
+					   </p>
+				   )}
+				   <div className="latest-posts-archive-filters-row">
 					{/* Search box */}
-					<div className="latest-posts-archive-filter-group">
-						<input
-							type="text"
-							className="latest-posts-archive-searchbox"
-							placeholder="Search posts..."
-							value={search}
-							onChange={e => setSearch(e.target.value)}
-							style={{
-								padding: '0.6em 1em',
-								borderRadius: 8,
-								border: '1.5px solid #fff',
-								fontSize: 18,
-								minWidth: 220,
-								background: 'rgba(255,255,255,0.13)',
-								color: '#fff',
-								outline: 'none',
-								boxShadow: 'none',
-							}}
-						/>
-					</div>
+					   <div className="latest-posts-archive-filter-group">
+						   <input
+							   type="text"
+							   className="latest-posts-archive-searchbox"
+							   placeholder="Search posts..."
+							   value={search}
+							   onChange={e => setSearch(e.target.value)}
+						   />
+					   </div>
 					{/* Category multi-select dropdown */}
-					<div className="latest-posts-archive-filter-group" style={{ position: 'relative' }}>
-						<div
-							ref={catDropdownSummaryRef}
-							className="latest-posts-archive-category-select"
-							style={{
-								padding: '0.6em 1em',
-								borderRadius: 8,
-								border: '1.5px solid #fff',
-								fontSize: 18,
-								minWidth: 180,
-								background: 'rgba(255,255,255,0.13)',
-								color: '#fff',
-								outline: 'none',
-								boxShadow: 'none',
-								marginLeft: 12,
-								cursor: 'pointer',
-								userSelect: 'none',
-								display: 'flex',
-								alignItems: 'center',
-								gap: 8,
-							}}
-							tabIndex={0}
-							onClick={() => setCatDropdownOpen(v => !v)}
-							onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') setCatDropdownOpen(v => !v); }}
-							aria-haspopup="listbox"
-							aria-expanded={catDropdownOpen}
-						>
-							<span style={{ flex: 1, textAlign: 'left', color: '#fff' }}>
-								{selectedCategories.length === 0
-									? 'All categories'
-									: `${selectedCategories.length} selected`}
-							</span>
-							<svg width="18" height="18" viewBox="0 0 20 20" fill="none" style={{ marginLeft: 6 }}>
-								<path d="M6 8L10 12L14 8" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-							</svg>
-						</div>
+					   <div className="latest-posts-archive-filter-group latest-posts-archive-category-group">
+						   <div
+							   ref={catDropdownSummaryRef}
+							   className="latest-posts-archive-category-select"
+							   tabIndex={0}
+							   onClick={() => setCatDropdownOpen(v => !v)}
+							   aria-haspopup="listbox"
+							   aria-expanded={catDropdownOpen}
+						   >
+							   <span className="latest-posts-archive-category-select-label">
+								   {selectedCategories.length === 0
+									   ? 'All categories'
+									   : `${selectedCategories.length} selected`}
+							   </span>
+							   <svg width="18" height="18" viewBox="0 0 20 20" fill="none" className="latest-posts-archive-category-select-arrow">
+								   <path d="M6 8L10 12L14 8" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+							   </svg>
+						   </div>
 						{catDropdownOpen && typeof window !== 'undefined' && ReactDOM.createPortal(
 							<div
 								ref={catDropdownRef}
 								className="latest-posts-archive-category-dropdown"
-								style={{
-									position: 'absolute',
-									top: dropdownPos.top,
-									left: dropdownPos.left,
-									minWidth: dropdownPos.width,
-									background: '#fff',
-									color: '#222',
-									borderRadius: 10,
-									boxShadow: '0 4px 24px rgba(0,0,0,0.13)',
-									zIndex: 1000,
-									padding: '0.5em 0',
-									maxHeight: 320,
-									overflowY: 'auto',
-									marginTop: 0,
-								}}
+								   style={{
+									   position: 'absolute',
+									   top: dropdownPos.top,
+									   left: dropdownPos.left,
+									   minWidth: dropdownPos.width,
+								   }}
 								tabIndex={-1}
 								role="listbox"
 							>
-								{categories.filter(cat => cat && cat.id && cat.slug).map(cat => (
-									<label
-										key={cat.id}
-										style={{
-											display: 'flex',
-											alignItems: 'center',
-											padding: '0.4em 1em',
-											cursor: 'pointer',
-											fontSize: 17,
-											userSelect: 'none',
-											background: selectedCategories.includes(cat.slug) ? '#e6f2e6' : 'transparent',
-										}}
-									>
-										<input
-											type="checkbox"
-											checked={selectedCategories.includes(cat.slug)}
-											onChange={e => {
-												setSelectedCategories(prev =>
-													e.target.checked
-														? [...prev, cat.slug]
-														: prev.filter(s => s !== cat.slug)
-												);
-											}}
-											style={{ marginRight: 10, background: 'transparent' }}
-										/>
-										{cat.name}
-									</label>
+								{/* Render all categories, children nested under parents */}
+								{categories.map(({ parent, children }) => (
+									<div key={parent.id} className="latest-posts-archive-category-parent-group">
+										<label
+											className={`latest-posts-archive-category-option${selectedCategories.includes(parent.slug) ? ' selected' : ''}`}
+										>
+											<input
+												type="checkbox"
+												checked={selectedCategories.includes(parent.slug)}
+												onChange={e => {
+													setSelectedCategories(prev =>
+														e.target.checked
+															? [...prev, parent.slug]
+															: prev.filter(s => s !== parent.slug)
+													);
+												}}
+											/>
+											{parent.name}
+										</label>
+										{children.length > 0 && (
+											<div style={{ paddingLeft: 18 }}>
+												{children.map(child => (
+													<label
+														key={child.id}
+														className={`latest-posts-archive-category-option${selectedCategories.includes(child.slug) ? ' selected' : ''}`}
+													>
+														<input
+															type="checkbox"
+															checked={selectedCategories.includes(child.slug)}
+															onChange={e => {
+																setSelectedCategories(prev =>
+																	e.target.checked
+																		? [...prev, child.slug]
+																		: prev.filter(s => s !== child.slug)
+																);
+															}}
+														/>
+														{child.name}
+													</label>
+												))}
+											</div>
+										)}
+									</div>
 								))}
 							</div>,
 							document.body
 						)}
 					</div>
 					{/* Clear filters button */}
-					<div className="latest-posts-archive-filter-group">
-						<button
-							type="button"
-							onClick={() => { setSearch(''); setSelectedCategories([]); }}
-							style={{
-								marginLeft: 16,
-								padding: '0.6em 1.2em',
-								borderRadius: 8,
-								border: '1.5px solid #fff',
-								background: 'rgba(255,255,255,0.13)',
-								color: '#fff',
-								fontSize: 16,
-								fontWeight: 500,
-								cursor: 'pointer',
-								transition: 'background 0.2s',
-							}}
-						>
-							Clear filters
-						</button>
-					</div>
-				</div>
-				{/* Selected category tags */}
-				{selectedCategories.length > 0 && (
-					<div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, justifyContent: 'center', marginTop: 12 }}>
-						{selectedCategories.filter(slug => !!slug).map(slug => {
-							const cat = categories.find(c => c.slug === slug && c.slug);
-							if (!cat || !cat.slug) return null;
-							return (
-								<span key={cat.slug} style={{
-									display: 'inline-flex',
-									alignItems: 'center',
-									background: '#e6f2e6',
-									color: '#2d6a2d',
-									borderRadius: 16,
-									padding: '0.2em 0.9em 0.2em 0.7em',
-									fontSize: '0.97em',
-									fontWeight: 500,
-									border: '1px solid #b2d8b2',
-									lineHeight: 1.2,
-									marginRight: 2,
-								}}>
-									{cat.name}
-									<button
-										onClick={e => {
-											e.stopPropagation();
-											setSelectedCategories(prev => prev.filter(s => s !== slug));
-										}}
-										style={{
-											background: 'none',
-											border: 'none',
-											color: '#2d6a2d',
-											marginLeft: 6,
-											cursor: 'pointer',
-											fontSize: '1.1em',
-											lineHeight: 1,
-											padding: 0,
-											display: 'flex',
-											alignItems: 'center',
-										}}
-										aria-label={`Remove ${cat.name}`}
-										tabIndex={0}
-									>
-										<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-											<line x1="4" y1="4" x2="10" y2="10" stroke="#2d6a2d" strokeWidth="2" strokeLinecap="round" />
-											<line x1="10" y1="4" x2="4" y2="10" stroke="#2d6a2d" strokeWidth="2" strokeLinecap="round" />
-										</svg>
-									</button>
-								</span>
-							);
-						})}
-					</div>
-				)}
+					   <div className="latest-posts-archive-filter-group">
+						   <button
+							   type="button"
+							   className="latest-posts-archive-clear-filters"
+							   onClick={() => { setSearch(''); setSelectedCategories([]); }}
+						   >
+							   Clear filters
+						   </button>
+					   </div>
+				   {selectedCategories.length > 0 && (
+					   <div className="latest-posts-archive-category-tags">
+									  {selectedCategories.filter(slug => !!slug).map(slug => {
+										   // Find the category object by searching parents and children only
+										   let cat: import("../lib/useAllCategories").WPCategory | null = null;
+										   for (const group of categories) {
+											   if (group.parent && group.parent.slug === slug) {
+												   cat = group.parent;
+												   break;
+											   }
+											   if (group.children && group.children.length > 0) {
+												   const child = group.children.find(child => child.slug === slug);
+												   if (child) {
+													   cat = child;
+													   break;
+												   }
+											   }
+										   }
+										   if (!cat || !cat.slug) return null;
+										   return (
+											   <span key={cat.slug} className="latest-posts-archive-category-tag">
+												   {cat.name}
+												   <button
+													   type="button"
+													   aria-label={`Remove ${cat.name}`}
+													   onClick={() => setSelectedCategories(prev => prev.filter(s => s !== cat!.slug))}
+												   >
+													   ×
+												   </button>
+											   </span>
+										   );
+									   })}
+					   </div>
+				   )}
 			</div>
-		</section>
-	);
+		</div></section>
+		   {/* Archive options row: tags and view toggle */}
+		   <div className="archive-options">
+			   <div className="archive-options-tags">
+				   {selectedCategories.length > 0 && (
+					   <div className="latest-posts-archive-category-tags">
+						   {selectedCategories.filter(slug => !!slug).map(slug => {
+							   // Find the category object by searching parents and children only
+							   let cat: import("../lib/useAllCategories").WPCategory | null = null;
+							   for (const group of categories) {
+								   if (group.parent && group.parent.slug === slug) {
+									   cat = group.parent;
+									   break;
+								   }
+								   if (group.children && group.children.length > 0) {
+									   const child = group.children.find(child => child.slug === slug);
+									   if (child) {
+										   cat = child;
+										   break;
+									   }
+								   }
+							   }
+							   if (!cat || !cat.slug) return null;
+							   return (
+								   <span key={cat.slug} className="latest-posts-archive-category-tag">
+									   {cat.name}
+									   <button
+										   onClick={e => {
+											   e.stopPropagation();
+											   setSelectedCategories(prev => prev.filter(s => s !== slug));
+										   }}
+										   className="latest-posts-archive-category-tag-remove"
+										   aria-label={`Remove ${cat.name}`}
+										   tabIndex={0}
+									   >
+										   <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+											   <line x1="4" y1="4" x2="10" y2="10" stroke="#2d6a2d" strokeWidth="2" strokeLinecap="round" />
+											   <line x1="10" y1="4" x2="4" y2="10" stroke="#2d6a2d" strokeWidth="2" strokeLinecap="round" />
+										   </svg>
+									   </button>
+								   </span>
+							   );
+						   })}
+					   </div>
+				   )}
+			   </div>
+			   <div className="archive-options-toggle">
+				   {/* View toggle button placeholder */}
+				   <button
+					   type="button"
+					   className="archive-view-toggle"
+					   onClick={() => setViewMode(v => v === 'grid' ? 'list' : 'grid')}
+					   aria-label={viewMode === 'grid' ? 'Switch to list view' : 'Switch to grid view'}
+				   >
+					   {viewMode === 'grid' ? 'List View' : 'Grid View'}
+				   </button>
+			   </div>
+		 </div>
+
+		 {/* Posts container: grid or list view */}
+		 <div className={viewMode === 'grid' ? 'latest-posts-archive-grid' : 'latest-posts-archive-list'}>
+			 {posts.slice(0, viewMode === 'grid' ? 15 : 15).map(post => {
+				 if (viewMode === 'grid') {
+					 const primaryCategory = post.categories?.edges?.[0]?.node?.slug || 'post';
+					 const postUrl = `/category/${primaryCategory}/${post.slug}`;
+					 return (
+						 <div
+							 key={post.id}
+							 className="latest-posts-archive-card selectable-card"
+							 style={{ cursor: 'pointer' }}
+							 onClick={() => window.location.href = postUrl}
+						 >
+							 <span className="latest-posts-title-link fluent-title3" style={{ color: '#000', marginBottom: '0.5rem', display: 'block' }}>{post.title}</span>
+							 {post.featuredImage?.node?.sourceUrl && (
+								 <span className="latest-posts-image-link">
+									 <img
+										 src={post.featuredImage.node.sourceUrl}
+										 alt={post.title}
+										 className="latest-posts-featured-image"
+										 loading="lazy"
+									 />
+								 </span>
+							 )}
+							 {(post.categories?.edges?.length ?? 0) > 0 && (
+								 <div style={{ marginBottom: '0.5rem', display: 'flex', flexWrap: 'wrap', gap: '0.5em' }}>
+									 {(post.categories?.edges ?? []).map((cat: any) => (
+										 <span
+											 key={cat.node.slug}
+											 className="latest-posts-category-tag"
+											 style={{
+												 background: '#e6f2e6',
+												 color: '#2d6a2d',
+												 fontSize: '0.85em',
+												 borderRadius: '6px',
+												 padding: '0.15em 0.7em',
+												 cursor: 'pointer',
+											 }}
+											 onClick={e => {
+												 e.stopPropagation();
+												 window.location.href = `/category/${cat.node.slug}`;
+											 }}
+										 >
+											 {cat.node.name}
+										 </span>
+									 ))}
+								 </div>
+							 )}
+							 <div className="latest-posts-date">{new Date(post.date).toLocaleDateString()}</div>
+							 <p className="latest-posts-excerpt">{post.excerpt ? post.excerpt.replace(/<[^>]+>/g, '').slice(0, 175) + (post.excerpt.length > 175 ? '…' : '') : ''}</p>
+							 <a
+								 href={postUrl}
+								 className="latest-posts-archive-link"
+								 style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4em', fontWeight: 600, color: '#111', textDecoration: 'none', marginTop: '0.5em' }}
+								 onClick={e => {
+									 e.stopPropagation();
+									 e.preventDefault();
+									 window.location.href = postUrl;
+								 }}
+								 tabIndex={0}
+							 >
+								 Read more
+								 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ marginLeft: '0.1em' }}>
+									 <path d="M7.5 5L12.5 10L7.5 15" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+								 </svg>
+							 </a>
+						 </div>
+					 );
+				 }
+				 // List view fallback (keep as before)
+				 return (
+					 <div key={post.id} className="latest-posts-archive-card">
+						 <h3>{post.title}</h3>
+						 {/* Add more post details here as needed */}
+					 </div>
+				 );
+			 })}
+		 </div>
+
+		 </>
+		 );
+
 };
 
 export default LatestPostsArchive;

@@ -1,9 +1,101 @@
+/* Searchbox styling */
+.latest-posts-archive-searchbox {
+  padding: 0.6em 1em;
+  border-radius: 8px;
+  border: 1.5px solid #fff;
+  font-size: 18px;
+  min-width: 220px;
+  background: rgba(255,255,255,0.13);
+  color: #fff;
+  outline: none;
+  box-shadow: none;
+  transition: border-color 0.2s, background 0.2s;
+}
+.latest-posts-archive-searchbox:focus {
+  border-color: #007814;
+  background: rgba(255,255,255,0.22);
+}
+
+/* Category selector styling */
+.latest-posts-archive-category-select {
+  padding: 0.6em 1em;
+  border-radius: 8px;
+  border: 1.5px solid #fff;
+  font-size: 18px;
+  min-width: 180px;
+  background: rgba(255,255,255,0.13);
+  color: #fff;
+  outline: none;
+  box-shadow: none;
+  margin-left: 12px;
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: border-color 0.2s, background 0.2s;
+}
+.latest-posts-archive-category-select:focus {
+  border-color: #007814;
+  background: rgba(255,255,255,0.22);
+}
+.latest-posts-archive-category-select-label {
+  flex: 1;
+  text-align: left;
+  color: #fff;
+}
+.latest-posts-archive-category-select-arrow {
+  margin-left: 6px;
+}
 /* Remove fill color from category dropdown checkboxes */
 .latest-posts-archive-category-dropdown input[type="checkbox"] {
   background: transparent !important;
   appearance: checkbox;
   -webkit-appearance: checkbox;
   box-shadow: none !important;
+}
+.latest-posts-archive-category-dropdown {
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  color: #222;
+  border-radius: 10px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.13);
+  padding: 0.5em 0;
+  max-height: 320px;
+  overflow-y: auto;
+  min-width: 200px;
+  margin-top: 0;
+  gap: 0;
+}
+.latest-posts-archive-category-option {
+  display: flex;
+  align-items: center;
+  padding: 0.4em 1em;
+  cursor: pointer;
+  font-size: 17px;
+  user-select: none;
+  background: transparent;
+  border: none;
+  width: 100%;
+  transition: background 0.15s;
+}
+.latest-posts-archive-category-option.selected {
+  background: #e6f2e6;
+}
+.latest-posts-archive-category-option:hover {
+  background: #f2f2f2;
+}
+.latest-posts-archive-category-parent-group {
+  padding: 0.2em 0 0.2em 0;
+}
+.latest-posts-archive-category-parent-label {
+  font-weight: 600;
+  font-size: 15px;
+  color: #007814;
+  padding: 0.2em 1em 0.2em 1em;
+  background: #f6f6f6;
 }
 /* Archive-specific grid and card styles */
 .latest-posts-archive-grid {
@@ -102,20 +194,23 @@
 }
 .hero-content-archive {
   width: 50%;
-  width: auto !important;
-  max-width: none !important;
-  min-width: 0 !important;
-  margin: 0 !important;
+  min-width: 0;
+  max-width: none;
+  margin: 0;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   height: 100%;
+  word-break: break-word;
+  white-space: normal;
+  position: relative;
+  z-index: 2;
 }
 .hero-title-archive {
   color: #fff;
-  font-size: 3.5rem;
-  font-weight: 700;
-  line-height: 1.1;
+  font-size: 4.5rem;
+  font-weight: 450;
+  line-height: 1.25;
   margin-bottom: 0.5rem;
   word-break: break-word;
 
@@ -125,7 +220,7 @@
   font-size: 1.25rem;
   margin: 1rem 0;
   max-width: 90vw;
-  line-height: 1.8;
+  line-height: 1.5;
   font-weight: 300;
  
 }
@@ -160,7 +255,17 @@
 .latest-posts-archive-list .latest-posts-archive-card {
   width: 100%;
   margin: 2rem auto;
-  max-width: 700px;
+}
+.hero-gradient-archive {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(90deg, rgba(34,34,34,0.72) 0%, rgba(34,34,34,0.32) 60%, rgba(34,34,34,0.08) 100%);
+
   min-width: 320px;
   align-items: center;
 }
