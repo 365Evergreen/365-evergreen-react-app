@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 
 export interface LatestPost {
+  type: string;
+  excerpt: any;
   id: string;
   title: string;
   date: string;
