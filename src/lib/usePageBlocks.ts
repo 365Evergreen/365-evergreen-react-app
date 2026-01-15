@@ -13,27 +13,30 @@ export interface PageData {
   blocks: PageBlock[];
 }
 
-export function usePageBlocks(pageId: string): PageData | null {
+export function usePageBlocks(
+  idOrSlug: string,
+  nodeType: 'page' | 'post' = 'page'
+): PageData | null {
   const [data, setData] = useState<PageData | null>(null);
   useEffect(() => {
     fetch('https://365evergreen.com/graphql', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        query: `query GetPage {\n  page(id: \"${pageId}\") {\n    id\n    title\n    blocks\n  }\n}`
+        query: `query GetNode {\n  ${nodeType}(id: \"${idOrSlug}\") {\n    id\n    title\n    blocks\n  }\n}`
       })
     })
       .then(res => res.json())
       .then(result => {
-        const page = result?.data?.page;
+        const node = result?.data?.[nodeType];
         let blocks: PageBlock[] = [];
         try {
-          blocks = page?.blocks ? JSON.parse(page.blocks) : [];
+          blocks = node?.blocks ? JSON.parse(node.blocks) : [];
         } catch {
           blocks = [];
         }
-        setData({ id: page?.id, title: page?.title, blocks });
+        setData({ id: node?.id, title: node?.title, blocks });
       });
-  }, [pageId]);
+  }, [idOrSlug, nodeType]);
   return data;
 }

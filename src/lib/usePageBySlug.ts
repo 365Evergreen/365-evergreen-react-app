@@ -14,30 +14,26 @@ export function usePageBySlug(slug: string | undefined): PageData | null {
   const [data, setData] = useState<PageData | null>(null);
   useEffect(() => {
     if (!slug) return;
+    // Prepend CPT base for e365page
+    const uri = slug.startsWith('/e365-page/') ? slug : `/e365-page/${slug.replace(/^\//, '')}/`;
     fetch('https://365evergreen.com/graphql', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        query: `query postContent {\n  postBy(uri: \"${slug}\") {\n    id\n    title\n    blocks\n    content(format: RENDERED)\n    featuredImage { node { sourceUrl(size: MEDIUM) } }\n    categories { edges { node { id name slug } } }\n  }\n}`
+        query: `query whatwedo {\n  e365page(id: \"${uri}\", idType: URI) {\n    title\n    uri\n    slug\n    content(format: RENDERED)\n  }\n}`
       })
     })
       .then(res => res.json())
       .then(result => {
-        const page = result?.data?.postBy;
-        let blocks: PageBlock[] = [];
-        try {
-          blocks = page?.blocks ? JSON.parse(page.blocks) : [];
-        } catch {
-          blocks = [];
-        }
+        const page = result?.data?.e365page;
         setData(page
           ? {
-              id: page.id,
+              id: page.slug,
               title: page.title,
-              blocks,
+              blocks: [],
               content: page.content,
-              featuredImage: page.featuredImage,
-              categories: page.categories,
+              featuredImage: undefined,
+              categories: undefined,
             }
           : null
         );

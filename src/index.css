@@ -1,3 +1,6 @@
+@media (max-width: 900px) {
+  /* No main margin-top: header overlays hero, hero gets padding */
+}
 /* Alternating section backgrounds */
 .bg-default {
   background: var(--neutralLightestAlt, #ffffff);

@@ -52,3 +52,17 @@ query allPosts {
     }
   }
 }
+
+## What we do
+
+
+ query whatWeDo {
+  e365page(id: "cG9zdDo0OTM=") {
+    id
+    title
+    uri
+    slug
+    content(format: RENDERED)
+    blocks(dynamicContent: true, attributes: true, htmlContent: true)
+  }
+}

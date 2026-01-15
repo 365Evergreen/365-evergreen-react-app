@@ -1,3 +1,31 @@
+@media (max-width: 900px) {
+  .header-root {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    z-index: 3000;
+    background: transparent;
+    transition: background 0.3s, box-shadow 0.3s;
+    box-shadow: none;
+  }
+  .header-root.header-root--scrolled {
+    background: #fff;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+  }
+  .header-nav--open {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #fff;
+    z-index: 4000;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+  }
+}
 /* Site title color transitions */
 .header-title {
   margin: 0 0 0 0.75em;

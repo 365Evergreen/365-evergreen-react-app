@@ -24,6 +24,11 @@ import { fadeVariants } from './components/motionPresets';
 
 import { Routes, Route } from 'react-router-dom';
 
+// Wrapper to allow passing optional props to PageView without changing its
+// original typings. We cast props through any when forwarding.
+
+const PageViewAny: any = PageView;
+
 
 function App() {
   const [chatOpen, setChatOpen] = useState(false);
@@ -94,7 +99,9 @@ function App() {
           <Route path="/latest-posts" element={<LatestPostsArchive />} />
           <Route path="/category/:category" element={<LatestPostsArchive />} />
           <Route path="/category/:category/:slug" element={<PageView />} />
+          <Route path="/what-we-do" element={<PageViewAny whatWeDoPageId="cG9zdDo0OTM=" />} />
           <Route path="/:slug" element={<PageView />} />
+          <Route path="/:parent/:slug" element={<PageView />} />
           <Route path="/vanilla-accordion-demo" element={<VanillaAccordionDemoPage />} />
         </Routes>
         <CopilotChat open={chatOpen} onClose={() => setChatOpen(false)} />

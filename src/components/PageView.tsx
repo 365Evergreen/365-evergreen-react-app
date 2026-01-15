@@ -3,13 +3,17 @@ import { useParams, Link } from 'react-router-dom';
 import { Breadcrumb, BreadcrumbItem } from '@fluentui/react-components';
 import { usePageBySlug } from '../lib/usePageBySlug';
 import PageBlocks from './PageBlocks';
-import WhatWeDo from './WhatWeDo';
 
 export const PageView: React.FC = () => {
-  const { slug } = useParams<{ slug?: string }>();
+  const { slug, parent } = useParams<{ slug?: string; parent?: string }>();
 
-  // Fetch page by slug (dynamic)
-  const page = usePageBySlug(slug);
+  // Build URI for custom post types
+  let uri = slug || '';
+  if (parent) {
+    uri = `/${parent}/${slug}/`;
+  }
+  // Fetch page by URI
+  const page = usePageBySlug(uri);
 
 
   // Build breadcrumb: Home / Category (if present) / Post Title
@@ -21,14 +25,11 @@ export const PageView: React.FC = () => {
     { text: page?.title || (params.slug || 'Page'), href: `/${category ? category + '/' : ''}${params.slug || ''}` },
   ];
 
-  if (slug === 'what-we-do') {
-    return <WhatWeDo />;
-  }
   return (
-    <section style={{ minHeight: 300, padding: '2rem 4vw' }}>
+    <section style={{ minHeight: 300, padding: 0, margin: 0 }}>
       <Breadcrumb>
         {breadcrumbItems.map((item, idx) => (
-          <BreadcrumbItem key={item.href}>
+          <BreadcrumbItem key={item.href + '-' + idx}>
             {idx < breadcrumbItems.length - 1 ? (
               <>
                 <Link to={item.href}>{item.text}</Link>
@@ -41,12 +42,12 @@ export const PageView: React.FC = () => {
         ))}
       </Breadcrumb>
       <h2>{page?.title || 'Loading...'}</h2>
-      <div>
+      <div style={{ width: '100%', margin: 0, padding: 0 }}>
         {page ? (
           page.blocks && page.blocks.length > 0 ? (
             <PageBlocks blocks={page.blocks} />
           ) : page.content ? (
-            <div dangerouslySetInnerHTML={{ __html: page.content }} />
+            <div style={{ width: '100%', margin: 0, padding: 0 }} dangerouslySetInnerHTML={{ __html: page.content }} />
           ) : <em>No content found…</em>
         ) : <em>Loading page content…</em>}
       </div>

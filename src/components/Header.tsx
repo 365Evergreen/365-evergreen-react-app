@@ -41,7 +41,7 @@ export function Header() {
           <img src="https://365evergreen.com/wp-content/uploads/2025/07/cropped-Evergreen_Logo__2110.webp" alt="365 Evergreen Logo" className="header-logo" />
           <h1 className={`header-title${scrolled ? ' header-title--scrolled' : ''}`}>365 Evergreen</h1>
         </a>
-        <nav className={`header-nav${menuOpen ? ' header-nav--open' : ''}`}> 
+        <nav className={`header-nav${menuOpen ? ' header-nav--open' : ''}`}>
           {navItems.length > 0 ? (
             navItems.map((item, idx) => {
               const hasChildren = item.children && item.children.length > 0;
@@ -84,19 +84,19 @@ export function Header() {
           ) : (
             <Button as="a" href="/" className="header-nav-btn" appearance="transparent">Home</Button>
           )}
-        <Button as="a" href="#contact" className="header-contact-btn">Get in touch</Button>
-      </nav>
-      <button
-        className="header-hamburger"
-        aria-label="Open menu"
-        aria-expanded={menuOpen}
-        onClick={() => setMenuOpen((open) => !open)}
-      >
-        <span className="header-hamburger-bar" />
-        <span className="header-hamburger-bar" />
-        <span className="header-hamburger-bar" />
-      </button>
-    </div>
-  </header>
+          <Button as="a" href="#contact" className="header-contact-btn">Get in touch</Button>
+        </nav>
+        <button
+          className="header-hamburger"
+          aria-label="Open menu"
+          aria-expanded={menuOpen}
+          onClick={() => setMenuOpen((open) => !open)}
+        >
+          <span className="header-hamburger-bar" />
+          <span className="header-hamburger-bar" />
+          <span className="header-hamburger-bar" />
+        </button>
+      </div>
+    </header>
   );
 }
