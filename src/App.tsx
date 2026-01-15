@@ -15,6 +15,7 @@ import { FloatingDrawer } from './components/FloatingDrawer';
 import { JourneySurvey } from './components/JourneySurvey';
 import questionsData from '../CTAJourneyQuestions.json';
 import { PageView } from './components/PageView';
+import WhatWeDoStatic from './components/WhatWeDoStatic';
 import LatestPostsArchive from './components/LatestPostsArchive';
 // import Carousel from './components/Carousel';
 import FluentCarousel from './components/FluentCarousel';
@@ -100,6 +101,7 @@ function App() {
           <Route path="/category/:category" element={<LatestPostsArchive />} />
           <Route path="/category/:category/:slug" element={<PageView />} />
           <Route path="/what-we-do" element={<PageViewAny whatWeDoPageId="cG9zdDo0OTM=" />} />
+          <Route path="/e365-page/what-we-do/" element={<WhatWeDoStatic />} />
           <Route path="/:slug" element={<PageView />} />
           <Route path="/:parent/:slug" element={<PageView />} />
           <Route path="/vanilla-accordion-demo" element={<VanillaAccordionDemoPage />} />

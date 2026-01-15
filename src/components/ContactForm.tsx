@@ -128,7 +128,7 @@ export function ContactForm() {
             </div>
             <div className="contact-form-row">
               <div style={{ gridColumn: '1 / span 2', textAlign: 'center' }}>
-                <Button className="contact-submit" appearance="primary" type="submit">
+                <Button className="appButton contact-submit" appearance="primary" type="submit">
                   Send Message <Send24Regular />
                 </Button>
               </div>

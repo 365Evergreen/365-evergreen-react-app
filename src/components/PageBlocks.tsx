@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { VanillaAccordion } from './VanillaAccordion';
 import '../PageBlocks.css';
 
 // Utility to convert absolute URLs to relative
@@ -97,23 +98,19 @@ const PageBlocks: React.FC<PageBlocksProps> = ({ blocks }) => {
           case 'core/buttons':
             content = null; // just render children below
             break;
-          // Simple accordion block (example: core/accordion or custom)
+          // Automatically map WP accordion block to VanillaAccordion
           case 'core/accordion': {
-            // Basic accordion logic for demo
-            const [open, setOpen] = useState(false);
-            content = (
-              <div className="wp-accordion">
-                <div className="wp-accordion-title" onClick={() => setOpen(o => !o)}>
-                  {block.attributes?.title || 'Accordion'}
-                  <span>{open ? '-' : '+'}</span>
-                </div>
-                {open && (
-                  <div className="wp-accordion-content">
-                    <PageBlocks blocks={block.innerBlocks || []} />
-                  </div>
-                )}
-              </div>
-            );
+            // Map WP block to VanillaAccordionItem structure
+            const panels = (block.innerBlocks || []).map((panelBlock: any) => ({
+              title: panelBlock.attributes?.title || 'Accordion Panel',
+              content: panelBlock.attributes?.content || panelBlock.innerHTML || '',
+            }));
+            const item = {
+              title: block.attributes?.title || 'Accordion',
+              description: block.attributes?.description || '',
+              panels,
+            };
+            content = <VanillaAccordion items={[item]} />;
             break;
           }
           // Add more block types as needed

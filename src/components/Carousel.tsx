@@ -92,7 +92,7 @@ export default function Carousel() {
                     <li key={i} className={styles.bulletItem}>{b}</li>
                   ))}
                 </ul>
-                <Button as="a" href={slide.cta.href} className={styles.cta} appearance="primary" size="large">
+                <Button as="a" href={slide.cta.href} className={`appButton ${styles.cta}`} appearance="primary" size="large"> 
                   {slide.cta.label}
                 </Button>
               </div>

@@ -26,10 +26,10 @@ export function CTA() {
             <li><CheckmarkCircle24Regular className={styles.bulletIcon} /> Guided onboarding included</li>
           </ul>
           <div className={styles.ctaButtons}>
-            <Button appearance="primary" size="large" className={`cta-override-btn ${styles.primaryBtn}`}>
+            <Button appearance="primary" size="large" className={`appButton cta-override-btn ${styles.primaryBtn}`}> 
               Get Started Free
             </Button>
-            <Button appearance="outline" size="large" className={`cta-override-btn ${styles.secondaryBtn}`}>
+            <Button appearance="outline" size="large" className={`appButton cta-override-btn ${styles.secondaryBtn}`}> 
               What's included
             </Button>
           </div>

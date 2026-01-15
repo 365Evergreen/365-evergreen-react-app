@@ -58,6 +58,8 @@ const FeatureAccordionButtons: React.FC<FeatureAccordionButtonsProps> = ({ featu
             return (
               <button
                 key={String(id) + '-' + idx}
+                type="button"
+                className={`appButton feature-accordion-btn${selectedAccordionId === id ? ' feature-accordion-btn--active' : ''}`}
                 style={{
                   padding: '0.5em 1.2em',
                   borderRadius: 10,

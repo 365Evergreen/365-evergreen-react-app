@@ -189,18 +189,19 @@ h6, .fluent-body1Strong {
   font-weight: 600;
 }
 
-button {
+/* App-specific button styles: use .appButton class in components */
+.appButton {
   border-radius: 8px;
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
   font-size: 1em;
- /* font-weight: 500;*/
+/* font-weight: 500;*/
   font-family: inherit;
   cursor: pointer;
   transition: border-color 0.25s;
 }
-button:focus,
-button:focus-visible {
+.appButton:focus,
+.appButton:focus-visible {
   outline: 4px auto var(--themeSecondary);
 }
 
@@ -218,7 +219,7 @@ main {
   a:hover {
     color: #323232;
   }
-  button {
+  .appButton {
     background-color: #f9f9f9;
   }
 }

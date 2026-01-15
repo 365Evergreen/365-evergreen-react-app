@@ -38,13 +38,13 @@ export const CopilotChat: React.FC<{ open?: boolean; onClose?: () => void }> = (
           value={input}
           onChange={e => setInput(e.target.value)}
         />
-        <button type="submit" className="chatBtn">Send</button>
+        <button type="submit" className="appButton chatBtn">Send</button>
       </form>
       <div className="chatFooter">
         <small>Knowledge: WordPress content | Write: Dataverse (coming soon)</small>
       </div>
       {onClose && (
-        <button className="chatCloseBtn" onClick={onClose} title="Close chat">×</button>
+        <button className="appButton chatCloseBtn" onClick={onClose} title="Close chat">×</button>
       )}
     </div>
   );
