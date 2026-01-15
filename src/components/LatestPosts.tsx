@@ -80,7 +80,7 @@ const LatestPosts: React.FC = () => {
                   <a
                     href={postUrl}
                     className="features-link"
-                    style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4em', fontWeight: 600, color: '#111', textDecoration: 'none', marginTop: '0.5em' }}
+                    style={{ display: 'inline-flex', alignItems: 'flex-start', gap: '0.4em', fontWeight: 600, color: '#111', textDecoration: 'none', marginTop: '0.5em' }}
                     onClick={e => {
                       e.stopPropagation();
                       e.preventDefault();

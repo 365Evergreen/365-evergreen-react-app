@@ -379,11 +379,11 @@ const LatestPostsArchive: React.FC = () => {
 						 </div>
 					 );
 				 }
-				 // List view fallback (keep as before)
+				 // List view fallback (add excerpt)
 				 return (
 					 <div key={post.id} className="latest-posts-archive-card">
 						 <h3>{post.title}</h3>
-						 {/* Add more post details here as needed */}
+						 <p className="latest-posts-excerpt">{post.excerpt ? post.excerpt.replace(/<[^>]+>/g, '').slice(0, 175) + (post.excerpt.length > 175 ? '…' : '') : ''}</p>
 					 </div>
 				 );
 			 })}
