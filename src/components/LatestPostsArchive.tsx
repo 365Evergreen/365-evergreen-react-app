@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Button } from '@fluentui/react-components';
 import '../LatestPostsArchive.css';
 import { useLatestPosts } from '../lib/useLatestPosts';
+import { COMPONENTS_BLOB_URL } from '../lib/useLatestPosts';
 import { useParams, useNavigate } from 'react-router-dom';
 
 const LatestPostsArchive: React.FC = () => {
@@ -15,7 +16,6 @@ const LatestPostsArchive: React.FC = () => {
 
   // Endpoint config
   const WPGRAPHQL_URL = import.meta.env.VITE_WPGRAPHQL_URL || 'https://365evergreen.com/wpgraphql';
-  const BLOB_BASE_URL = import.meta.env.VITE_BLOB_BASE_URL || 'https://pauli.blob.core.windows.net/365-evergreen/';
 
   // Close dropdown on outside click
   useEffect(() => {
@@ -35,6 +35,7 @@ const LatestPostsArchive: React.FC = () => {
   // Fetch categories from WPGraphQL (with parent/child structure)
   useEffect(() => {
     async function fetchCategories() {
+      let flat: any[] = [];
       try {
         const res = await fetch(WPGRAPHQL_URL, {
           method: 'POST',
@@ -54,36 +55,25 @@ const LatestPostsArchive: React.FC = () => {
             }`
           })
         });
-        if (!res.ok) {
-          // eslint-disable-next-line no-console
-          console.warn('WPGraphQL endpoint not found or returned error:', WPGRAPHQL_URL, res.status);
-          setCategories([]);
-          return;
+        if (res.ok) {
+          const json = await res.json();
+          flat = (json?.data?.categories?.edges || []).map((e: any) => e.node);
+        } else {
+          throw new Error('WPGraphQL endpoint not found or returned error');
         }
-        let json = null;
-        try {
-          json = await res.json();
-        } catch (err) {
-          // eslint-disable-next-line no-console
-          console.warn('WPGraphQL endpoint did not return JSON:', WPGRAPHQL_URL);
-          setCategories([]);
-          return;
-        }
-        const flat = (json?.data?.categories?.edges || []).map((e: any) => e.node);
-        // Group by parent
-        const parents = flat.filter((cat: any) => !cat.parent || !cat.parent.node);
-        const children = flat.filter((cat: any) => cat.parent && cat.parent.node);
-        // Attach children to parents
-        const grouped = parents.map((parent: any) => ({
-          ...parent,
-          children: children.filter((c: any) => c.parent.node.id === parent.id)
-        }));
-        setCategories(grouped);
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error('Failed to fetch categories from WPGraphQL', e);
-        setCategories([]);
+        console.error('Failed to fetch categories from WPGraphQL:', e);
       }
+      // Group by parent
+      const parents = flat.filter((cat: any) => !cat.parent || !cat.parent.node);
+      const children = flat.filter((cat: any) => cat.parent && cat.parent.node);
+      // Attach children to parents
+      const grouped = parents.map((parent: any) => ({
+        ...parent,
+        children: children.filter((c: any) => c.parent.node.id === parent.id)
+      }));
+      setCategories(grouped);
     }
     fetchCategories();
   }, [WPGRAPHQL_URL]);
@@ -114,18 +104,11 @@ const LatestPostsArchive: React.FC = () => {
     async function fetchHero() {
       try {
         let data: any;
-        // Try to fetch from Azure blob storage (allow for subfolders)
         try {
-          const res = await fetch(BLOB_BASE_URL + 'page-components.json');
+          const res = await fetch(COMPONENTS_BLOB_URL);
           data = await res.json();
         } catch (e) {
-          // fallback: try root if not found
-          try {
-            const res = await fetch(BLOB_BASE_URL + '/page-components.json');
-            data = await res.json();
-          } catch (e2) {
-            data = null;
-          }
+          data = null;
         }
         const heroConfig = (data?.body || []).find((c: any) => c.page === 'latest-posts') || null;
         if (mounted) setHero(heroConfig);
@@ -139,7 +122,7 @@ const LatestPostsArchive: React.FC = () => {
     return () => {
       mounted = false;
     };
-  }, [BLOB_BASE_URL]);
+  }, []);
 
   // Filtering
   let filteredPosts = posts;
@@ -274,7 +257,7 @@ const LatestPostsArchive: React.FC = () => {
                     role="listbox"
                   >
                     {categories.map(parent => (
-                      <div key={parent.slug || parent.id} style={{ padding: 0 }}>
+                      <div key={`parent-${parent.slug || parent.id}`} style={{ padding: 0 }}>
                         <div style={{
                           padding: '0.5em 1em',
                           fontWeight: 700,
@@ -286,7 +269,7 @@ const LatestPostsArchive: React.FC = () => {
                         {(parent.children && parent.children.length > 0)
                           ? parent.children.map((cat: any) => (
                               <div
-                                key={cat.slug}
+                                key={`child-${cat.slug || cat.id}`}
                                 role="option"
                                 aria-selected={selectedCategories.includes(cat.slug)}
                                 tabIndex={0}
@@ -323,6 +306,7 @@ const LatestPostsArchive: React.FC = () => {
                           : (
                             // If no children, parent is selectable
                             <div
+                              key={`parent-selectable-${parent.slug || parent.id}`}
                               role="option"
                               aria-selected={selectedCategories.includes(parent.slug)}
                               tabIndex={0}
@@ -402,7 +386,7 @@ const LatestPostsArchive: React.FC = () => {
           if (viewMode === 'grid') {
             return (
               <div
-                key={post.id}
+                key={`post-main-${post.id}`}
                 className="latest-posts-archive-card selectable-card"
                 onClick={() => navigate(postUrl)}
                 style={{ cursor: 'pointer' }}
@@ -422,7 +406,7 @@ const LatestPostsArchive: React.FC = () => {
                   <div style={{ marginBottom: '0.5rem', display: 'flex', flexWrap: 'wrap', gap: '0.5em' }}>
                     {(post.categories?.edges ?? []).map((cat: any) => (
                       <span
-                        key={cat.node.slug}
+                        key={`postcat-main-${cat.node.slug || cat.node.id}`}
                         className="latest-posts-category-tag"
                         style={{
                           background: '#e6f2e6',
@@ -466,7 +450,7 @@ const LatestPostsArchive: React.FC = () => {
           // List view fallback
           const cardClass = 'latest-posts-archive-card';
           return (
-            <div key={post.id} className={cardClass}>
+            <div key={`post-alt-${post.id}`} className={cardClass}>
               <a href={postUrl} className="latest-posts-title-link">
                 <h3 className="fluent-title3">{post.title}</h3>
               </a>
@@ -482,7 +466,7 @@ const LatestPostsArchive: React.FC = () => {
                 <span className="latest-posts-date">{new Date(post.date).toLocaleDateString()}</span>
                 {(post.categories?.edges ?? []).map((cat: any) => (
                   <span
-                    key={cat.node.slug}
+                    key={`postcat-alt-${cat.node.slug || cat.node.id}`}
                     className="latest-posts-category-tag"
                     onClick={() => navigate(`/category/${cat.node.slug}`)}
                   >
