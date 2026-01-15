@@ -43,14 +43,15 @@ export function Header() {
         </a>
         <nav className={`header-nav${menuOpen ? ' header-nav--open' : ''}`}> 
           {navItems.length > 0 ? (
-            navItems.map(item => {
+            navItems.map((item, idx) => {
               const hasChildren = item.children && item.children.length > 0;
-              const isOpen = !!openSubmenus[item.id];
+              const isOpen = !!openSubmenus[item.id || idx];
+              const navKey = item.id && item.id !== '' ? item.id : `nav-${idx}`;
               return (
-                <div className="header-nav-item" key={item.id} style={{ position: 'relative', display: 'inline-block' }}>
+                <div className="header-nav-item" key={navKey} style={{ position: 'relative', display: 'inline-block' }}>
                   <div style={{ display: 'flex', alignItems: 'center' }}>
                     <Button as="a" href={item.url} className="header-nav-btn" appearance="transparent"
-                      onClick={e => { e.preventDefault(); handleNav(item.url.startsWith('/') ? item.url : `/${item.label.toLowerCase().replace(/\s+/g, '-')}`); }}>
+                      onClick={e => { e.preventDefault(); handleNav(item.uri); }}>
                       {item.label}
                     </Button>
                     {hasChildren && (
@@ -66,12 +67,15 @@ export function Header() {
                   </div>
                   {hasChildren && isOpen && (
                     <div className="header-nav-submenu" style={{ position: 'absolute', left: 0, top: '100%', background: '#fff', minWidth: 180, zIndex: 10, boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }}>
-                      {item.children?.map(sub => (
-                        <Button as="a" href={sub.url} className="header-nav-btn header-nav-btn--submenu" appearance="transparent" key={sub.id}
-                          onClick={e => { e.preventDefault(); handleNav(sub.url.startsWith('/') ? sub.url : `/${sub.label.toLowerCase().replace(/\s+/g, '-')}`); }}>
-                          {sub.label}
-                        </Button>
-                      ))}
+                      {item.children?.map((sub, subIdx) => {
+                        const subKey = sub.id && sub.id !== '' ? sub.id : `subnav-${idx}-${subIdx}`;
+                        return (
+                          <Button as="a" href={sub.url} className="header-nav-btn header-nav-btn--submenu" appearance="transparent" key={subKey}
+                            onClick={e => { e.preventDefault(); handleNav(sub.uri); }}>
+                            {sub.label}
+                          </Button>
+                        );
+                      })}
                     </div>
                   )}
                 </div>

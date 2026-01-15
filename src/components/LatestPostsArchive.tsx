@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Button } from '@fluentui/react-components';
 import '../LatestPostsArchive.css';
 import { useLatestPosts } from '../lib/useLatestPosts';
@@ -6,15 +6,76 @@ import { useParams, useNavigate } from 'react-router-dom';
 
 const LatestPostsArchive: React.FC = () => {
   const { category } = useParams<{ category?: string }>();
+
+  // Categories state
+  const [categories, setCategories] = useState<any[]>([]);
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [catDropdownOpen, setCatDropdownOpen] = useState(false);
+  const catDropdownRef = useRef<HTMLDivElement>(null);
+
+  // Close dropdown on outside click
+  useEffect(() => {
+    function handleClick(e: MouseEvent) {
+      if (catDropdownRef.current && !catDropdownRef.current.contains(e.target as Node)) {
+        setCatDropdownOpen(false);
+      }
+    }
+    if (catDropdownOpen) {
+      document.addEventListener('mousedown', handleClick);
+    } else {
+      document.removeEventListener('mousedown', handleClick);
+    }
+    return () => document.removeEventListener('mousedown', handleClick);
+  }, [catDropdownOpen]);
+
+  // Fetch categories from WPGraphQL (with parent/child structure)
+  useEffect(() => {
+    async function fetchCategories() {
+      try {
+        const res = await fetch('/wpgraphql', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            query: `query categories {
+              categories {
+                edges {
+                  node {
+                    id
+                    name
+                    slug
+                    parent { node { id name slug } }
+                  }
+                }
+              }
+            }`
+          })
+        });
+        const json = await res.json();
+        const flat = (json?.data?.categories?.edges || []).map((e: any) => e.node);
+        // Group by parent
+        const parents = flat.filter((cat: any) => !cat.parent || !cat.parent.node);
+        const children = flat.filter((cat: any) => cat.parent && cat.parent.node);
+        // Attach children to parents
+        const grouped = parents.map((parent: any) => ({
+          ...parent,
+          children: children.filter((c: any) => c.parent.node.id === parent.id)
+        }));
+        setCategories(grouped);
+      } catch (e) {
+        setCategories([]);
+      }
+    }
+    fetchCategories();
+  }, []);
   const navigate = useNavigate();
 
   const posts = useLatestPosts() || [];
 
   const [typeFilter] = useState<string>('');
-  const [searchTerm] = useState<string>('');
+  const [searchTerm, setSearchTerm] = useState<string>('');
   const [page, setPage] = useState<number>(1);
-  const pageSize = 10;
-  const [viewMode] = useState<'grid' | 'list'>('list');
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const pageSize = viewMode === 'grid' ? 15 : 10;
 
   const [, setIsWideScreen] = useState<boolean>(false);
   useEffect(() => {
@@ -56,7 +117,12 @@ const LatestPostsArchive: React.FC = () => {
 
   // Filtering
   let filteredPosts = posts;
-  if (category) {
+  // Filter by selected categories (multi-select)
+  if (selectedCategories.length > 0) {
+    filteredPosts = filteredPosts.filter((post: any) =>
+      post.categories?.edges?.some((edge: any) => selectedCategories.includes(edge.node.slug))
+    );
+  } else if (category) {
     filteredPosts = filteredPosts.filter((post: any) =>
       post.categories?.edges?.some((edge: any) => edge.node.slug === category)
     );
@@ -64,11 +130,20 @@ const LatestPostsArchive: React.FC = () => {
   if (typeFilter) filteredPosts = filteredPosts.filter((p: any) => p.type === typeFilter);
   if (searchTerm?.trim()) {
     const term = searchTerm.trim().toLowerCase();
-    filteredPosts = filteredPosts.filter((post: any) =>
-      (post.title || '').toLowerCase().includes(term) ||
-      (post.excerpt || '').toLowerCase().includes(term) ||
-      (post.content || '').toLowerCase().includes(term)
-    );
+    filteredPosts = filteredPosts.filter((post: any) => {
+      const title = (post.title || '').toLowerCase();
+      const excerpt = (post.excerpt || '').toLowerCase();
+      const content = (post.content || '').toLowerCase();
+      const categories = (post.categories?.edges || [])
+        .map((edge: any) => (edge.node.name || '').toLowerCase())
+        .join(' ');
+      return (
+        title.includes(term) ||
+        excerpt.includes(term) ||
+        content.includes(term) ||
+        categories.includes(term)
+      );
+    });
   }
 
   const sortedPosts = [...filteredPosts].sort((a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime());
@@ -82,119 +157,307 @@ const LatestPostsArchive: React.FC = () => {
   }
 
   return (
-    <section className="latest-posts-archive">
-      <div
-        className="latest-posts-archive-hero"
-        style={{
-          width: '100%',
-          maxWidth: 900,
-          margin: '0 auto 2rem auto',
-          padding: '2rem 1rem',
-          background: hero?.backgroundColour || '#f6f8fa',
-          borderRadius: 16,
-          boxShadow: '0 2px 12px rgba(0,0,0,0.04)',
-          textAlign: 'center',
-          position: 'relative',
-          overflow: 'hidden',
-        }}
-      >
-        {hero?.backgroundImage && (
-          <span
-            style={{
-              position: 'absolute',
-              inset: 0,
-              zIndex: 0,
-              backgroundImage: `url(${hero.backgroundImage})`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              backgroundRepeat: 'no-repeat',
-              opacity: 1,
-              borderRadius: 16,
-              pointerEvents: 'none',
-            }}
-            aria-hidden="true"
-          />
-        )}
-        <div style={{ position: 'relative', zIndex: 1 }}>
-          {heroLoading ? (
+    <div className="latest-posts-archive-root">
+      {/* Hero Section */}
+      {heroLoading ? (
+        <section className="hero-root-archive" style={{ minHeight: 160, height: 200, position: 'relative', overflow: 'hidden' }}>
+          <div style={{ position: 'absolute', inset: 0, zIndex: 1 }}>
+            <div className="hero-gradient" />
+          </div>
+          <div className="hero-content" style={{ position: 'relative', zIndex: 2 }}>
             <div style={{ padding: '2rem', color: '#888' }}>Loading...</div>
-          ) : hero ? (
-            <>
-              <h1 className="fluent-title1" style={{ marginBottom: '0.5rem' }}>{hero.title}</h1>
-              {hero.blurb && (
-                <p className="fluent-title2" style={{ marginBottom: '1.5rem', color: '#444' }}>{hero.blurb}</p>
-              )}
-            </>
-          ) : (
+          </div>
+        </section>
+      ) : hero ? (
+        <section
+          className="hero-root-archive"
+          style={{
+            ...(hero.backgroundImage
+              ? { background: `url('${hero.backgroundImage}') center/cover no-repeat` }
+              : hero.backgroundColour
+                ? { background: hero.backgroundColour }
+                : {}),
+            position: 'relative' as const,
+            overflow: 'hidden' as const,
+          }}
+        >
+          {hero.backgroundImage && (
+            <div style={{ position: 'absolute', inset: 0, zIndex: 1 }}>
+              <div className="hero-gradient" />
+            </div>
+          )}
+          <div className="hero-content" style={{ position: 'relative', zIndex: 2 }}>
+            <h1 className="hero-title">{hero.title}</h1>
+            {hero.blurb && <p className="hero-desc">{hero.blurb}</p>}
+            {hero.ctaText && hero.ctaUrl && (
+              <a href={hero.ctaUrl} className="hero-btn">{hero.ctaText}</a>
+            )}
+            {/* Filters/Search Row */}
+            <div className="latest-posts-archive-filters-row" style={{ marginTop: '1.5rem' }}>
+              <div className="latest-posts-archive-filter-group">
+                <span className="latest-posts-archive-filter-label">Search:</span>
+                {/* Example search input, wire up as needed */}
+                <input
+                  type="text"
+                  placeholder="Search posts..."
+                  value={searchTerm}
+                  onChange={e => setSearchTerm(e.target.value)}
+                  style={{ padding: '0.5em', borderRadius: 4, border: '1px solid #ccc', minWidth: 180 }}
+                />
+              </div>
+              <div className="latest-posts-archive-filter-group" ref={catDropdownRef} style={{ position: 'relative' }}>
+                <span className="latest-posts-archive-filter-label">Categories:</span>
+                <div
+                  tabIndex={0}
+                  className="cat-dropdown-summary"
+                  style={{
+                    minWidth: 140,
+                    border: '1px solid #ccc',
+                    borderRadius: 4,
+                    padding: '0.5em',
+                    background: '#fff',
+                    cursor: 'pointer',
+                    userSelect: 'none',
+                  }}
+                  onClick={() => setCatDropdownOpen(v => !v)}
+                  onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') setCatDropdownOpen(v => !v); }}
+                  aria-haspopup="listbox"
+                  aria-expanded={catDropdownOpen}
+                >
+                  {selectedCategories.length === 0
+                    ? 'All'
+                    : categories.filter(cat => selectedCategories.includes(cat.slug)).map(cat => cat.name).join(', ')}
+                  <span style={{ float: 'right', marginLeft: 8, fontSize: 12, color: '#888' }}>{catDropdownOpen ? '▲' : '▼'}</span>
+                </div>
+                {catDropdownOpen && (
+                  <div
+                    className="cat-dropdown-list"
+                    style={{
+                      position: 'absolute',
+                      top: '2.5em',
+                      left: 0,
+                      zIndex: 10,
+                      background: '#fff',
+                      border: '1px solid #ccc',
+                      borderRadius: 4,
+                      boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+                      minWidth: 180,
+                      maxHeight: 260,
+                      overflowY: 'auto',
+                    }}
+                    role="listbox"
+                  >
+                    {categories.map(parent => (
+                      <div key={parent.slug || parent.id} style={{ padding: 0 }}>
+                        <div style={{
+                          padding: '0.5em 1em',
+                          fontWeight: 700,
+                          background: '#f6f6f6',
+                          color: '#222',
+                          borderBottom: parent.children && parent.children.length > 0 ? '1px solid #eee' : undefined,
+                        }}>{parent.name}</div>
+                        {/* If parent has children, render them as options */}
+                        {(parent.children && parent.children.length > 0)
+                          ? parent.children.map((cat: any) => (
+                              <div
+                                key={cat.slug}
+                                role="option"
+                                aria-selected={selectedCategories.includes(cat.slug)}
+                                tabIndex={0}
+                                style={{
+                                  padding: '0.5em 2em',
+                                  background: selectedCategories.includes(cat.slug) ? '#e6f2e6' : '#fff',
+                                  color: selectedCategories.includes(cat.slug) ? '#2d6a2d' : '#222',
+                                  cursor: 'pointer',
+                                  fontWeight: selectedCategories.includes(cat.slug) ? 600 : 400,
+                                }}
+                                onClick={() => {
+                                  setSelectedCategories(prev =>
+                                    prev.includes(cat.slug)
+                                      ? prev.filter(s => s !== cat.slug)
+                                      : [...prev, cat.slug]
+                                  );
+                                }}
+                                onKeyDown={e => {
+                                  if (e.key === 'Enter' || e.key === ' ') {
+                                    setSelectedCategories(prev =>
+                                      prev.includes(cat.slug)
+                                        ? prev.filter(s => s !== cat.slug)
+                                        : [...prev, cat.slug]
+                                    );
+                                  }
+                                }}
+                              >
+                                {cat.name}
+                                {selectedCategories.includes(cat.slug) && (
+                                  <span style={{ float: 'right', color: '#007814', fontWeight: 700 }}>&#10003;</span>
+                                )}
+                              </div>
+                            ))
+                          : (
+                            // If no children, parent is selectable
+                            <div
+                              role="option"
+                              aria-selected={selectedCategories.includes(parent.slug)}
+                              tabIndex={0}
+                              style={{
+                                padding: '0.5em 2em',
+                                background: selectedCategories.includes(parent.slug) ? '#e6f2e6' : '#fff',
+                                color: selectedCategories.includes(parent.slug) ? '#2d6a2d' : '#222',
+                                cursor: 'pointer',
+                                fontWeight: selectedCategories.includes(parent.slug) ? 600 : 400,
+                              }}
+                              onClick={() => {
+                                setSelectedCategories(prev =>
+                                  prev.includes(parent.slug)
+                                    ? prev.filter(s => s !== parent.slug)
+                                    : [...prev, parent.slug]
+                                );
+                              }}
+                              onKeyDown={e => {
+                                if (e.key === 'Enter' || e.key === ' ') {
+                                  setSelectedCategories(prev =>
+                                    prev.includes(parent.slug)
+                                      ? prev.filter(s => s !== parent.slug)
+                                      : [...prev, parent.slug]
+                                  );
+                                }
+                              }}
+                            >
+                              {parent.name}
+                              {selectedCategories.includes(parent.slug) && (
+                                <span style={{ float: 'right', color: '#007814', fontWeight: 700 }}>&#10003;</span>
+                              )}
+                            </div>
+                          )}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </section>
+      ) : (
+        <section className="hero-root-archive" style={{ minHeight: 160, height: 200, position: 'relative', overflow: 'hidden' }}>
+          <div style={{ position: 'absolute', inset: 0, zIndex: 1 }}>
+            <div className="hero-gradient" />
+          </div>
+          <div className="hero-content" style={{ position: 'relative', zIndex: 2 }}>
             <div style={{ padding: '2rem', color: '#c00' }}>
               Hero content not found.
               <pre style={{ textAlign: 'left', fontSize: '0.9em', color: '#444', background: '#f9f9f9', padding: '1em', borderRadius: 8, overflowX: 'auto' }}>{JSON.stringify(hero, null, 2)}</pre>
             </div>
-          )}
-        </div>
-      </div>
+          </div>
+        </section>
+      )}
 
-      <div className={viewMode === 'grid' ? 'latest-posts-archive-grid' : 'latest-posts-archive-list'}
-        style={{
-          display: viewMode === 'grid' ? 'grid' : 'flex',
-          gridTemplateColumns: viewMode === 'grid' ? 'repeat(3, 1fr)' : undefined,
-          gap: viewMode === 'grid' ? '2rem' : undefined,
-          flexDirection: viewMode === 'list' ? 'column' : undefined,
-          alignItems: 'center',
-          width: '100%',
-        }}
-      >
+      {/* View toggle below hero, above archive */}
+      <div style={{ display: 'flex', justifyContent: 'flex-end', margin: '1.5rem 0 1rem 0' }}>
+        <Button
+          appearance="secondary"
+          onClick={() => setViewMode(viewMode === 'grid' ? 'list' : 'grid')}
+          style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5em', fontWeight: 600 }}
+        >
+          <img
+            src={viewMode === 'grid'
+              ? 'https://365evergreen.com/wp-content/uploads/2026/01/ic_fluent_apps_list_24_regular.png'
+              : 'https://365evergreen.com/wp-content/uploads/2026/01/ic_fluent_grid_24_regular.png'}
+            alt={viewMode === 'grid' ? 'List view icon' : 'Grid view icon'}
+            style={{ width: 22, height: 22, marginRight: 4, verticalAlign: 'middle' }}
+          />
+          {viewMode === 'grid' ? 'List View' : 'Grid View'}
+        </Button>
+      </div>
+      <div className={viewMode === 'grid' ? 'latest-posts-archive-grid' : 'latest-posts-archive-list'}>
         {pagedPosts.map((post: any) => {
           const primaryCategory = post.categories?.edges?.[0]?.node?.slug || 'post';
           const postUrl = `/category/${primaryCategory}/${post.slug}`;
+          if (viewMode === 'grid') {
+            return (
+              <div
+                key={post.id}
+                className="latest-posts-archive-card selectable-card"
+                onClick={() => navigate(postUrl)}
+                style={{ cursor: 'pointer' }}
+              >
+                <span className="latest-posts-title-link fluent-title3" style={{ color: '#000', marginBottom: '0.5rem', display: 'block' }}>{post.title}</span>
+                {post.featuredImage?.node?.sourceUrl && (
+                  <span className="latest-posts-image-link">
+                    <img
+                      src={post.featuredImage.node.sourceUrl}
+                      alt={post.title}
+                      className="latest-posts-featured-image"
+                      loading="lazy"
+                    />
+                  </span>
+                )}
+                {(post.categories?.edges?.length ?? 0) > 0 && (
+                  <div style={{ marginBottom: '0.5rem', display: 'flex', flexWrap: 'wrap', gap: '0.5em' }}>
+                    {(post.categories?.edges ?? []).map((cat: any) => (
+                      <span
+                        key={cat.node.slug}
+                        className="latest-posts-category-tag"
+                        style={{
+                          background: '#e6f2e6',
+                          color: '#2d6a2d',
+                          fontSize: '0.85em',
+                          borderRadius: '6px',
+                          padding: '0.15em 0.7em',
+                          cursor: 'pointer',
+                        }}
+                        onClick={e => {
+                          e.stopPropagation();
+                          navigate(`/category/${cat.node.slug}`);
+                        }}
+                      >
+                        {cat.node.name}
+                      </span>
+                    ))}
+                  </div>
+                )}
+                <div className="latest-posts-date">{new Date(post.date).toLocaleDateString()}</div>
+                <p className="latest-posts-excerpt">{getExcerpt(post)}</p>
+                <a
+                  href={postUrl}
+                  className="latest-posts-archive-link"
+                  style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4em', fontWeight: 600, color: '#111', textDecoration: 'none', marginTop: '0.5em' }}
+                  onClick={e => {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    navigate(postUrl);
+                  }}
+                  tabIndex={0}
+                >
+                  Read more
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ marginLeft: '0.1em' }}>
+                    <path d="M7.5 5L12.5 10L7.5 15" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </a>
+              </div>
+            );
+          }
+          // List view fallback
+          const cardClass = 'latest-posts-archive-card';
           return (
-            <div
-              key={post.id}
-              style={{
-                width: '100%',
-                maxWidth: viewMode === 'grid' ? '100%' : 540,
-                margin: viewMode === 'grid' ? 0 : '2rem auto',
-                background: '#fff',
-                borderRadius: 12,
-                boxShadow: '0 2px 12px rgba(0,0,0,0.07)',
-                padding: '2rem',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-              }}
-              className="latest-posts-archive-card"
-            >
-              <a href={postUrl} style={{ textDecoration: 'none', color: 'inherit', textAlign: 'center', width: '100%' }}>
-                <h3 className="latest-posts-title-link fluent-title3" style={{ marginBottom: '1rem' }}>{post.title}</h3>
+            <div key={post.id} className={cardClass}>
+              <a href={postUrl} className="latest-posts-title-link">
+                <h3 className="fluent-title3">{post.title}</h3>
               </a>
               {post.featuredImage?.node?.sourceUrl && (
                 <img
                   src={post.featuredImage.node.sourceUrl}
                   alt={post.title}
-                  style={{
-                    width: '100%',
-                    maxWidth: 420,
-                    borderRadius: 8,
-                    marginBottom: '1rem',
-                    objectFit: 'cover',
-                  }}
+                  className="latest-posts-featured-image"
                 />
               )}
-              <p className="latest-posts-excerpt" style={{ marginBottom: '1rem', textAlign: 'center' }}>{getExcerpt(post)}</p>
-              <div style={{ display: 'flex', justifyContent: 'center', gap: '1.5em', marginBottom: '1rem', flexWrap: 'wrap' }}>
-                <span style={{ color: '#888', fontSize: '0.95em' }}>{new Date(post.date).toLocaleDateString()}</span>
+              <p className="latest-posts-excerpt">{getExcerpt(post)}</p>
+              <div className="latest-posts-meta-row">
+                <span className="latest-posts-date">{new Date(post.date).toLocaleDateString()}</span>
                 {(post.categories?.edges ?? []).map((cat: any) => (
                   <span
                     key={cat.node.slug}
                     className="latest-posts-category-tag"
-                    style={{
-                      background: '#e6f2e6',
-                      color: '#2d6a2d',
-                      fontSize: '0.85em',
-                      borderRadius: '6px',
-                      padding: '0.15em 0.7em',
-                      cursor: 'pointer',
-                    }}
                     onClick={() => navigate(`/category/${cat.node.slug}`)}
                   >
                     {cat.node.name}
@@ -214,7 +477,7 @@ const LatestPostsArchive: React.FC = () => {
           <Button disabled={page === pageCount} onClick={() => setPage(page + 1)}>Next &gt;</Button>
         </div>
       )}
-    </section>
+    </div>
   );
 };
 

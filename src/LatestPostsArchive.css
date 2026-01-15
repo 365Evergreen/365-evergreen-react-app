@@ -1,24 +1,246 @@
-/* Responsive grid/list for archive */
+/* Archive-specific grid and card styles */
 .latest-posts-archive-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  align-items: stretch;  padding: 0 4vw 0 4vw;
+}
+@media (max-width: 1200px) {
+  .latest-posts-archive-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 900px) {
+  .latest-posts-archive-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+.latest-posts-archive-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 3;
+  word-break: break-word;
+  transition: box-shadow 0.2s;
+}
+.latest-posts-archive-card.selectable-card:hover {
+  box-shadow: 0 4px 24px rgba(0,0,0,0.13);
+}
+
+.latest-posts-archive-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  font-weight: 600;
+  color: #111;
+  text-decoration: none;
+  margin-top: 0.5em;
+}
+.latest-posts-archive-link:hover {
+  text-decoration: underline;
+}
+/* Hero section fallback styles (if Hero.css not loaded) */
+/* Homepage hero */
+.hero-root-home {
+  min-height: 450px;
+  height: 450px;
+  margin-top: -76px;
+  padding: 0 4vw 0 4vw;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  text-align: left;
+  overflow: hidden;
+  background-position: center top !important;
+  background-size: cover !important;
+}
+
+/* Archive hero */
+.hero-root-archive {
+  min-height: 160px;
+  height: 450px;
+  margin-top: 0;
+  padding: 0 4vw 0 4vw;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  text-align: left;
+  overflow: hidden;
+  background-position: center top !important;
+  background-size: cover !important;
+}
+.hero-gradient {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
   width: 100%;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
+  align-items: stretch;
 }
+.hero-content {
+  width: 50%;
+  width: auto !important;
+  max-width: none !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+.hero-title {
+  color: #fff;
+  font-size: 3.5rem;
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 0.5rem;
+  word-break: break-word;
 
-.latest-posts-archive-list {
-  width: 100%;
+}
+.hero-desc {
+  color: #fff;
+  font-size: 1.25rem;
+  margin: 1rem 0;
+  max-width: 90vw;
+  line-height: 1.8;
+  font-weight: 300;
+ 
+}
+/* .hero-btn styles are not orphaned, but ensure block is closed and not duplicated elsewhere */
+.hero-btn {
+  background: #fff !important;
+  color: var(--themeNeutralSecondary) !important;
+  border: none;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  font-weight: 600;
+  transition: background 0.2s, color 0.2s;
+}
+.hero-btn:hover, .hero-btn:focus {
+  background: #f6f8fa !important;
+  color: #007814 !important;
+}
+/* Archive card styles */
+.latest-posts-archive-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  padding: 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
+  z-index: 3;
+  word-break: break-word;
 }
 
+/* List mode only: full width and margin */
+.latest-posts-archive-list .latest-posts-archive-card {
+  width: 100%;
+  margin: 2rem auto;
+  max-width: 700px;
+  min-width: 320px;
+  align-items: center;
+}
+
+.latest-posts-archive-card--grid {
+  /* No width/margin overrides in grid mode */
+  box-sizing: border-box;
+}
+
+
+.latest-posts-featured-image {
+  width: 100%;
+  aspect-ratio: 16/9;
+  height: auto;
+  object-fit: cover;
+  object-position: center top;
+  border-radius: 12px;
+  margin-bottom: 0.75rem;
+  display: block;
+  background: #f6f6f6;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+.latest-posts-excerpt {
+  margin-bottom: 1rem;
+  text-align: center;
+  color: #444;
+}
+
+.latest-posts-meta-row {
+  display: flex;
+  justify-content: center;
+  gap: 1.5em;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.latest-posts-date {
+  color: #888;
+  font-size: 0.95em;
+}
+
+.latest-posts-category-tag {
+  background: #e6f2e6;
+  color: #2d6a2d;
+  font-size: 0.85em;
+  border-radius: 6px;
+  padding: 0.15em 0.7em;
+  cursor: pointer;
+  margin-left: 0.5em;
+  transition: background 0.2s, color 0.2s;
+}
+.latest-posts-category-tag:hover {
+  /* Hero section fallback styles (if Hero.css not loaded) */
+  .hero-root {
+    min-height: 160px;
+    height: 200px;
+    padding: 0 0 2rem 4vw;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    text-align: left;
+    overflow: hidden;
+    background-position: center top !important;
+    background-size: cover !important;
+  }
+  align-items: center;
+}
+
+/* Grid container: 3 columns, gap, responsive */
+.latest-posts-archive-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  align-items: stretch;
+}
+@media (max-width: 1200px) {
+  .latest-posts-archive-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
 @media (max-width: 900px) {
   .latest-posts-archive-grid {
     grid-template-columns: 1fr;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    gap: 1rem;
   }
 }
 /* Override Fluent UI Select border color to use themePrimary */
@@ -70,21 +292,4 @@
   margin-bottom: 2rem;
 }
 
-.latest-posts-archive-filters-row {
-  display: flex;
-  gap: 2rem;
-  padding: 0 !important;
-}
-
-.latest-posts-archive-filter-group {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
-
-.latest-posts-archive-filter-label {
-  color: var(--neutralPrimary);
-  font-weight: 500;
-  margin-bottom: 0;
-  min-width: 110px;
-}
+/* Remove duplicate filter row/group/label styles at end of file */}
