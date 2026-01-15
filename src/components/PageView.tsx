@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { Breadcrumb, BreadcrumbItem } from '@fluentui/react-components';
 import { usePageBySlug } from '../lib/usePageBySlug';
 import PageBlocks from './PageBlocks';
+import WhatWeDo from './WhatWeDo';
 
 export const PageView: React.FC = () => {
   const { slug } = useParams<{ slug?: string }>();
@@ -20,6 +21,9 @@ export const PageView: React.FC = () => {
     { text: page?.title || (params.slug || 'Page'), href: `/${category ? category + '/' : ''}${params.slug || ''}` },
   ];
 
+  if (slug === 'what-we-do') {
+    return <WhatWeDo />;
+  }
   return (
     <section style={{ minHeight: 300, padding: '2rem 4vw' }}>
       <Breadcrumb>

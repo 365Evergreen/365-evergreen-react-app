@@ -216,40 +216,7 @@ const LatestPostsArchive: React.FC = () => {
 							   Clear filters
 						   </button>
 					   </div>
-				   {selectedCategories.length > 0 && (
-					   <div className="latest-posts-archive-category-tags">
-									  {selectedCategories.filter(slug => !!slug).map(slug => {
-										   // Find the category object by searching parents and children only
-										   let cat: import("../lib/useAllCategories").WPCategory | null = null;
-										   for (const group of categories) {
-											   if (group.parent && group.parent.slug === slug) {
-												   cat = group.parent;
-												   break;
-											   }
-											   if (group.children && group.children.length > 0) {
-												   const child = group.children.find(child => child.slug === slug);
-												   if (child) {
-													   cat = child;
-													   break;
-												   }
-											   }
-										   }
-										   if (!cat || !cat.slug) return null;
-										   return (
-											   <span key={cat.slug} className="latest-posts-archive-category-tag">
-												   {cat.name}
-												   <button
-													   type="button"
-													   aria-label={`Remove ${cat.name}`}
-													   onClick={() => setSelectedCategories(prev => prev.filter(s => s !== cat!.slug))}
-												   >
-													   ×
-												   </button>
-											   </span>
-										   );
-									   })}
-					   </div>
-				   )}
+				   {/* Removed selected category tags from hero section */}
 			</div>
 		</div></section>
 		   {/* Archive options row: tags and view toggle */}
