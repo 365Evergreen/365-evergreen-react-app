@@ -1,4 +1,5 @@
 import React from "react";
+import "../ResponsiveVideoPlayer.css";
 
 interface ResponsiveVideoPlayerProps {
   src: string;
@@ -8,11 +9,8 @@ interface ResponsiveVideoPlayerProps {
   style?: React.CSSProperties;
 }
 
-const getPaddingBottom = (aspectRatio: string = "16:9") => {
-  const [w, h] = aspectRatio.split(":").map(Number);
-  if (!w || !h) return "56.25%";
-  return `${(h / w) * 100}%`;
-};
+
+const isDirectVideo = (src: string) => /\.(mp4|webm|ogg)(\?.*)?$/i.test(src);
 
 const ResponsiveVideoPlayer: React.FC<ResponsiveVideoPlayerProps> = ({
   src,
@@ -20,33 +18,46 @@ const ResponsiveVideoPlayer: React.FC<ResponsiveVideoPlayerProps> = ({
   aspectRatio = "16:9",
   allowFullScreen = true,
   style = {},
-}) => (
-  <div
-    style={{
-      position: "relative",
-      width: "100%",
-      paddingBottom: getPaddingBottom(aspectRatio),
-      margin: 0,
-      maxWidth: 900,
-      marginLeft: "auto",
-      marginRight: "auto",
-      ...style,
-    }}
-  >
-    <iframe
-      src={src}
-      title={title}
-      allowFullScreen={allowFullScreen}
+}) => {
+  // Calculate width and height
+  const width = 750;
+  const [w, h] = aspectRatio.split(":").map(Number);
+  const height = Math.round(width * (h / w));
+
+  return (
+    <div
+      className="responsive-video-player"
       style={{
-        position: "absolute",
-        top: 0,
-        left: 0,
-        width: "100%",
-        height: "100%",
-        border: "none",
+        width: `${width}px`,
+        height: `${height}px`,
+        margin: 0,
+        padding: 0,
+        ...style,
       }}
-    />
-  </div>
-);
+    >
+      {isDirectVideo(src) ? (
+        <video
+          src={src}
+          title={title}
+          controls
+          className="responsive-video-player__iframe"
+          width={width}
+          height={height}
+        >
+          Sorry, your browser does not support embedded videos.
+        </video>
+      ) : (
+        <iframe
+          src={src}
+          title={title}
+          allowFullScreen={allowFullScreen}
+          className="responsive-video-player__iframe"
+          width={width}
+          height={height}
+        />
+      )}
+    </div>
+  );
+};
 
 export default ResponsiveVideoPlayer;

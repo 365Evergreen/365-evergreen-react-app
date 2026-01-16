@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 
 export interface VanillaAccordionPanel {
   title: string;
@@ -19,55 +18,60 @@ interface VanillaAccordionProps {
 }
 
 export const VanillaAccordion: React.FC<VanillaAccordionProps> = ({ items }) => {
+  // Track open panel: [itemIndex, panelIndex]
+  const [openPanel, setOpenPanel] = useState<{ itemIdx: number; panelIdx: number } | null>(null);
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
-      <AnimatePresence mode="wait">
-        {items.map((item, idx) => (
-          <motion.section
-            key={item.title + idx}
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 24 }}
-            transition={{ duration: 0.35, ease: "easeOut" }}
-            style={{
-              display: "flex",
-              flexDirection: idx % 2 === 1 ? "row-reverse" : "row",
-              alignItems: "flex-start",
-              gap: "2rem",
-              marginBottom: "2rem",
-            }}
-          >
-            <div style={{ flex: 1, minWidth: 0 }}>
-              <h2 style={{ margin: 0, fontSize: "1.5rem", fontWeight: 600 }}>{item.title}</h2>
-              {item.description && <p style={{ margin: "0.5rem 0 1.5rem 0" }}>{item.description}</p>}
-              <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-                {item.panels.map((panel, pidx) => (
-                  <VanillaAccordionPanel
-                    key={(panel as any).key ?? panel.title + '-' + pidx}
-                    title={panel.title}
-                    content={panel.content}
-                  />
-                ))}
-              </div>
-            </div>
-            {item.image && (
-              <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", minWidth: 0 }}>
-                <img
-                  src={item.image}
-                  alt={item.imageAlt || item.title}
-                  style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: 12 }}
+      {items.map((item, idx) => (
+        <section
+          key={item.title + idx}
+          style={{
+            display: "flex",
+            flexDirection: idx % 2 === 1 ? "row-reverse" : "row",
+            alignItems: "flex-start",
+            gap: "2rem",
+            marginBottom: "2rem",
+          }}
+        >
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <h2 style={{ margin: 0, fontSize: "1.5rem", fontWeight: 600 }}>{item.title}</h2>
+            {item.description && <p style={{ margin: "0.5rem 0 1.5rem 0" }}>{item.description}</p>}
+            <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+              {item.panels.map((panel, pidx) => (
+                <VanillaAccordionPanel
+                  key={(panel as any).key ?? panel.title + '-' + pidx}
+                  title={panel.title}
+                  content={panel.content}
+                  open={openPanel?.itemIdx === idx && openPanel?.panelIdx === pidx}
+                  onClick={() => setOpenPanel(openPanel?.itemIdx === idx && openPanel?.panelIdx === pidx ? null : { itemIdx: idx, panelIdx: pidx })}
                 />
-              </div>
-            )}
-          </motion.section>
-        ))}
-      </AnimatePresence>
+              ))}
+            </div>
+          </div>
+          {item.image && (
+            <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", minWidth: 0 }}>
+              <img
+                src={item.image}
+                alt={item.imageAlt || item.title}
+                style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: 12 }}
+              />
+            </div>
+          )}
+        </section>
+      ))}
     </div>
   );
 };
 
-const VanillaAccordionPanel: React.FC<{ title: string; content: string }> = ({ title, content }) => {
-  const [open, setOpen] = useState(false);
+interface VanillaAccordionPanelProps {
+  title: string;
+  content: string;
+  open: boolean;
+  onClick: () => void;
+}
+
+const VanillaAccordionPanel: React.FC<VanillaAccordionPanelProps> = ({ title, content, open, onClick }) => {
+  // Always render the panel container, but only show content if open
   return (
     <div
       style={{
@@ -76,12 +80,13 @@ const VanillaAccordionPanel: React.FC<{ title: string; content: string }> = ({ t
         background: "var(--neutralLighter)",
         overflow: "hidden",
         transition: "box-shadow 0.2s",
+        minHeight: 56, // Ensures the container doesn't shrink when closed
       }}
     >
       <button
         type="button"
         aria-expanded={open}
-        onClick={() => setOpen((o) => !o)}
+        onClick={onClick}
         style={{
           width: "100%",
           textAlign: "left",
@@ -102,19 +107,20 @@ const VanillaAccordionPanel: React.FC<{ title: string; content: string }> = ({ t
         </span>
         {title}
       </button>
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 12 }}
-            transition={{ duration: 0.28, ease: "easeOut" }}
-            style={{ padding: "1.1rem 1.5rem", background: "#fff", fontSize: "1rem", color: "#222" }}
-          >
-            {content}
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <div
+        style={{
+          padding: open ? "1.1rem 1.5rem" : 0,
+          background: open ? "#fff" : "inherit",
+          fontSize: open ? "1rem" : 0,
+          color: open ? "#222" : "inherit",
+          height: open ? "auto" : 0,
+          overflow: open ? "visible" : "hidden",
+          transition: "all 0.28s cubic-bezier(.4,0,.2,1)",
+        }}
+        aria-hidden={!open}
+      >
+        {open && content}
+      </div>
     </div>
   );
 };

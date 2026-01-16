@@ -1,0 +1,61 @@
+.we-do-communication-bg {
+  position: relative;
+  background-image: url('https://365evergreen.com/wp-content/uploads/2026/01/377150-PPL-Hero-Background.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 0;
+}
+
+.we-do-communication-container {
+  position: relative;
+  z-index: 1;
+  padding: 3rem 0;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.we-do-communication__heading {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  text-align: left;
+  color: #222;
+}
+
+.we-do-communication__description {
+  font-size: 1.25rem;
+  margin-bottom: 2.5rem;
+  color: #444;
+  text-align: left;
+}
+
+.we-do-communication__columns {
+  display: flex;
+  gap: 32px;
+}
+
+.we-do-communication__accordion {
+  flex: 1;
+  min-width: 0;
+  min-height: 420px; /* Prevents height jump when expanding/collapsing panels */
+}
+
+.we-do-communication__calendar {
+  flex: 2;
+  min-width: 0;
+}
+
+.we-do-communication__calendar-inner {
+  background: #fff;
+  border-radius: 8px;
+  min-height: 300px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+.we-do-communication__footer {
+  text-align: center;
+  font-size: 32px;
+  margin-top: 48px;
+}
