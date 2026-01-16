@@ -1,0 +1,42 @@
+[
+  {
+    "id": 14,
+    "feature": "What we do",
+    "label": "Stay connected",
+    "blurb": "We can take you from beginner to enterprise-level experts",
+    "image": null,
+    "section": "communication"
+  },
+  {
+    "id": 15,
+    "feature": "What we do",
+    "label": "Smart notifications",
+    "blurb": "We can take you from beginner to enterprise-level experts",
+    "image": null,
+    "section": "communication"
+  },
+  {
+    "id": 16,
+    "feature": "What we do",
+    "label": "Build communities",
+    "blurb": "We can take you from beginner to enterprise-level experts",
+    "image": null,
+    "section": "communication"
+  },
+  {
+    "id": 17,
+    "feature": "What we do",
+    "label": "Create faster",
+    "blurb": "We can take you from beginner to enterprise-level experts",
+    "image": null,
+    "section": "communication"
+  },
+  {
+    "id": 18,
+    "feature": "What we do",
+    "label": "Tailored communication",
+    "blurb": "We can take you from beginner to enterprise-level experts",
+    "image": null,
+    "section": "communication"
+  }
+]

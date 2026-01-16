@@ -23,14 +23,6 @@ const FeatureAccordionButtons: React.FC<FeatureAccordionButtonsProps> = ({ featu
       : []
   ), [featureTitle, featureButtons]);
 
-  // Filter accordions for this feature
-  const filteredAccordions = useMemo(() => (
-    featureTitle
-      ? accordions.filter(acc =>
-          acc.parentFeature && acc.parentFeature.trim().toLowerCase() === featureTitle.trim().toLowerCase()
-        )
-      : []
-  ), [featureTitle, accordions]);
 
   // State for selected button
   const [selectedAccordionId, setSelectedAccordionId] = useState<number | null>(null);
@@ -38,16 +30,20 @@ const FeatureAccordionButtons: React.FC<FeatureAccordionButtonsProps> = ({ featu
   // Always select the first button by default (or when feature changes)
   useEffect(() => {
     if (filteredButtons.length > 0) {
-      // Support both accordionId and accordion property names
       setSelectedAccordionId(filteredButtons[0].accordionId ?? filteredButtons[0].accordion);
     }
   }, [filteredButtons, featureTitle]);
 
-  // Find the selected button and related accordion group
+  // Find the selected button
   const selectedBtn = filteredButtons.find(btn => (btn.accordionId ?? btn.accordion) === selectedAccordionId);
-  const selectedAccordion = selectedBtn
-    ? filteredAccordions.find(acc => acc.title.trim().toLowerCase() === (selectedBtn.accordionLabel || '').trim().toLowerCase())
-    : null;
+
+  // Find the accordion group by id (from accordions) for the selected button
+  const selectedAccordion = useMemo(() => {
+    if (!selectedBtn || !accordions.length) return null;
+    const label = selectedBtn.accordionLabel || selectedBtn.label;
+    if (!label || !label.trim) return null;
+    return accordions.find(acc => acc.title && acc.title.trim && acc.title.trim().toLowerCase() === label.trim().toLowerCase()) || null;
+  }, [selectedBtn, accordions]);
 
   return (
     <div>

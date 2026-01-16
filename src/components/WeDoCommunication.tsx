@@ -1,42 +1,114 @@
-import React from "react";
+import React, { useState } from "react";
 import "../WeDoCommunication.css";
-import { VanillaAccordion } from "./VanillaAccordion";
+import WhatWeDoAccordion from "./WhatWeDoAccordion";
 
-const WeDoCommunication: React.FC = () => (
-  <section className="we-do-communication-bg">
-    <div className="we-do-communication-container">
-      <h2 className="we-do-communication__heading">Communication</h2>
-      <p className="we-do-communication__description">This is a placeholder description for the communication section. Add your real content here to describe what this section is about.</p>
-      <div className="we-do-communication__columns">
-        <div className="we-do-communication__accordion">
-          <VanillaAccordion
-            items={[
-              {
-                title: "Beautiful canvases",
-                panels: [
-                  { title: "Panel 1", content: "Some placeholder content here." },
-                  { title: "Panel 2", content: "More placeholder content." },
-                ],
-              },
-              {
-                title: "All the right channels",
-                panels: [
-                  { title: "Panel 1", content: "Another panel content." },
-                ],
-              },
-            ]}
-          />
+
+
+const COMMUNICATION_URL = "https://pauli.blob.core.windows.net/365-evergreen/accordions/accordions.json";
+const ACCORDION_LIST_URL = "https://pauli.blob.core.windows.net/365-evergreen/accordions/accordion-list.json";
+
+const WeDoCommunication: React.FC = () => {
+  const [comms, setComms] = React.useState<any[]>([]);
+  const [accordionList, setAccordionList] = React.useState<any[]>([]);
+  const [selectedIdx, setSelectedIdx] = useState(0);
+  const [openPanelIdx, setOpenPanelIdx] = useState(0);
+
+  React.useEffect(() => {
+    let cancelled = false;
+    Promise.all([
+      fetch(COMMUNICATION_URL).then((res) => res.json()),
+      fetch(ACCORDION_LIST_URL).then((res) => res.json())
+    ]).then(([commsData, accordionData]) => {
+      let commsArr = Array.isArray(commsData)
+        ? commsData
+        : (commsData && Array.isArray(commsData.body) ? commsData.body : []);
+      let accordionArr = Array.isArray(accordionData)
+        ? accordionData
+        : (accordionData && Array.isArray(accordionData.body) ? accordionData.body : []);
+      if (!cancelled) {
+        setComms(commsArr.filter((item: { section: string; }) => item.section === "communication"));
+        setAccordionList(accordionArr);
+      }
+    }).catch(() => {
+      if (!cancelled) {
+        setComms([]);
+        setAccordionList([]);
+      }
+    });
+    return () => { cancelled = true; };
+  }, []);
+
+  const selected = comms.length > 0 ? comms[selectedIdx] : null;
+  const panels = selected && Array.isArray(accordionList)
+    ? accordionList.filter((item) => item.parentId === selected.id)
+    : [];
+
+  // Get image for selected panel if present, else fallback to selected item
+  let imageUrl = selected?.imageUrl;
+  if (panels.length > 0 && panels[openPanelIdx] && panels[openPanelIdx].imageUrl) {
+    imageUrl = panels[openPanelIdx].imageUrl;
+  }
+
+  return (
+    <section className="we-do-communication-bg">
+      <div className="we-do-communication-container">
+        <h2 className="we-do-communication__heading">Communication</h2>
+        <p className="we-do-communication__description">This is a placeholder description for the communication section. Add your real content here to describe what this section is about.</p>
+        <div className="we-do-communication__button-row">
+          {comms.length === 0 ? (
+            <span>Loading...</span>
+          ) : (
+            comms.map((item, idx) => (
+              <button
+                key={item.id}
+                className={`we-do-communication__button${selectedIdx === idx ? " selected" : ""}`}
+                onClick={() => setSelectedIdx(idx)}
+              >
+                {item.label}
+              </button>
+            ))
+          )}
         </div>
-        <div className="we-do-communication__calendar">
-          <div className="we-do-communication__calendar-inner">
-            <h3>Calendar Placeholder</h3>
-            {/* You can replace this with a Calendar component or embed */}
+        <div className="we-do-communication__columns">
+          <div className="communication-accordion-container">
+            {comms.length === 0 ? (
+              <div>Loading accordion...</div>
+            ) : selected ? (
+              <WhatWeDoAccordion
+                items={[{
+                  title: selected.label,
+                  panels: panels.length > 0
+                    ? panels.map((p) => ({
+                        title: p.label,
+                        content: p.blurb,
+                      }))
+                    : [{ title: selected.label, content: selected.blurb }]
+                }]}
+                openPanelIdx={openPanelIdx}
+                setOpenPanelIdx={setOpenPanelIdx}
+              />
+            ) : (
+              <div>No accordion data found.</div>
+            )}
+          </div>
+          <div className="communication-image-container">
+            {imageUrl ? (
+              <img
+                src={imageUrl}
+                alt={selected?.label}
+                className="communication-image"
+                style={{ opacity: 1, transition: 'opacity 0.5s cubic-bezier(.4,0,.2,1)' }}
+                onLoad={e => { e.currentTarget.style.opacity = '1'; }}
+              />
+            ) : (
+              <div className="communication-image-placeholder">No image</div>
+            )}
           </div>
         </div>
+        <p className="we-do-communication__footer">Yo</p>
       </div>
-      <p className="we-do-communication__footer">Yo cunt</p>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
 
 export default WeDoCommunication;

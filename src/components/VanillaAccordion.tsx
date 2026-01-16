@@ -24,7 +24,7 @@ export const VanillaAccordion: React.FC<VanillaAccordionProps> = ({ items }) => 
     <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
       {items.map((item, idx) => (
         <section
-          key={item.title + idx}
+            key={item.title ? `${item.title}-${idx}` : `section-${idx}`}
           style={{
             display: "flex",
             flexDirection: idx % 2 === 1 ? "row-reverse" : "row",
@@ -39,7 +39,7 @@ export const VanillaAccordion: React.FC<VanillaAccordionProps> = ({ items }) => 
             <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
               {item.panels.map((panel, pidx) => (
                 <VanillaAccordionPanel
-                  key={(panel as any).key ?? panel.title + '-' + pidx}
+                  key={panel.title ? `${panel.title}-${pidx}` : `panel-${idx}-${pidx}`}
                   title={panel.title}
                   content={panel.content}
                   open={openPanel?.itemIdx === idx && openPanel?.panelIdx === pidx}
