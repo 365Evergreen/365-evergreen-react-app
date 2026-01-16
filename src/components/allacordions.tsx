@@ -48,7 +48,7 @@ const AllAccordions: React.FC = () => {
               Feature: <span style={{ color: "#0078d4" }}>{acc.feature}</span> | Label: <span style={{ color: "#333" }}>{item.title}</span>
               {item.id && (
                 <>
-                  {' '}| lbl: <span style={{ color: "#888" }}>{item.label}</span>{' '}| ID: <span style={{ color: "#888" }}>{item.id}</span>
+                  {' '}| lbl: <span style={{ color: "#888" }}>{item.label}</span>{' '}| ID: <span style={{ color: "#888" }}>{item.parentFeatureId}</span>
                 </>
               )}
             </div>

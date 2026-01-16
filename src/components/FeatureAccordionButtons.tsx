@@ -2,23 +2,31 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { useAzureAccordions } from '../lib/useAzureAccordions';
 import { VanillaAccordion } from './VanillaAccordion';
 import accordionListJson from '../../accordion-list.json';
+import featuresData from '../lib/features.json';
 
 interface FeatureAccordionButtonsProps {
   feature: string;
 }
-
 const FeatureAccordionButtons: React.FC<FeatureAccordionButtonsProps> = ({ feature }) => {
-  const accordions = useAzureAccordions();
-  // Filter accordions for the selected feature
-  const filteredAccordions = useMemo(() => (
-    feature
-      ? accordions.filter(acc => acc.feature && acc.feature.trim().toLowerCase() === feature.trim().toLowerCase())
-      : []
-  ), [feature, accordions]);
+  // Find featureId from features.json
+  const featureId = useMemo(() => {
+    const edges = featuresData.data?.features?.edges || [];
+    const match = edges.find((f: any) => f.node.title.trim().toLowerCase() === feature.trim().toLowerCase());
+    return match?.node?.id ?? undefined;
+  }, [feature]);
+
+  // Filter accordions by parentFeatureId
+  const accordions = useAzureAccordions(featureId);
+
+  // State for selected accordion index
+  const [selectedIdx, setSelectedIdx] = useState(0);
+  useEffect(() => {
+    setSelectedIdx(0);
+  }, [featureId]);
 
   // Get panels/items for each accordion
   const accordionItems = useMemo(() => (
-    filteredAccordions.map(acc => {
+    accordions.map(acc => {
       // Find items in accordion-list where parentId matches acc.id
       const panels = (accordionListJson.body || []).filter(item => item.parentId === acc.id)
         .sort((a, b) => (a.order || 0) - (b.order || 0))
@@ -30,13 +38,7 @@ const FeatureAccordionButtons: React.FC<FeatureAccordionButtonsProps> = ({ featu
         panels
       };
     })
-  ), [filteredAccordions]);
-
-  // State for selected accordion index
-  const [selectedIdx, setSelectedIdx] = useState(0);
-  useEffect(() => {
-    setSelectedIdx(0);
-  }, [feature]);
+  ), [accordions]);
 
   return (
     <div>
