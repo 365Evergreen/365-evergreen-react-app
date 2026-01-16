@@ -6,11 +6,12 @@ export interface AccordionPanelData {
 }
 
 export interface AccordionGroupData {
+  id: number;
   title: string;
   description?: string;
   header?: string;
   image?: string;
-  parentFeature?: string;
+  feature?: string;
   panels: AccordionPanelData[];
 }
 
@@ -25,19 +26,20 @@ export function useAzureAccordions(): AccordionGroupData[] {
       const accordions = Array.isArray(accordionMeta) ? accordionMeta : [accordionMeta];
       const items = Array.isArray(accordionItems) ? accordionItems : [accordionItems];
       const grouped = accordions.map(acc => {
-        // Find panels where parentId matches this accordion's ID
+        // Find panels where parentId matches this accordion's id
         const panels = items
-          .filter(item => item.parentId === acc.ID)
+          .filter(item => item.parentId === acc.id)
           .sort((a, b) => (a.order || 0) - (b.order || 0))
           .map(item => ({
             title: item.label,
             content: item.blurb
           }));
         return {
-          title: acc.Label,
-          description: acc.Blurb,
-          image: acc.Image,
-          parentFeature: acc.ParentFeature,
+          id: acc.id,
+          title: acc.label,
+          description: acc.blurb,
+          image: acc.image,
+          feature: acc.feature,
           panels
         };
       });

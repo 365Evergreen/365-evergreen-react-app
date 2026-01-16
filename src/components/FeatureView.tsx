@@ -49,7 +49,7 @@ const FeatureView: React.FC = () => {
         )}
       </div>
       {/* Feature buttons and accordions for this feature */}
-      {feature?.title && <FeatureAccordionButtons featureTitle={feature.title} />}
+      {feature?.title && <FeatureAccordionButtons feature={feature.title} />}
     </section>
   );
 };

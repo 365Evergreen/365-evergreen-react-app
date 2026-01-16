@@ -1,11 +1,15 @@
- [
+{
+    "body": [
         {
             "id": 1,
             "parent": "Work from anywhere",
             "parentId": 1,
             "label": "All your information, all the time",
             "blurb": "We help your team members create, connect, and collaborate securely from anywhere.",
-            "order": 1
+            "order": 1,
+            "accordion": "Work from anywhere",
+            "accordionId": 1,
+            "imageUrl": null
         },
         {
             "id": 2,
@@ -13,7 +17,10 @@
             "parentId": 1,
             "label": "Work with any device",
             "blurb": "Deliver a seamless user experience whether your team is on desktop, tablet, or mobile — same tools, same interface, same productivity.",
-            "order": 2
+            "order": 2,
+            "accordion": "Work from anywhere",
+            "accordionId": 1,
+            "imageUrl": null
         },
         {
             "id": 3,
@@ -21,7 +28,10 @@
             "parentId": 1,
             "label": "Work in the cloud and offline",
             "blurb": "Store, sync, and share documents effortlessly with cloud storage that's always up-to-date and accessible anywhere.",
-            "order": 3
+            "order": 3,
+            "accordion": "Work from anywhere",
+            "accordionId": 1,
+            "imageUrl": null
         },
         {
             "id": 4,
@@ -29,7 +39,10 @@
             "parentId": 1,
             "label": "Assured governance",
             "blurb": "Maintain control and meet regulatory requirements with comprehensive governance policies and automated compliance checks.",
-            "order": 4
+            "order": 4,
+            "accordion": "Work from anywhere",
+            "accordionId": 1,
+            "imageUrl": null
         },
         {
             "id": 5,
@@ -37,7 +50,10 @@
             "parentId": 2,
             "label": "Keep informed",
             "blurb": "Enable users to access SharePoint resources in the flow of work, including email, Microsoft Teams, and Microsoft Viva.",
-            "order": 1
+            "order": 1,
+            "accordion": "Communicate with ease",
+            "accordionId": 2,
+            "imageUrl": null
         },
         {
             "id": 7,
@@ -45,7 +61,10 @@
             "parentId": 2,
             "label": "Chat and meet with anyone",
             "blurb": "Enable users to access SharePoint resources in the flow of work, including email, Microsoft Teams, and Microsoft Viva.",
-            "order": 2
+            "order": 2,
+            "accordion": "Communicate with ease",
+            "accordionId": 2,
+            "imageUrl": null
         },
         {
             "id": 8,
@@ -53,7 +72,10 @@
             "parentId": 2,
             "label": "Targetted news and updates",
             "blurb": "Enable users to access SharePoint resources in the flow of work, including email, Microsoft Teams, and Microsoft Viva.",
-            "order": 3
+            "order": 3,
+            "accordion": "Communicate with ease",
+            "accordionId": 2,
+            "imageUrl": null
         },
         {
             "id": 9,
@@ -61,7 +83,10 @@
             "parentId": 2,
             "label": "Push updates to your team",
             "blurb": "Enable users to access SharePoint resources in the flow of work, including email, Microsoft Teams, and Microsoft Viva.",
-            "order": 4
+            "order": 4,
+            "accordion": "Communicate with ease",
+            "accordionId": 2,
+            "imageUrl": null
         },
         {
             "id": 10,
@@ -69,7 +94,10 @@
             "parentId": 3,
             "label": "Rich canvases for your collaborators",
             "blurb": "Enable users to access SharePoint resources in the flow of work, including email, Microsoft Teams, and Microsoft Viva.",
-            "order": 1
+            "order": 1,
+            "accordion": "Collaborate seamlessly",
+            "accordionId": 3,
+            "imageUrl": null
         },
         {
             "id": 11,
@@ -77,7 +105,10 @@
             "parentId": 3,
             "label": "The right spaces for the right documents",
             "blurb": "Enable users to access SharePoint resources in the flow of work, including email, Microsoft Teams, and Microsoft Viva.",
-            "order": 2
+            "order": null,
+            "accordion": "Collaborate seamlessly",
+            "accordionId": 3,
+            "imageUrl": null
         },
         {
             "id": 12,
@@ -85,7 +116,10 @@
             "parentId": 3,
             "label": "Coauthoring",
             "blurb": "Enable users to access SharePoint resources in the flow of work, including email, Microsoft Teams, and Microsoft Viva.",
-            "order": 3
+            "order": null,
+            "accordion": "Collaborate seamlessly",
+            "accordionId": 3,
+            "imageUrl": null
         },
         {
             "id": 13,
@@ -93,7 +127,10 @@
             "parentId": 3,
             "label": "Changes as the happen",
             "blurb": "Enable users to access SharePoint resources in the flow of work, including email, Microsoft Teams, and Microsoft Viva.",
-            "order": 4
+            "order": null,
+            "accordion": "Collaborate seamlessly",
+            "accordionId": 3,
+            "imageUrl": null
         },
         {
             "id": 14,
@@ -101,7 +138,10 @@
             "parentId": 4,
             "label": "Beautiful sites and workspaces",
             "blurb": "Enable users to access SharePoint resources in the flow of work, including email, Microsoft Teams, and Microsoft Viva.",
-            "order": 1
+            "order": null,
+            "accordion": "Engage your teams",
+            "accordionId": 4,
+            "imageUrl": null
         },
         {
             "id": 15,
@@ -109,7 +149,10 @@
             "parentId": 4,
             "label": "Build communities",
             "blurb": "Enable users to access SharePoint resources in the flow of work, including email, Microsoft Teams, and Microsoft Viva.",
-            "order": 2
+            "order": null,
+            "accordion": "Engage your teams",
+            "accordionId": 4,
+            "imageUrl": null
         },
         {
             "id": 16,
@@ -117,7 +160,10 @@
             "parentId": 4,
             "label": "Foster relationships",
             "blurb": "Enable users to access SharePoint resources in the flow of work, including email, Microsoft Teams, and Microsoft Viva.",
-            "order": 3
+            "order": null,
+            "accordion": "Engage your teams",
+            "accordionId": 4,
+            "imageUrl": null
         },
         {
             "id": 17,
@@ -125,7 +171,10 @@
             "parentId": 4,
             "label": "Personalised content and dashboards",
             "blurb": "Enable users to access SharePoint resources in the flow of work, including email, Microsoft Teams, and Microsoft Viva.",
-            "order": 4
+            "order": null,
+            "accordion": "Engage your teams",
+            "accordionId": 4,
+            "imageUrl": null
         },
         {
             "id": 18,
@@ -133,6 +182,43 @@
             "parentId": 5,
             "label": "Automate the repetitive",
             "blurb": "Enable users to access SharePoint resources in the flow of work, including email, Microsoft Teams, and Microsoft Viva.",
-            "order": 1
+            "order": null,
+            "accordion": "Replace the effort",
+            "accordionId": 5,
+            "imageUrl": null
+        },
+        {
+            "id": 19,
+            "parent": "Stay connected",
+            "parentId": 14,
+            "label": "Teams keeps everyone in the loop  ",
+            "blurb": "Enable users to access SharePoint resources in the flow of work, including email, Microsoft Teams, and Microsoft Viva.",
+            "order": 1,
+            "accordion": "Stay connected",
+            "accordionId": 14,
+            "imageUrl": "https://365evergreen.com/wp-content/uploads/2026/01/accordion-1.avif"
+        },
+        {
+            "id": 20,
+            "parent": "Stay connected",
+            "parentId": 14,
+            "label": "SharePoint brings the details together  ",
+            "blurb": "Enable users to access SharePoint resources in the flow of work, including email, Microsoft Teams, and Microsoft Viva.",
+            "order": 2,
+            "accordion": "Stay connected",
+            "accordionId": 14,
+            "imageUrl": "https://365evergreen.com/wp-content/uploads/2026/01/accordion-2-1.avif"
+        },
+        {
+            "id": 21,
+            "parent": "Stay connected",
+            "parentId": 14,
+            "label": "Copilot ties it all into one story  ",
+            "blurb": "Enable users to access SharePoint resources in the flow of work, including email, Microsoft Teams, and Microsoft Viva.",
+            "order": 3,
+            "accordion": "Stay connected",
+            "accordionId": 14,
+            "imageUrl": "https://365evergreen.com/wp-content/uploads/2026/01/accordion-2.avif"
         }
     ]
+}

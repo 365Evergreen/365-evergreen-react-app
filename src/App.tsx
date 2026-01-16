@@ -7,6 +7,7 @@ import { Features } from './components/Features';
 import LatestPosts from './components/LatestPosts';
 import { ContactForm } from './components/ContactForm';
 import FeatureView from './components/FeatureView';
+import AllAccordions from './components/allacordions';
 import { Footer } from './components/Footer';
 import { CookieConsent } from './components/CookieConsent';
 import { CopilotChat } from './components/CopilotChat';
@@ -97,6 +98,7 @@ function App() {
             </AnimatePresence>
           } />
           <Route path="/feature/:slug" element={<FeatureView />} />
+          <Route path="/all-accordions" element={<AllAccordions />} />
           <Route path="/latest-posts" element={<LatestPostsArchive />} />
           <Route path="/category/:category" element={<LatestPostsArchive />} />
           <Route path="/category/:category/:slug" element={<PageView />} />

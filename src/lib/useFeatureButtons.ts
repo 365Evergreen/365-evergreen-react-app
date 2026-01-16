@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 export interface FeatureButton {
   feature: string;
   label: string;
-  accordionId: number;
+  accordion: number;
   accordionLabel: string;
 }
 
