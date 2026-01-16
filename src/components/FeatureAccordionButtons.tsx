@@ -1,22 +1,53 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { useAzureAccordions } from '../lib/useAzureAccordions';
+
 import { VanillaAccordion } from './VanillaAccordion';
-import accordionListJson from '../../accordion-list.json';
 import featuresData from '../lib/features.json';
 
 interface FeatureAccordionButtonsProps {
   feature: string;
 }
+
+import { useParams } from 'react-router-dom';
+
 const FeatureAccordionButtons: React.FC<FeatureAccordionButtonsProps> = ({ feature }) => {
-  // Find featureId from features.json
+  // Find featureId from features.json, robustly (by title or slug)
+  const { slug } = useParams<{ slug?: string }>();
   const featureId = useMemo(() => {
     const edges = featuresData.data?.features?.edges || [];
-    const match = edges.find((f: any) => f.node.title.trim().toLowerCase() === feature.trim().toLowerCase());
+    const norm = (s: string) => s.trim().toLowerCase().replace(/\s+/g, ' ');
+    let match = edges.find((f: any) => norm(f.node.title) === norm(feature));
+    if (!match && slug) {
+      match = edges.find((f: any) => f.node.slug?.toLowerCase() === slug.toLowerCase());
+    }
+    if (!match) {
+      // eslint-disable-next-line no-console
+      console.warn('No feature match for:', feature, 'slug:', slug);
+    }
     return match?.node?.id ?? undefined;
-  }, [feature]);
+  }, [feature, slug]);
 
-  // Filter accordions by parentFeatureId
-  const accordions = useAzureAccordions(featureId);
+
+  // Fetch accordions and accordion-list from hosted URLs
+  const [accordions, setAccordions] = useState<any[]>([]);
+  const [accordionList, setAccordionList] = useState<any[]>([]);
+
+  useEffect(() => {
+    if (!featureId) {
+      setAccordions([]);
+      return;
+    }
+    fetch('https://pauli.blob.core.windows.net/365-evergreen/accordions/accordions.json')
+      .then(res => res.json())
+      .then(data => {
+        const arr = Array.isArray(data) ? data : (data.body || []);
+        setAccordions(arr.filter((acc: any) => acc.featureId === featureId));
+      });
+    fetch('https://pauli.blob.core.windows.net/365-evergreen/accordions/accordion-list.json')
+      .then(res => res.json())
+      .then(data => {
+        setAccordionList(Array.isArray(data) ? data : (data.body || []));
+      });
+  }, [featureId]);
 
   // State for selected accordion index
   const [selectedIdx, setSelectedIdx] = useState(0);
@@ -28,18 +59,18 @@ const FeatureAccordionButtons: React.FC<FeatureAccordionButtonsProps> = ({ featu
   const accordionItems = useMemo(() => (
     accordions.map(acc => {
       // Find items in accordion-list where parentId matches acc.id
-      const panels = (accordionListJson.body || []).filter(item => item.parentId === acc.id)
+      const panels = accordionList.filter(item => item.parentId === acc.id)
         .sort((a, b) => (a.order || 0) - (b.order || 0))
         .map(item => ({ title: item.label, content: item.blurb }));
       return {
         id: acc.id,
-        title: acc.title,
-        description: acc.description,
+        title: acc.label,
+        description: acc.blurb,
         image: acc.image,
         panels
       };
     })
-  ), [accordions]);
+  ), [accordions, accordionList]);
 
   return (
     <div>

@@ -21,8 +21,12 @@ import LatestPostsArchive from './components/LatestPostsArchive';
 // import Carousel from './components/Carousel';
 import FluentCarousel from './components/FluentCarousel';
 import VanillaAccordionDemoPage from './components/VanillaAccordionDemoPage';
+
 import { AnimatePresence, motion } from 'framer-motion';
 import { fadeVariants } from './components/motionPresets';
+import AccordionTest from './components/AccordionTest';
+import FeatureButtonsTest from './components/FeatureButtonsTest';
+import FeatureButtonsLogic from './components/FeatureButtonsLogic';
 
 import { Routes, Route } from 'react-router-dom';
 
@@ -107,6 +111,10 @@ function App() {
           <Route path="/:slug" element={<PageView />} />
           <Route path="/:parent/:slug" element={<PageView />} />
           <Route path="/vanilla-accordion-demo" element={<VanillaAccordionDemoPage />} />
+          <Route path="/accordion-test" element={<AccordionTest />} />
+          <Route path="/feature-buttons-test" element={<FeatureButtonsTest />} />
+          {/* Simulate homepage selection: pass featureId for Modern workplace */}
+          <Route path="/feature-buttons-logic" element={<FeatureButtonsLogic featureId="cG9zdDozMzg=" />} />
         </Routes>
         <CopilotChat open={chatOpen} onClose={() => setChatOpen(false)} />
       </main>

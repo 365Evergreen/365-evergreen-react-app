@@ -12,11 +12,11 @@ export interface AccordionGroupData {
   header?: string;
   image?: string;
   feature?: string;
-  parentFeatureId?: string;
+  featureId?: string;
   panels: AccordionPanelData[];
 }
 
-export function useAzureAccordions(parentFeatureId?: string): AccordionGroupData[] {
+export function useAzureAccordions(featureId?: string): AccordionGroupData[] {
   const [data, setData] = useState<AccordionGroupData[]>([]);
 
   useEffect(() => {
@@ -27,8 +27,8 @@ export function useAzureAccordions(parentFeatureId?: string): AccordionGroupData
       const accordions = Array.isArray(accordionMeta) ? accordionMeta : [accordionMeta];
       const items = Array.isArray(accordionItems) ? accordionItems : [accordionItems];
       let filteredAccordions = accordions;
-      if (parentFeatureId) {
-        filteredAccordions = accordions.filter(acc => acc.parentFeatureId === parentFeatureId);
+      if (featureId) {
+        filteredAccordions = accordions.filter(acc => acc.featureId === featureId);
       }
       const grouped = filteredAccordions.map(acc => {
         // Find panels where parentId matches this accordion's id
@@ -45,13 +45,13 @@ export function useAzureAccordions(parentFeatureId?: string): AccordionGroupData
           description: acc.blurb,
           image: acc.image,
           feature: acc.feature,
-          parentFeatureId: acc.parentFeatureId,
+          featureId: acc.featureId,
           panels
         };
       });
       setData(grouped);
     });
-  }, [parentFeatureId]);
+  }, [featureId]);
 
   return data;
 }

@@ -3,119 +3,119 @@
         {
             "id": 1,
             "feature": "Modern workplace",
-            "parentFeatureId": "cG9zdDozMzg=",
             "label": "Work from anywhere",
             "blurb": "We help your team members create, connect, and collaborate securely from anywhere.",
             "image": "https://365evergreen.com/wp-content/uploads/2025/07/francesco-gallarotti-ruQHpukrN7c-unsplash-1536x1024.jpg",
-            "section": null
+            "section": null,
+            "featureId": "cG9zdDozMzg="
         },
         {
             "id": 2,
             "feature": "Modern workplace",
-            "parentFeatureId": "cG9zdDozMzg=",
             "label": "Communicate with ease",
             "blurb": "We help your team members create, connect, and collaborate securely from anywhere.",
             "image": "https://365evergreen.com/wp-content/uploads/2025/07/francesco-gallarotti-ruQHpukrN7c-unsplash-1536x1024.jpg",
-            "section": null
+            "section": null,
+            "featureId": "cG9zdDozMzg="
         },
         {
             "id": 3,
             "feature": "Modern workplace",
-            "parentFeatureId": "cG9zdDozMzg=",
             "label": "Collaborate seamlessly",
             "blurb": "We help your team members create, connect, and collaborate securely from anywhere.",
             "image": "https://365evergreen.com/wp-content/uploads/2025/07/francesco-gallarotti-ruQHpukrN7c-unsplash-1536x1024.jpg",
-            "section": null
+            "section": null,
+            "featureId": "cG9zdDozMzg="
         },
         {
             "id": 4,
             "feature": "Modern workplace",
-            "parentFeatureId": "cG9zdDozMzg=",
             "label": "Engage your teams",
             "blurb": "We help your team members create, connect, and collaborate securely from anywhere.",
             "image": "https://365evergreen.com/wp-content/uploads/2025/07/francesco-gallarotti-ruQHpukrN7c-unsplash-1536x1024.jpg",
-            "section": null
+            "section": null,
+            "featureId": "cG9zdDozMzg="
         },
         {
             "id": 5,
             "feature": "Automated processes",
-            "parentFeatureId": "cG9zdDozNDM=",
             "label": "Replace the effort",
             "blurb": "Automate repetitive tasks and streamline business processes with custom workflows\n",
             "image": "https://365evergreen.com/wp-content/uploads/2025/07/francesco-gallarotti-ruQHpukrN7c-unsplash-1536x1024.jpg",
-            "section": null
+            "section": null,
+            "featureId": "cG9zdDozNDM="
         },
         {
             "id": 6,
             "feature": "Automated processes",
-            "parentFeatureId": "cG9zdDozNDM=",
             "label": "Be more efficient",
             "blurb": "We help your team members create, connect, and collaborate securely from anywhere.",
             "image": "https://365evergreen.com/wp-content/uploads/2025/07/francesco-gallarotti-ruQHpukrN7c-unsplash-1536x1024.jpg",
-            "section": null
+            "section": null,
+            "featureId": "cG9zdDozNDM="
         },
         {
             "id": 7,
             "feature": "Automated processes",
-            "parentFeatureId": "cG9zdDozNDM=",
             "label": "Connect your apps",
             "blurb": "We help your team members create, connect, and collaborate securely from anywhere.",
             "image": "https://365evergreen.com/wp-content/uploads/2025/07/francesco-gallarotti-ruQHpukrN7c-unsplash-1536x1024.jpg",
-            "section": null
+            "section": null,
+            "featureId": "cG9zdDozNDM="
         },
         {
             "id": 8,
             "feature": "Automated processes",
-            "parentFeatureId": "cG9zdDozNDM=",
             "label": "Scale",
             "blurb": null,
             "image": null,
-            "section": null
+            "section": null,
+            "featureId": "cG9zdDozNDM="
         },
         {
             "id": 9,
             "feature": "Automated processes",
-            "parentFeatureId": "cG9zdDozNDM=",
             "label": "Flow with confidence",
             "blurb": "We will help your team to scale automation to the next level ",
             "image": null,
-            "section": null
+            "section": null,
+            "featureId": "cG9zdDozNDM="
         },
         {
             "id": 10,
             "feature": "Business apps",
-            "parentFeatureId": "cG9zdDozNDg=",
             "label": "Build rapidly",
             "blurb": "Together, we can turn your idea into a working app in the blink of an eye",
             "image": "https://365evergreen.com/wp-content/uploads/2025/07/francesco-gallarotti-ruQHpukrN7c-unsplash-1536x1024.jpg",
-            "section": null
+            "section": null,
+            "featureId": "cG9zdDozNDg="
         },
         {
             "id": 11,
             "feature": "Business apps",
-            "parentFeatureId": "cG9zdDozNDg=",
             "label": "Empower your team",
             "blurb": "Let us train your team members build and extend apps that they understand",
             "image": "https://365evergreen.com/wp-content/uploads/2025/07/francesco-gallarotti-ruQHpukrN7c-unsplash-1536x1024.jpg",
-            "section": null
+            "section": null,
+            "featureId": "cG9zdDozNDg="
         },
         {
             "id": 12,
             "feature": "Business apps",
-            "parentFeatureId": "cG9zdDozNDg=",
             "label": "Manage for data",
             "blurb": "Let us train your team members build and extend apps that they understand",
             "image": "https://365evergreen.com/wp-content/uploads/2025/07/francesco-gallarotti-ruQHpukrN7c-unsplash-1536x1024.jpg",
-            "section": null
+            "section": null,
+            "featureId": "cG9zdDozNDg="
         },
         {
             "id": 13,
             "feature": "Business apps",
-            "parentFeatureId": "cG9zdDozNDg=",
             "label": "Scale with ease",
             "blurb": "We can take you from beginner to enterprise-level experts",
             "image": "https://365evergreen.com/wp-content/uploads/2025/07/francesco-gallarotti-ruQHpukrN7c-unsplash-1536x1024.jpg",
-            "section": null
+            "section": null,
+            "featureId": "cG9zdDozNDg="
         },
         {
             "id": 14,
@@ -123,7 +123,8 @@
             "label": "Stay connected",
             "blurb": "We can take you from beginner to enterprise-level experts",
             "image": null,
-            "section": "communication"
+            "section": "communication",
+            "featureId": null
         },
         {
             "id": 15,
@@ -131,7 +132,8 @@
             "label": "Smart notifications",
             "blurb": "We can take you from beginner to enterprise-level experts",
             "image": null,
-            "section": "communication"
+            "section": "communication",
+            "featureId": null
         },
         {
             "id": 16,
@@ -139,7 +141,8 @@
             "label": "Build communities",
             "blurb": "We can take you from beginner to enterprise-level experts",
             "image": null,
-            "section": "communication"
+            "section": "communication",
+            "featureId": null
         },
         {
             "id": 17,
@@ -147,7 +150,8 @@
             "label": "Create faster",
             "blurb": "We can take you from beginner to enterprise-level experts",
             "image": null,
-            "section": "communication"
+            "section": "communication",
+            "featureId": null
         },
         {
             "id": 18,
@@ -155,7 +159,8 @@
             "label": "Tailored communication",
             "blurb": "We can take you from beginner to enterprise-level experts",
             "image": null,
-            "section": "communication"
+            "section": "communication",
+            "featureId": null
         }
     ]
 }
