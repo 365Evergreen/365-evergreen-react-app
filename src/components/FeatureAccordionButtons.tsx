@@ -32,6 +32,7 @@ const FeatureAccordionButtons: React.FC<FeatureAccordionButtonsProps> = ({ featu
         .sort((a, b) => (a.order || 0) - (b.order || 0))
         .map(item => ({ title: item.label, content: item.blurb }));
       return {
+        id: acc.id,
         title: acc.title,
         description: acc.description,
         image: acc.image,
@@ -46,7 +47,7 @@ const FeatureAccordionButtons: React.FC<FeatureAccordionButtonsProps> = ({ featu
         <div style={{ marginTop: '2rem', marginBottom: '2rem', display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
           {accordionItems.map((acc, idx) => (
             <button
-              key={acc.title + '-' + idx}
+              key={(acc.id ? acc.id : acc.title) + '-' + idx}
               type="button"
               className={`appButton feature-accordion-btn${selectedIdx === idx ? ' feature-accordion-btn--active' : ''}`}
               style={{
