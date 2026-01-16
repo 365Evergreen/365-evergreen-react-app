@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "../WeDoCommunication.css";
 import WhatWeDoAccordion from "./WhatWeDoAccordion";
 
@@ -11,9 +11,21 @@ const WeDoCommunication: React.FC = () => {
   const [comms, setComms] = React.useState<any[]>([]);
   const [accordionList, setAccordionList] = React.useState<any[]>([]);
   const [selectedIdx, setSelectedIdx] = useState(0);
-  const [openPanelIdx, setOpenPanelIdx] = useState(0);
+  const [openPanelIdx, setOpenPanelIdx] = useState<number | null>(0);
+  const accordionContainerRef = useRef<HTMLDivElement>(null);
+  const [accordionHeight, setAccordionHeight] = useState<number>(0);
+  const selected = comms.length > 0 ? comms[selectedIdx] : null;
+  const panels = selected && Array.isArray(accordionList)
+    ? accordionList.filter((item) => item.parentId === selected.id)
+    : [];
 
-  React.useEffect(() => {
+  useEffect(() => {
+    if (accordionContainerRef.current) {
+      setAccordionHeight(accordionContainerRef.current.offsetHeight);
+    }
+  }, [panels, openPanelIdx, selectedIdx]);
+
+  useEffect(() => {
     let cancelled = false;
     Promise.all([
       fetch(COMMUNICATION_URL).then((res) => res.json()),
@@ -38,14 +50,16 @@ const WeDoCommunication: React.FC = () => {
     return () => { cancelled = true; };
   }, []);
 
-  const selected = comms.length > 0 ? comms[selectedIdx] : null;
-  const panels = selected && Array.isArray(accordionList)
-    ? accordionList.filter((item) => item.parentId === selected.id)
-    : [];
+  // ...existing code...
 
   // Get image for selected panel if present, else fallback to selected item
   let imageUrl = selected?.imageUrl;
-  if (panels.length > 0 && panels[openPanelIdx] && panels[openPanelIdx].imageUrl) {
+  if (
+    panels.length > 0 &&
+    openPanelIdx !== null &&
+    panels[openPanelIdx] &&
+    panels[openPanelIdx].imageUrl
+  ) {
     imageUrl = panels[openPanelIdx].imageUrl;
   }
 
@@ -70,7 +84,7 @@ const WeDoCommunication: React.FC = () => {
           )}
         </div>
         <div className="we-do-communication__columns">
-          <div className="communication-accordion-container">
+          <div className="communication-accordion-container" ref={accordionContainerRef}>
             {comms.length === 0 ? (
               <div>Loading accordion...</div>
             ) : selected ? (
@@ -97,18 +111,26 @@ const WeDoCommunication: React.FC = () => {
                 src={imageUrl}
                 alt={selected?.label}
                 className="communication-image"
-                style={{ opacity: 1, transition: 'opacity 0.5s cubic-bezier(.4,0,.2,1)' }}
+                style={{
+                  opacity: 1,
+                  transition: 'opacity 0.5s cubic-bezier(.4,0,.2,1)',
+                  height: accordionHeight ? `${accordionHeight}px` : 'auto',
+                  width: 'auto',
+                  objectFit: 'cover',
+                  maxWidth: '100%',
+                  display: 'block',
+                }}
                 onLoad={e => { e.currentTarget.style.opacity = '1'; }}
               />
             ) : (
-              <div className="communication-image-placeholder">No image</div>
+              <div className="communication-image-placeholder" style={{ height: accordionHeight ? `${accordionHeight}px` : 'auto', width: '100%' }}>No image</div>
             )}
           </div>
         </div>
         <p className="we-do-communication__footer">Yo</p>
       </div>
     </section>
-  );
+    );
 };
 
 export default WeDoCommunication;

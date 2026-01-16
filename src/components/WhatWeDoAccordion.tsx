@@ -13,15 +13,16 @@ export interface WhatWeDoAccordionItem {
 
 interface WhatWeDoAccordionProps {
   items: WhatWeDoAccordionItem[];
-  openPanelIdx?: number;
-  setOpenPanelIdx?: (idx: number) => void;
+  openPanelIdx?: number | null;
+  setOpenPanelIdx?: (idx: number | null) => void;
 }
 
 const WhatWeDoAccordion: React.FC<WhatWeDoAccordionProps> = ({ items, openPanelIdx, setOpenPanelIdx }) => {
-  const [internalOpenIdx, setInternalOpenIdx] = useState<number | null>(openPanelIdx ?? 0);
+  // All panels collapsed by default
+  const [internalOpenIdx, setInternalOpenIdx] = useState<number | null>(null);
   const handlePanelClick = (idx: number) => {
     if (setOpenPanelIdx) {
-      setOpenPanelIdx(idx);
+      setOpenPanelIdx(idx === (openPanelIdx ?? null) ? null : idx);
     } else {
       setInternalOpenIdx(idx === internalOpenIdx ? null : idx);
     }
