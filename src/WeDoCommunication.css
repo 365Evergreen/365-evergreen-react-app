@@ -127,18 +127,32 @@
 }
 
 .we-do-communication__button {
+  --button-bg: #fff;
+  --button-color: #7c4d9e;
+  --button-bg-selected: #7c4d9e;
+  --button-color-selected: #fff;
   padding: 0.75rem 2rem;
   font-size: 1.1rem;
   border-radius: 6px;
-  border: none;
-  background: #7c4d9e;
-  color: #fff;
+  border: 2px solid #7c4d9e;
+  background: var(--button-bg);
+  color: var(--button-color);
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.18s;
+  transition: background 0.18s, color 0.18s;
+}
+.we-do-communication__button.selected,
+.we-do-communication__button[aria-pressed="true"] {
+  background: var(--button-bg-selected);
+  color: var(--button-color-selected);
+}
+.we-do-communication__button:not(.selected):not([aria-pressed="true"]) {
+  background: var(--button-bg);
+  color: var(--button-color);
 }
 .we-do-communication__button:hover {
-  background: #5a3570;
+  background: #f3e9fa;
+  color: #5a3570;
 }
 .we-do-communication-bg {
   position: relative;
