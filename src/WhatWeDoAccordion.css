@@ -1,3 +1,29 @@
+@media (max-width: 768px) {
+  .whatwedo-accordion {
+    gap: 1rem;
+  }
+  .whatwedo-accordion__section {
+    margin-bottom: 1rem;
+  }
+  .whatwedo-accordion__title {
+    font-size: 1.1rem;
+  }
+  .whatwedo-accordion__panel {
+    min-height: 40px;
+  }
+  .whatwedo-accordion__button {
+    font-size: 1rem;
+    padding: 0.7rem 1rem;
+  }
+  .whatwedo-accordion__arrow {
+    font-size: 16px;
+    margin-right: 8px;
+  }
+  .whatwedo-accordion__content {
+    padding: 0.7rem 1rem;
+    font-size: 0.95rem;
+  }
+}
 .whatwedo-accordion {
   display: flex;
   flex-direction: column;

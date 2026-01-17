@@ -1,3 +1,50 @@
+@media (max-width: 768px) {
+  .we-do-communication-container {
+    flex-direction: column;
+    padding: 1.2rem 0.5rem;
+    max-width: 100vw;
+    gap: 1.2rem;
+  }
+  .communication-accordion-container,
+  .communication-image-container {
+    max-width: 100%;
+    min-width: 0;
+  }
+  .communication-image,
+  .we-do-communication__image {
+    max-width: 100vw;
+    max-height: 180px;
+    border-radius: 8px;
+  }
+  .communication-image-placeholder,
+  .we-do-communication__image-placeholder {
+    max-width: 100vw;
+    height: 120px;
+    font-size: 1rem;
+  }
+  .we-do-communication__heading {
+    font-size: 1.5rem;
+    text-align: left;
+  }
+  .we-do-communication__description {
+    font-size: 1rem;
+    margin-bottom: 1.2rem;
+  }
+  .we-do-communication__button-row {
+    flex-direction: column;
+    gap: 0.7rem;
+    margin-bottom: 1.2rem;
+    align-items: stretch;
+  }
+  .we-do-communication__button {
+    font-size: 1rem;
+    padding: 0.6rem 1.2rem;
+  }
+  .we-do-communication__footer {
+    font-size: 1.1rem;
+    margin-top: 1.5rem;
+  }
+}
 .communication-accordion-container {
   flex: 1;
   min-width: 0;

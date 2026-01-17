@@ -47,6 +47,7 @@ const WhatWeDoAccordion: React.FC<WhatWeDoAccordionProps> = ({ items, openPanelI
                   </span>
                   {panel.title}
                 </button>
+                <div className="whatwedo-accordion-content-expanded">
                 <div
                   className="whatwedo-accordion__content"
                   style={{ display: currentOpenIdx === pidx ? "block" : "none" }}
@@ -54,7 +55,12 @@ const WhatWeDoAccordion: React.FC<WhatWeDoAccordionProps> = ({ items, openPanelI
                 >
                   {panel.content}
                 </div>
-              </div>
+                {currentOpenIdx === pidx && (
+                  <div>
+                    <button type="button">Unstyled</button>
+                  </div>
+                )}
+              </div></div>
             ))}
           </div>
         </section>
