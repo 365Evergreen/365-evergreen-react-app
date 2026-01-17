@@ -1,3 +1,41 @@
+/* Archive options layout */
+.archive-options {  padding: .5rem 4vw .5rem 4vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.archive-options-toggle {
+  margin-left: auto;
+}
+
+.archive-view-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.5em 1.2em;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 1.1em;
+  border-radius: 8px;
+  transition: background 0.18s;
+  font-family: inherit;
+}
+
+.archive-view-toggle-icon {
+  display: inline-block;
+  vertical-align: middle;
+}
+/* Only show on desktop */
+.desktop-only {
+  display: block;
+}
+@media (max-width: 900px) {
+  .desktop-only {
+    display: none !important;
+  }
+}
 /* Searchbox styling */
 .latest-posts-archive-searchbox {
   padding: 0.6em 1em;

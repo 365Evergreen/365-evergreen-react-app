@@ -264,17 +264,25 @@ const LatestPostsArchive: React.FC = () => {
 					   </div>
 				   )}
 			   </div>
-			   <div className="archive-options-toggle">
-				   {/* View toggle button placeholder */}
-				   <button
-					   type="button"
-					   className="archive-view-toggle"
-					   onClick={() => setViewMode(v => v === 'grid' ? 'list' : 'grid')}
-					   aria-label={viewMode === 'grid' ? 'Switch to list view' : 'Switch to grid view'}
-				   >
-					   {viewMode === 'grid' ? 'List View' : 'Grid View'}
-				   </button>
-			   </div>
+							 <div className="archive-options-toggle desktop-only">
+									 <button
+											 type="button"
+											 className="archive-view-toggle"
+											 onClick={() => setViewMode(v => v === 'grid' ? 'list' : 'grid')}
+											 aria-label={viewMode === 'grid' ? 'Switch to list view' : 'Switch to grid view'}
+									 >
+											 <img
+												 src={viewMode === 'grid'
+													 ? 'https://365evergreen.com/wp-content/uploads/2026/01/ic_fluent_apps_list_24_regular-1.png'
+													 : 'https://365evergreen.com/wp-content/uploads/2026/01/ic_fluent_grid_24_regular-1.png'}
+												 alt={viewMode === 'grid' ? 'List view icon' : 'Grid view icon'}
+												 width={22}
+												 height={22}
+												 className="archive-view-toggle-icon"
+											 />
+											 {viewMode === 'grid' ? 'List View' : 'Grid View'}
+									 </button>
+							 </div>
 		 </div>
 
 		 {/* Posts container: grid or list view */}
