@@ -85,7 +85,9 @@ function App() {
                   animate="visible"
                   exit="exit"
                 >
-                  <LatestPosts />
+                  <div style={{ paddingBottom: '2.5rem' }}>
+                    <LatestPosts />
+                  </div>
                 </motion.div>
               </div>
               <div className="bg-default">
@@ -130,13 +132,13 @@ function App() {
             if (type === 'checkbox' && i === 1) options = ['Email', 'Chat', 'Video Calls', 'In-person'];
             if (type === 'radio' && i === 2) options = ['Lack of clarity', 'Poor tools', 'Low engagement', 'Siloed work'];
             return {
-              id: `q${i+1}`,
+              id: `q${i + 1}`,
               type: type as 'radio' | 'checkbox' | 'text',
               question: q.title,
               ...(options ? { options } : {})
             };
           })}
-          onComplete={() => {}}
+          onComplete={() => { }}
         />
       </FloatingDrawer>
     </>
