@@ -5,7 +5,7 @@ import WhatWeDoAccordion from "./WhatWeDoAccordion";
 const COMMUNICATION_URL = "https://365evergreendev.blob.core.windows.net/365evergreen/accordions.json";
 const ACCORDION_LIST_URL = "https://365evergreendev.blob.core.windows.net/365evergreen/accordion-list.json";
 
-const WhatWeDoGovernance: React.FC = () => {
+const WeDoGovernance: React.FC = () => {
   const [comms, setComms] = React.useState<any[]>([]);
   const [accordionList, setAccordionList] = React.useState<any[]>([]);
   const [selectedIdx, setSelectedIdx] = useState(0);
@@ -129,4 +129,4 @@ const WhatWeDoGovernance: React.FC = () => {
     );
 };
 
-export default WhatWeDoGovernance;
+export default WeDoGovernance;

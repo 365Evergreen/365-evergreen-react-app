@@ -4,16 +4,18 @@ import WhatWeDoAccordion from "./WhatWeDoAccordion";
 
 
 
-const COMMUNICATION_URL = "https://365evergreendev.blob.core.windows.net/365evergreen/accordions.json";
-const ACCORDION_LIST_URL = "https://365evergreendev.blob.core.windows.net/365evergreen/accordion-list.json";
+// We now fetch accordions and their items from WPGraphQL via `useAccordionsByComponent`
+import { useAccordionsByComponent } from '../lib/useAccordionsByComponent';
 
 const WeDoCommunication: React.FC = () => {
-  const [comms, setComms] = React.useState<any[]>([]);
-  const [accordionList, setAccordionList] = React.useState<any[]>([]);
   const [selectedIdx, setSelectedIdx] = useState(0);
   const [openPanelIdx, setOpenPanelIdx] = useState<number | null>(0);
   const accordionContainerRef = useRef<HTMLDivElement>(null);
   const [accordionHeight, setAccordionHeight] = useState<number>(0);
+
+  // Use GraphQL hook to fetch accordions and items for this component
+  const { accordions: comms, items: accordionList, loading, error } = useAccordionsByComponent('WeDoCommunication');
+
   const selected = comms.length > 0 ? comms[selectedIdx] : null;
   const panels = selected && Array.isArray(accordionList)
     ? accordionList.filter((item) => item.parentId === selected.id)
@@ -25,30 +27,14 @@ const WeDoCommunication: React.FC = () => {
     }
   }, [panels, openPanelIdx, selectedIdx]);
 
+  // previous blob-based fetch replaced by GraphQL hook `useAccordionsByComponent`.
+  // We still handle loading/error states for parity with previous behavior.
   useEffect(() => {
-    let cancelled = false;
-    Promise.all([
-      fetch(COMMUNICATION_URL).then((res) => res.json()),
-      fetch(ACCORDION_LIST_URL).then((res) => res.json())
-    ]).then(([commsData, accordionData]) => {
-      let commsArr = Array.isArray(commsData)
-        ? commsData
-        : (commsData && Array.isArray(commsData.body) ? commsData.body : []);
-      let accordionArr = Array.isArray(accordionData)
-        ? accordionData
-        : (accordionData && Array.isArray(accordionData.body) ? accordionData.body : []);
-      if (!cancelled) {
-        setComms(commsArr.filter((item: { section: string; }) => item.section === "communication"));
-        setAccordionList(accordionArr);
-      }
-    }).catch(() => {
-      if (!cancelled) {
-        setComms([]);
-        setAccordionList([]);
-      }
-    });
-    return () => { cancelled = true; };
-  }, []);
+    if (!loading && !error && comms.length > 0 && selectedIdx >= comms.length) {
+      // Ensure selected index is valid when data arrives
+      setSelectedIdx(0);
+    }
+  }, [loading, error, comms, selectedIdx]);
 
   // ...existing code...
 
@@ -69,8 +55,12 @@ const WeDoCommunication: React.FC = () => {
         <h2 className="we-do-communication__heading">Communication</h2>
         <p className="we-do-communication__description">Enhance your business communication with Microsoft 365. Our solutions empower teams to collaborate seamlessly, share information effortlessly, and stay connected regardless of location. With tools like Microsoft Teams, SharePoint, and Outlook, you can foster a culture of collaboration, streamline information sharing, and ensure everyone stays informed. From instant messaging to video conferencing and document management, Microsoft 365 offers a comprehensive suite of communication tools tailored to your business needs.</p>
         <div className="we-do-communication__button-row">
-          {comms.length === 0 ? (
+          {loading ? (
             <span>Loading...</span>
+          ) : error ? (
+            <span style={{ color: 'red' }}>Failed to load content</span>
+          ) : comms.length === 0 ? (
+            <span>No items found</span>
           ) : (
             comms.map((item, idx) => (
               <button
