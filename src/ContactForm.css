@@ -25,11 +25,30 @@
   .contact-root {
     padding: 0.5rem 0.5rem 1.5rem 0.5rem;
     background: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100vh;
+  }
+  .contact-wrapper {
+    width: 100%;
+    max-width: 480px;
+    margin: 0 auto;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
   .contact-container {
     padding: 1.2rem 0.5rem;
     border-radius: 12px;
     box-shadow: 0 1px 8px rgba(0,0,0,0.06);
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
   .contact-info-title {
     font-size: 1.5rem;
@@ -41,9 +60,15 @@
   }
   .contact-form {
     gap: 1rem;
+    width: 100%;
+    align-items: center;
   }
   .contact-form-row {
     gap: 1rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
   .contact-label {
     font-size: 1rem;
@@ -53,11 +78,14 @@
     padding: 0.7rem;
     font-size: 0.98rem;
     border-radius: 8px;
+    width: 100%;
+    box-sizing: border-box;
   }
   .contact-submit {
     font-size: 1rem;
     padding: 0.7rem 0;
     border-radius: 8px;
+    width: 100%;
   }
 }
 /* Consolidated ContactForm Styles */

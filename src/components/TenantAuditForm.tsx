@@ -2,9 +2,7 @@ import React, { useState } from 'react';
 import '../../TenantAuditForm.css';
 import { Button } from '@fluentui/react-components';
 
-interface TenantAuditFormProps {
-  onSubmit?: (data: TenantAuditFormData) => void;
-}
+
 
 export interface TenantAuditFormData {
   firstName: string;
@@ -14,7 +12,7 @@ export interface TenantAuditFormData {
   message: string;
 }
 
-export const TenantAuditForm: React.FC<TenantAuditFormProps> = ({ onSubmit }) => {
+export const TenantAuditForm: React.FC = () => {
   const [form, setForm] = useState<TenantAuditFormData>({
     firstName: '',
     surname: '',
@@ -28,9 +26,38 @@ export const TenantAuditForm: React.FC<TenantAuditFormProps> = ({ onSubmit }) =>
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (onSubmit) onSubmit(form);
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const formData = {
+      firstName: form.firstName,
+      surname: form.surname,
+      email: form.email,
+      organisation: form.organisation,
+      message: form.message,
+    };
+
+    try {
+      const response = await fetch(
+        "https://ee9ffbbcb17ae277b5341496799d04.c5.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/ab3332679c374cdcb8563bef31db25a6/triggers/manual/paths/invoke?api-version=1",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
+
+      if (!response.ok) {
+        console.error("Failed to trigger workflow:", response.statusText);
+        return;
+      }
+
+      console.log("Workflow triggered successfully!");
+    } catch (error) {
+      console.error("Error triggering workflow:", error);
+    }
   };
 
   return (
