@@ -12,7 +12,7 @@ const FeatureView: React.FC = () => {
 
   const breadcrumbItems = [
     { text: 'Home', href: '/' },
-    { text: 'Features', href: '/#features' },
+    { text: 'Features', href: '/all-features' },
     { text: feature?.title || (slug || 'Feature'), href: `/feature/${slug}` },
   ];
 

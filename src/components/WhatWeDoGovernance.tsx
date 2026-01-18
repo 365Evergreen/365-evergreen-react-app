@@ -2,12 +2,10 @@ import React, { useState, useRef, useEffect } from "react";
 import "../WeDoCommunication.css";
 import WhatWeDoAccordion from "./WhatWeDoAccordion";
 
-
-
 const COMMUNICATION_URL = "https://365evergreendev.blob.core.windows.net/365evergreen/accordions.json";
 const ACCORDION_LIST_URL = "https://365evergreendev.blob.core.windows.net/365evergreen/accordion-list.json";
 
-const WeDoCommunication: React.FC = () => {
+const WhatWeDoGovernance: React.FC = () => {
   const [comms, setComms] = React.useState<any[]>([]);
   const [accordionList, setAccordionList] = React.useState<any[]>([]);
   const [selectedIdx, setSelectedIdx] = useState(0);
@@ -38,7 +36,7 @@ const WeDoCommunication: React.FC = () => {
         ? accordionData
         : (accordionData && Array.isArray(accordionData.body) ? accordionData.body : []);
       if (!cancelled) {
-        setComms(commsArr.filter((item: { section: string; }) => item.section === "communication"));
+        setComms(commsArr.filter((item: { section: string; }) => item.section === "governance"));
         setAccordionList(accordionArr);
       }
     }).catch(() => {
@@ -49,8 +47,6 @@ const WeDoCommunication: React.FC = () => {
     });
     return () => { cancelled = true; };
   }, []);
-
-  // ...existing code...
 
   // Get image for selected panel if present, else fallback to selected item
   let imageUrl = selected?.imageUrl;
@@ -66,8 +62,8 @@ const WeDoCommunication: React.FC = () => {
   return (
     <section className="we-do-communication-bg">
       <div className="we-do-communication-container">
-        <h2 className="we-do-communication__heading">Communication</h2>
-        <p className="we-do-communication__description">Enhance your business communication with Microsoft 365. Our solutions empower teams to collaborate seamlessly, share information effortlessly, and stay connected regardless of location. With tools like Microsoft Teams, SharePoint, and Outlook, you can foster a culture of collaboration, streamline information sharing, and ensure everyone stays informed. From instant messaging to video conferencing and document management, Microsoft 365 offers a comprehensive suite of communication tools tailored to your business needs.</p>
+        <h2 className="we-do-communication__heading">Governance</h2>
+        <p className="we-do-communication__description">Placeholder description for governance. Replace with real content describing governance capabilities.</p>
         <div className="we-do-communication__button-row">
           {comms.length === 0 ? (
             <span>Loading...</span>
@@ -127,10 +123,10 @@ const WeDoCommunication: React.FC = () => {
             )}
           </div>
         </div>
-        <p className="we-do-communication__footer">Yo</p>
+        <p className="we-do-communication__footer">Governance footer</p>
       </div>
     </section>
     );
 };
 
-export default WeDoCommunication;
+export default WhatWeDoGovernance;

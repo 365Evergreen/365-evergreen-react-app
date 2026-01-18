@@ -3,6 +3,8 @@ import ResponsiveVideoPlayer from "./ResponsiveVideoPlayer";
 
 import WeDoCollaboration from "./WeDoCollaboration";
 import WeDoCommunication from "./WeDoCommunication";
+import WhatWeDoGovernance from "./WhatWeDoGovernance";
+import WhatWeSupport from "./WhatWeSupport";
 
 
 
@@ -28,6 +30,8 @@ const WhatWeDoStatic: React.FC = () => (
   <main>
     <WeDoCommunication />
     <WeDoCollaboration />
+    <WhatWeDoGovernance />
+    <WhatWeSupport />
     <TagCloud />
     <ResponsiveVideoPlayer
       src="https://365evergreendev.blob.core.windows.net/365evergreen/videos/Recording-20260116_084354.webm"

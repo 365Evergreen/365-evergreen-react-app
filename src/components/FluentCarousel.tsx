@@ -48,7 +48,7 @@ const useClasses = makeStyles({
 });
 
 // Remote blob URL for carousel items (primary source)
-const CAROUSEL_BLOB_URL = 'https://365evergreendev.blob.core.windows.net/365-evergreen/carousel-items.json';
+const CAROUSEL_BLOB_URL = 'https://365evergreendev.blob.core.windows.net/365evergreen/carousel-items.json';
 
 type RawCarouselItem = {
   Title: string;

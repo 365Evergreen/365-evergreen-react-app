@@ -28,17 +28,18 @@ const PageBlocks: React.FC<PageBlocksProps> = ({ blocks }) => {
         let content: React.ReactNode = null;
         switch (block.name) {
           case 'core/paragraph':
-            content = <p dangerouslySetInnerHTML={{ __html: block.attributes?.content || block.innerHTML || '' }} />;
+            content = <p className="fluent-body1" dangerouslySetInnerHTML={{ __html: block.attributes?.content || block.innerHTML || '' }} />;
             break;
           case 'core/heading': {
             const level = block.attributes?.level || 2;
             const tag = `h${level}`;
             if (/^h[1-6]$/.test(tag)) {
               content = React.createElement(tag, {
+                className: `fluent-title${level}`,
                 dangerouslySetInnerHTML: { __html: block.attributes?.content || block.innerHTML || '' }
               });
             } else {
-              content = <h2 dangerouslySetInnerHTML={{ __html: block.attributes?.content || block.innerHTML || '' }} />;
+              content = <h2 className="fluent-title2" dangerouslySetInnerHTML={{ __html: block.attributes?.content || block.innerHTML || '' }} />;
             }
             break;
           }
@@ -120,7 +121,7 @@ const PageBlocks: React.FC<PageBlocksProps> = ({ blocks }) => {
               <div style={{ border: '1px dashed #ccc', margin: '8px 0', padding: 4 }}>
                 <small style={{ color: '#888' }}>{block.name}</small>
                 {block.innerHTML && (
-                  <div dangerouslySetInnerHTML={{ __html: block.innerHTML }} />
+                  <div className="fluent-body1" dangerouslySetInnerHTML={{ __html: block.innerHTML }} />
                 )}
               </div>
             );
@@ -182,6 +183,7 @@ const PageBlocks: React.FC<PageBlocksProps> = ({ blocks }) => {
         return (
           <div
             key={idx}
+            className="wp-content"
             style={{
               ...containerStyle,
               position: overlay ? 'relative' : containerStyle.position,
