@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../../TenantAuditForm.css';
+import '../TenantAuditForm.css';
 import { Button } from '@fluentui/react-components';
 
 

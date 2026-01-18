@@ -3,28 +3,32 @@
             "Title": "Free modern workplace",
             "Blurb": null,
             "image": "https://fabricweb.azureedge.net/fabric-website/assets/images/swatch-picker/park-full-img.jpg",
-            "CTA": null,
-            "dsplay": false
+            "CTA": "get-your-free-modern-workplace-trial",
+            "btnText": "Get your free trial",
+            "display": true
         },
         {
             "Title": "An app in a week",
             "Blurb": "Get a custom business app built in just one week — fast, focused, and ready to test.",
             "image": "  \"https://365evergreen.com/wp-content/uploads/2026/01/377150-PPL-Hero-Background.png",
-            "CTA": "Get your app",
-            "dsplay": true
+            "CTA": "app-in-a-week",
+            "btnText": "Get started",
+            "display": true
         },
         {
             "Title": "Governance health check",
             "Blurb": "Ensure your environment meets compliance standards with a free health check",
             "image": "https://365evergreen.com/wp-content/uploads/2026/01/Hero-PowerPages-T2C.png",
-            "CTA": "Get your free health check",
-            "dsplay": true
+            "CTA": "get-your-free-health-check",
+            "btnText": "Get your check up",
+            "display": true
         },
         {
             "Title": "Collaboration kickstart",
             "Blurb": "Boost team productivity with a free collaboration kickstart workshop",
             "image": "https://fabricweb.azureedge.net/fabric-website/assets/images/swatch-picker/park-full-img.jpg",
-            "CTA": "Get your free kickstart",
-            "dsplay": true
+            "CTA": "try-teams",
+            "btnText": "Try Teams",
+            "display": false
         }
     ]

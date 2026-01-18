@@ -2,6 +2,7 @@ import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Breadcrumb, BreadcrumbItem } from '@fluentui/react-components';
 import { usePageBySlug } from '../lib/usePageBySlug';
+import { useCtaPost } from '../lib/useCtaPost';
 import PageBlocks from './PageBlocks';
 
 export const PageView: React.FC = () => {
@@ -14,15 +15,17 @@ export const PageView: React.FC = () => {
   }
   // Fetch page by URI
   const page = usePageBySlug(uri);
-
+  // If no e365page found, try fetching a regular post by slug (CTA or normal post)
+  const ctaPost = useCtaPost(slug);
 
   // Build breadcrumb: Home / Category (if present) / Post Title
   const params = useParams<{ slug?: string; category?: string }>();
   const category = params.category;
+  const titleText = page?.title || ctaPost?.title || (params.slug || 'Page');
   const breadcrumbItems = [
     { text: 'Home', href: '/' },
     ...(category ? [{ text: category.charAt(0).toUpperCase() + category.slice(1), href: `/${category}` }] : []),
-    { text: page?.title || (params.slug || 'Page'), href: `/${category ? category + '/' : ''}${params.slug || ''}` },
+    { text: titleText, href: `/${category ? category + '/' : ''}${params.slug || ''}` },
   ];
 
   return (
@@ -41,7 +44,7 @@ export const PageView: React.FC = () => {
           </BreadcrumbItem>
         ))}
       </Breadcrumb>
-      <h2>{page?.title || 'Loading...'}</h2>
+      <h2>{titleText}</h2>
       <div style={{ width: '100%', margin: 0, padding: 0 }}>
         {page ? (
           page.blocks && page.blocks.length > 0 ? (
@@ -49,6 +52,8 @@ export const PageView: React.FC = () => {
           ) : page.content ? (
             <div style={{ width: '100%', margin: 0, padding: 0 }} dangerouslySetInnerHTML={{ __html: page.content }} />
           ) : <em>No content found…</em>
+        ) : ctaPost ? (
+          <div style={{ width: '100%', margin: 0, padding: 0 }} dangerouslySetInnerHTML={{ __html: ctaPost.content || '' }} />
         ) : <em>Loading page content…</em>}
       </div>
     </section>

@@ -16,6 +16,8 @@ import { FloatingDrawer } from './components/FloatingDrawer';
 import { JourneySurvey } from './components/JourneySurvey';
 import questionsData from '../CTAJourneyQuestions.json';
 import { PageView } from './components/PageView';
+import CtaPage from './components/CtaPage';
+import TestCtaQuery from './components/TestCtaQuery';
 import WhatWeDoStatic from './components/WhatWeDoStatic';
 import LatestPostsArchive from './components/LatestPostsArchive';
 // import Carousel from './components/Carousel';
@@ -103,8 +105,10 @@ function App() {
               </div>
             </AnimatePresence>
           } />
+          <Route path="/CTA/:slug" element={<CtaPage />} />
           <Route path="/feature/:slug" element={<FeatureView />} />
           <Route path="/all-accordions" element={<AllAccordions />} />
+          <Route path="/test/cta-query" element={<TestCtaQuery />} />
           <Route path="/latest-posts" element={<LatestPostsArchive />} />
           <Route path="/category/:category" element={<LatestPostsArchive />} />
           <Route path="/category/:category/:slug" element={<PageView />} />

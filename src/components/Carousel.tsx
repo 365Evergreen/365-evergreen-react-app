@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useNavigate } from 'react-router-dom';
 import styles from '../Carousel.module.css';
 import { Button } from '@fluentui/react-components';
 
@@ -41,6 +42,7 @@ const slides = [
 export default function Carousel() {
   const [active, setActive] = React.useState(0);
   const timeoutRef = React.useRef<number | null>(null);
+  const navigate = useNavigate();
 
   // Auto-advance every 7s
   React.useEffect(() => {
@@ -92,7 +94,16 @@ export default function Carousel() {
                     <li key={i} className={styles.bulletItem}>{b}</li>
                   ))}
                 </ul>
-                <Button as="a" href={slide.cta.href} className={`appButton ${styles.cta}`} appearance="primary" size="large"> 
+                <Button
+                  className={`appButton ${styles.cta}`}
+                  appearance="primary"
+                  size="large"
+                  onClick={() => {
+                    // Extract slug from href (e.g., '/get-started' => 'get-started')
+                    const slug = slide.cta.href.replace(/^\//, '');
+                    navigate(`/cta/${slug}`);
+                  }}
+                >
                   {slide.cta.label}
                 </Button>
               </div>

@@ -1,6 +1,7 @@
 import carouselStyles from '../Carousel.module.css';
 import carouselItems from '../../carousel-items.json';
 import * as React from "react";
+import { useNavigate } from "react-router-dom";
 
 import {
   Carousel,
@@ -48,12 +49,13 @@ const useClasses = makeStyles({
 
 
 // Normalize and filter carousel items
-const SLIDES = (Array.isArray(carouselItems) ? carouselItems : []).filter(item => item.dsplay === true).map(item => ({
+const SLIDES = (Array.isArray(carouselItems) ? carouselItems : []).filter(item => item.display === true).map(item => ({
   title: item.Title,
   // coerce null to undefined to match BannerCardProps (string | undefined)
   blurb: item.Blurb ?? undefined,
   image: (item.image || '').replace(/^[\s"]+|[\s",]+$/g, ''),
   cta: item.CTA ?? undefined,
+  btnText: item.btnText ?? undefined,
 }));
 
 
@@ -65,8 +67,9 @@ interface BannerCardProps {
   cta?: string;
 }
 
-const BannerCard: React.FC<BannerCardProps> = ({ image, title, blurb, cta }) => {
+const BannerCard: React.FC<BannerCardProps & { slug?: string }> = ({ image, title, blurb, cta, slug }) => {
   const classes = useClasses();
+  const navigate = useNavigate();
   return (
     <CarouselCard className={classes.bannerCard}>
       <div style={{
@@ -84,15 +87,15 @@ const BannerCard: React.FC<BannerCardProps> = ({ image, title, blurb, cta }) => 
       <div className={classes.cardContainer}>
         <div className={classes.title}>{title}</div>
         {blurb && <div className={classes.subtext}>{blurb}</div>}
-        {cta && (
+        {cta && slug && (
           <a
-            href="#"
+            href={`/CTA/${slug}`}
             className="features-link"
             style={{ textDecoration: 'none', marginTop: '1em', display: 'inline-block' }}
             tabIndex={0}
             onClick={e => {
               e.preventDefault();
-              // Add navigation or action here if needed
+              navigate(`/CTA/${slug}`);
             }}
           >
             <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4em', fontSize: '1rem' }}>
@@ -126,15 +129,20 @@ const FluentCarousel: React.FC = () => {
       >
         <CarouselViewport>
           <CarouselSlider>
-            {SLIDES.map((slide, idx) => (
-              <BannerCard
-                key={`slide-${idx}`}
-                image={slide.image}
-                title={slide.title}
-                blurb={slide.blurb}
-                cta={slide.cta}
-              />
-            ))}
+            {SLIDES.map((slide, idx) => {
+              // Extract slug from CTA field
+              const slug = slide.cta ? slide.cta.replace(/^\//, '') : undefined;
+              return (
+                <BannerCard
+                  key={`slide-${idx}`}
+                  image={slide.image}
+                  title={slide.title}
+                  blurb={slide.blurb}
+                  cta={slide.btnText}
+                  slug={slug}
+                />
+              );
+            })}
           </CarouselSlider>
         </CarouselViewport>
         <CarouselNavContainer
