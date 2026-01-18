@@ -30,7 +30,7 @@ const WhatWeDoStatic: React.FC = () => (
     <WeDoCollaboration />
     <TagCloud />
     <ResponsiveVideoPlayer
-      src="https://pauli.blob.core.windows.net/365-evergreen/videos/Recording-20260116_084354.webm"
+      src="https://365evergreendev.blob.core.windows.net/365evergreen/videos/Recording-20260116_084354.webm"
       title="Evergreen Demo Video"
       aspectRatio="16:9"
     />

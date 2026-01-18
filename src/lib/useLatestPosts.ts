@@ -15,7 +15,7 @@ export interface LatestPost {
 
 
 // Hardcoded blob URL for hero and future components
-export const COMPONENTS_BLOB_URL = 'https://pauli.blob.core.windows.net/365-evergreen/components/page-components.json';
+export const COMPONENTS_BLOB_URL = 'https://365evergreendev.blob.core.windows.net/365-evergreen/components/page-components.json';
 
 export function useLatestPosts(limit: number = 100): LatestPost[] {
   const [posts, setPosts] = useState<LatestPost[]>([]);

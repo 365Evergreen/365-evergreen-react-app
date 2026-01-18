@@ -4,8 +4,8 @@ import WhatWeDoAccordion from "./WhatWeDoAccordion";
 
 
 
-const COMMUNICATION_URL = "https://pauli.blob.core.windows.net/365-evergreen/accordions/accordions.json";
-const ACCORDION_LIST_URL = "https://pauli.blob.core.windows.net/365-evergreen/accordions/accordion-list.json";
+const COMMUNICATION_URL = "https://365evergreendev.blob.core.windows.net/365evergreen/accordions.json";
+const ACCORDION_LIST_URL = "https://365evergreendev.blob.core.windows.net/365evergreen/accordion-list.json";
 
 const WeDoCommunication: React.FC = () => {
   const [comms, setComms] = React.useState<any[]>([]);

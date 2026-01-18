@@ -13,7 +13,7 @@ export function useAllAzureAccordions(): RawAccordion[] {
   const [accordions, setAccordions] = useState<RawAccordion[]>([]);
 
   useEffect(() => {
-    fetch('https://pauli.blob.core.windows.net/365-evergreen/accordions/accordions.json')
+    fetch('https://365evergreendev.blob.core.windows.net/365evergreen/accordions.json')
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) {

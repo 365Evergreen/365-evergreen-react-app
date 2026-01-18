@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import featuresData from '../lib/features.json';
 
 // Hosted accordions data
-const ACCORDIONS_URL = 'https://pauli.blob.core.windows.net/365-evergreen/accordions/accordions.json';
+const ACCORDIONS_URL = 'https://365evergreendev.blob.core.windows.net/365evergreen/accordions.json';
 
 const featureOptions = (featuresData.data?.features?.edges || []).map((f: any) => ({
   id: f.node.id,

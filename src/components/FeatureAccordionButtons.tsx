@@ -36,13 +36,13 @@ const FeatureAccordionButtons: React.FC<FeatureAccordionButtonsProps> = ({ featu
       setAccordions([]);
       return;
     }
-    fetch('https://pauli.blob.core.windows.net/365-evergreen/accordions/accordions.json')
+    fetch('https://365evergreendev.blob.core.windows.net/365evergreen/accordions.json')
       .then(res => res.json())
       .then(data => {
         const arr = Array.isArray(data) ? data : (data.body || []);
         setAccordions(arr.filter((acc: any) => acc.featureId === featureId));
       });
-    fetch('https://pauli.blob.core.windows.net/365-evergreen/accordions/accordion-list.json')
+    fetch('https://365evergreendev.blob.core.windows.net/365evergreen/accordion-list.json')
       .then(res => res.json())
       .then(data => {
         setAccordionList(Array.isArray(data) ? data : (data.body || []));

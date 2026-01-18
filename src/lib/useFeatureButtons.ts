@@ -11,7 +11,7 @@ export function useFeatureButtons(): FeatureButton[] {
   const [buttons, setButtons] = useState<FeatureButton[]>([]);
 
   useEffect(() => {
-    fetch('https://pauli.blob.core.windows.net/365-evergreen/accordions/feature-buttons.json')
+    fetch('https://365evergreendev.blob.core.windows.net/365evergreen/accordions/feature-buttons.json')
       .then(res => res.json())
       .then(setButtons);
   }, []);

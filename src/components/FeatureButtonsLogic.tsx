@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useMemo } from 'react';
 
 // Hosted data URLs
-const ACCORDIONS_URL = 'https://pauli.blob.core.windows.net/365-evergreen/accordions/accordions.json';
-const ACCORDION_LIST_URL = 'https://pauli.blob.core.windows.net/365-evergreen/accordions/accordion-list.json';
+const ACCORDIONS_URL = 'https://365evergreendev.blob.core.windows.net/365evergreen/accordions.json';
+const ACCORDION_LIST_URL = 'https://365evergreendev.blob.core.windows.net/365evergreen/accordion-list.json';
 
 interface FeatureButtonsLogicProps {
   featureId: string; // WP post ID, passed from parent (e.g., homepage selection)

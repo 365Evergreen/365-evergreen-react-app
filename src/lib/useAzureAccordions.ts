@@ -21,8 +21,8 @@ export function useAzureAccordions(featureId?: string): AccordionGroupData[] {
 
   useEffect(() => {
     Promise.all([
-      fetch('https://pauli.blob.core.windows.net/365-evergreen/accordions/accordions.json').then(res => res.json()),
-      fetch('https://pauli.blob.core.windows.net/365-evergreen/accordions/accordion-list.json').then(res => res.json())
+      fetch('https://365evergreendev.blob.core.windows.net/365evergreen/accordions.json').then(res => res.json()),
+      fetch('https://365evergreendev.blob.core.windows.net/365evergreen/accordion-list.json').then(res => res.json())
     ]).then(([accordionMeta, accordionItems]) => {
       const accordions = Array.isArray(accordionMeta) ? accordionMeta : [accordionMeta];
       const items = Array.isArray(accordionItems) ? accordionItems : [accordionItems];
