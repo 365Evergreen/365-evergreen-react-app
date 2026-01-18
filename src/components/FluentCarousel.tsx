@@ -1,5 +1,5 @@
 import carouselStyles from '../Carousel.module.css';
-import carouselItems from '../../carousel-items.json';
+import localCarouselItems from '../../carousel-items.json';
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -47,16 +47,67 @@ const useClasses = makeStyles({
   },
 });
 
+// Remote blob URL for carousel items (primary source)
+const CAROUSEL_BLOB_URL = 'https://365evergreendev.blob.core.windows.net/365-evergreen/carousel-items.json';
 
-// Normalize and filter carousel items
-const SLIDES = (Array.isArray(carouselItems) ? carouselItems : []).filter(item => item.display === true).map(item => ({
-  title: item.Title,
-  // coerce null to undefined to match BannerCardProps (string | undefined)
-  blurb: item.Blurb ?? undefined,
-  image: (item.image || '').replace(/^[\s"]+|[\s",]+$/g, ''),
-  cta: item.CTA ?? undefined,
-  btnText: item.btnText ?? undefined,
-}));
+type RawCarouselItem = {
+  Title: string;
+  Blurb?: string | null;
+  image?: string | null;
+  CTA?: string | null;
+  btnText?: string | null;
+  display?: boolean | null;
+};
+
+type Slide = {
+  title: string;
+  blurb?: string;
+  image: string;
+  cta?: string;
+  btnText?: string;
+};
+
+function normalizeRawItems(items: any[]): Slide[] {
+  if (!Array.isArray(items)) return [];
+  return items
+    .filter((item: RawCarouselItem) => item && (item.display === true))
+    .map((item: RawCarouselItem) => ({
+      title: item.Title,
+      blurb: item.Blurb ?? undefined,
+      image: (item.image || '').replace(/^[\s"]+|[\s",]+$/g, ''),
+      cta: item.CTA ?? undefined,
+      btnText: item.btnText ?? undefined,
+    } as Slide));
+}
+
+// Initialize with local JSON as a fallback and attempt to fetch remote blob on mount
+const initialSlides = normalizeRawItems(Array.isArray(localCarouselItems) ? localCarouselItems : []);
+
+const useSlides = () => {
+  const [slides, setSlides] = React.useState<Slide[]>(initialSlides);
+
+  React.useEffect(() => {
+    let cancelled = false;
+    fetch(CAROUSEL_BLOB_URL)
+      .then(res => res.json())
+      .then(data => {
+        let items: any[] = [];
+        if (Array.isArray(data)) items = data;
+        else if (data && Array.isArray((data as any).body)) items = (data as any).body;
+        else if (data) items = [data];
+        const normalized = normalizeRawItems(items);
+        if (!cancelled && normalized.length > 0) {
+          setSlides(normalized);
+        }
+      })
+      .catch(() => {
+        // Keep fallback local slides on error; do not throw UI errors here
+      });
+    return () => { cancelled = true; };
+  }, []);
+
+  return slides;
+};
 
 
 
@@ -118,6 +169,8 @@ const getAnnouncement: CarouselAnnouncerFunction = (
   return `Elevated carousel slide ${index + 1} of ${totalSlides}`;
 };
 const FluentCarousel: React.FC = () => {
+  const slides = useSlides();
+
   return (
     <div className={carouselStyles.carouselRoot}>
       <Carousel
@@ -129,7 +182,7 @@ const FluentCarousel: React.FC = () => {
       >
         <CarouselViewport>
           <CarouselSlider>
-            {SLIDES.map((slide, idx) => {
+            {slides.map((slide, idx) => {
               // Extract slug from CTA field
               const slug = slide.cta ? slide.cta.replace(/^\//, '') : undefined;
               return (
