@@ -89,10 +89,11 @@ const WeDoCommunication: React.FC = () => {
                   title: selected.label,
                   panels: panels.length > 0
                     ? panels.map((p) => ({
-                      title: p.label,
-                      content: p.blurb,
-                    }))
-                    : [{ title: selected.label, content: selected.blurb }]
+                        title: p.label,
+                        content: p.blurb,
+                        slug: p.slug ?? undefined,
+                      }))
+                    : [{ title: selected.label, content: selected.blurb, slug: undefined }]
                 }]}
                 openPanelIdx={openPanelIdx}
                 setOpenPanelIdx={setOpenPanelIdx}

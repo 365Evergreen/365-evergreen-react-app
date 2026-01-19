@@ -6,6 +6,7 @@ export type AccordionItem = {
   id: number | string;
   parentId: number | string;
   label: string;
+  slug?: string | null;
   blurb: string; // always string for UI
   order?: number | null;
   imageUrl?: string | null;
@@ -127,6 +128,7 @@ export function useAccordionsByComponent(componentName: string) {
               id: it.databaseId ?? it.id,
               parentId,
               label: it.title ?? '',
+              slug: it.slug ?? null,
               blurb: content ?? '',
               order,
               imageUrl: it.featuredImage?.node?.sourceUrl ?? null,

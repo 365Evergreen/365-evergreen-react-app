@@ -20,6 +20,7 @@ import { PageView } from './components/PageView';
 import CtaPage from './components/CtaPage';
 import TestCtaQuery from './components/TestCtaQuery';
 import WhatWeDoStatic from './components/WhatWeDoStatic';
+import WhatWeDoItem from './components/WhatWeDoItem';
 import LatestPostsArchive from './components/LatestPostsArchive';
 // import Carousel from './components/Carousel';
 import FluentCarousel from './components/FluentCarousel';
@@ -115,6 +116,7 @@ function App() {
           <Route path="/category/:category" element={<LatestPostsArchive />} />
           <Route path="/category/:category/:slug" element={<PageView />} />
           <Route path="/what-we-do" element={<PageViewAny whatWeDoPageId="cG9zdDo0OTM=" />} />
+          <Route path="/what-we-do/:slug" element={<WhatWeDoItem />} />
           <Route path="/e365-page/what-we-do/" element={<WhatWeDoStatic />} />
           <Route path="/:slug" element={<PageView />} />
           <Route path="/:parent/:slug" element={<PageView />} />
