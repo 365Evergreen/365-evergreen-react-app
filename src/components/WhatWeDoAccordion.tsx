@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "../WhatWeDoAccordion.css";
+import { ChevronRight24Filled } from '@fluentui/react-icons';
 
 export interface WhatWeDoAccordionPanel {
   title: string;
@@ -53,13 +54,21 @@ const WhatWeDoAccordion: React.FC<WhatWeDoAccordionProps> = ({ items, openPanelI
                   style={{ display: currentOpenIdx === pidx ? "block" : "none" }}
                   aria-hidden={currentOpenIdx !== pidx}
                 >
-                  {panel.content}
-                </div>
-                {currentOpenIdx === pidx && (
-                  <div>
-                    <button type="button">Unstyled</button>
+                  <div dangerouslySetInnerHTML={{ __html: panel.content }} />
+                  <div style={{ marginTop: '1rem', textAlign: 'left' }}>
+                    <a
+                      href="#"
+                      className="features-link whatwedo-accordion__cta"
+                      onClick={e => { e.preventDefault(); /* TODO: wire navigation if needed */ }}
+                      tabIndex={0}
+                    >
+                      <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4em' }}>
+                        Learn more
+                        <ChevronRight24Filled style={{ fontSize: '1.05em', marginLeft: '0.1em' }} />
+                      </span>
+                    </a>
                   </div>
-                )}
+                </div>
               </div></div>
             ))}
           </div>

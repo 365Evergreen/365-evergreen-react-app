@@ -87,3 +87,38 @@
   font-size: 1rem;
   color: #222;
 }
+
+/* CTA button inside the content area - styled like feature links */
+.whatwedo-accordion__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: none;
+  color: #111;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.whatwedo-accordion__cta:hover,
+.whatwedo-accordion__cta:focus {
+  text-decoration: underline;
+  outline: none;
+}
+
+.whatwedo-accordion__cta {
+  display: inline-flex;
+  align-items: center;
+}
+
+.whatwedo-accordion__cta svg {
+  margin-left: 0.1em;
+  font-size: 1.05em;
+}
+
+@media (max-width: 768px) {
+  .whatwedo-accordion__cta { font-size: 0.95rem; }
+}

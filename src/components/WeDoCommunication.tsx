@@ -17,8 +17,12 @@ const WeDoCommunication: React.FC = () => {
   const { accordions: comms, items: accordionList, loading, error } = useAccordionsByComponent('WeDoCommunication');
 
   const selected = comms.length > 0 ? comms[selectedIdx] : null;
+  // Filter panels for the selected accordion and sort by provided order (sortOrder)
   const panels = selected && Array.isArray(accordionList)
-    ? accordionList.filter((item) => item.parentId === selected.id)
+    ? accordionList
+      .filter((item) => item.parentId === selected.id)
+      .slice()
+      .sort((a, b) => ((a.order ?? Number.MAX_SAFE_INTEGER) - (b.order ?? Number.MAX_SAFE_INTEGER)))
     : [];
 
   useEffect(() => {
@@ -30,11 +34,13 @@ const WeDoCommunication: React.FC = () => {
   // previous blob-based fetch replaced by GraphQL hook `useAccordionsByComponent`.
   // We still handle loading/error states for parity with previous behavior.
   useEffect(() => {
-    if (!loading && !error && comms.length > 0 && selectedIdx >= comms.length) {
-      // Ensure selected index is valid when data arrives
-      setSelectedIdx(0);
+    if (!loading && !error && comms.length > 0) {
+      // Default to the 'Stay connected' accordion if present, otherwise first item
+      const defaultIdx = comms.findIndex(c => c.label === 'Stay connected');
+      setSelectedIdx(defaultIdx >= 0 ? defaultIdx : 0);
+      setOpenPanelIdx(0);
     }
-  }, [loading, error, comms, selectedIdx]);
+  }, [loading, error, comms]);
 
   // ...existing code...
 
@@ -83,9 +89,9 @@ const WeDoCommunication: React.FC = () => {
                   title: selected.label,
                   panels: panels.length > 0
                     ? panels.map((p) => ({
-                        title: p.label,
-                        content: p.blurb,
-                      }))
+                      title: p.label,
+                      content: p.blurb,
+                    }))
                     : [{ title: selected.label, content: selected.blurb }]
                 }]}
                 openPanelIdx={openPanelIdx}
@@ -120,7 +126,7 @@ const WeDoCommunication: React.FC = () => {
         <p className="we-do-communication__footer">Yo</p>
       </div>
     </section>
-    );
+  );
 };
 
 export default WeDoCommunication;
