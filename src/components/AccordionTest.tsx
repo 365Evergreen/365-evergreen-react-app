@@ -1,6 +1,7 @@
-import React, { useState, useMemo } from 'react';
-import accordionsData from '../../accordions.json';
-import accordionListData from '../../accordion-list.json';
+import React, { useState, useMemo, useEffect } from 'react';
+// Attempt to load fixture JSON from the project root at runtime; fall back to empty lists when unavailable.
+const defaultAccordions: any = { body: [] };
+const defaultAccordionList: any = { body: [] };
 
 // Hardcoded feature WP post IDs for test UI (replace with real IDs as needed)
 const featureOptions = [
@@ -11,19 +12,32 @@ const featureOptions = [
 
 const AccordionTest: React.FC = () => {
   const [selectedFeatureId, setSelectedFeatureId] = useState(featureOptions[0].id);
+  const [accordionsDataState, setAccordionsDataState] = React.useState<any>(defaultAccordions);
   const accordions = useMemo(() => {
-    return (accordionsData.body || accordionsData).filter(
+    return (accordionsDataState.body || accordionsDataState).filter(
       (acc: any) => acc.parentFeatureId === selectedFeatureId
     );
-  }, [selectedFeatureId]);
+  }, [selectedFeatureId, accordionsDataState]);
 
   const [selectedAccordionId, setSelectedAccordionId] = useState<string | null>(null);
+  const [accordionListDataState, setAccordionListDataState] = React.useState<any>(defaultAccordionList);
   const items = useMemo(() => {
     if (!selectedAccordionId) return [];
-    return (accordionListData.body || accordionListData).filter(
+    return (accordionListDataState.body || accordionListDataState).filter(
       (item: any) => item.parentId === Number(selectedAccordionId)
     );
-  }, [selectedAccordionId]);
+  }, [selectedAccordionId, accordionListDataState]);
+
+  useEffect(() => {
+    fetch('/accordions.json')
+      .then(r => r.ok ? r.json() : defaultAccordions)
+      .then(j => setAccordionsDataState(j))
+      .catch(() => setAccordionsDataState(defaultAccordions));
+    fetch('/accordion-list.json')
+      .then(r => r.ok ? r.json() : defaultAccordionList)
+      .then(j => setAccordionListDataState(j))
+      .catch(() => setAccordionListDataState(defaultAccordionList));
+  }, []);
 
   return (
     <div style={{ padding: 32 }}>
@@ -42,10 +56,11 @@ const AccordionTest: React.FC = () => {
           ))}
         </select>
       </label>
+      {/* Load optional fixture JSON at runtime (non-blocking) */}
       <div style={{ margin: '16px 0' }}>
         <strong>Accordions:</strong>
         {accordions.length === 0 && <div>No accordions for this feature.</div>}
-        {accordions.map(acc => {
+        {accordions.map((acc: any) => {
           const accIdStr = String(acc.id);
           return (
             <button
@@ -62,7 +77,7 @@ const AccordionTest: React.FC = () => {
         <strong>Accordion Items:</strong>
         {items.length === 0 && <div>No items for this accordion.</div>}
         <ul>
-          {items.map(item => (
+          {items.map((item: any) => (
             <li key={item.id}><strong>{item.label}</strong>: {item.blurb}</li>
           ))}
         </ul>

@@ -1,18 +1,17 @@
 import React, { useState, useRef, useEffect } from "react";
-import "../WeDoCommunication.css";
+import "../WeDoCollaboration.css";
 import WhatWeDoAccordion from "./WhatWeDoAccordion";
-
-
 
 // We now fetch accordions and their items from WPGraphQL via `useAccordionsByComponent`
 import { useAccordionsByComponent } from '../lib/useAccordionsByComponent';
+import type { Accordion, AccordionItem } from '../lib/useAccordionsByComponent';
 
 const WeDoCollaboration: React.FC = () => {
 
   // Use GraphQL hook to fetch accordions and items for this component
   const { accordions: comms, items: accordionList, loading, error } = useAccordionsByComponent('WeDoCollaboration');
   // Compute defaultIdx from comms
-  const defaultIdx = comms.findIndex(c => c.label === 'Stay connected');
+  const defaultIdx = comms.findIndex((c: Accordion) => c.label === 'Stay connected');
   const [selectedIdx, setSelectedIdx] = useState<number>(defaultIdx >= 0 ? defaultIdx : 0);
   const [openPanelIdx, setOpenPanelIdx] = useState<number | null>(0);
   const accordionContainerRef = useRef<HTMLDivElement>(null);
@@ -23,7 +22,7 @@ const WeDoCollaboration: React.FC = () => {
   const panels = React.useMemo(() => {
     return selected && Array.isArray(accordionList)
       ? accordionList
-        .filter((item) => item.parentId === selected.id)
+        .filter((item: AccordionItem) => item.parentId === selected.id)
         .slice()
         .sort((a, b) => ((a.order ?? Number.MAX_SAFE_INTEGER) - (b.order ?? Number.MAX_SAFE_INTEGER)))
       : [];
@@ -41,9 +40,10 @@ const WeDoCollaboration: React.FC = () => {
 
   // ...existing code...
 
-  // Get image for selected panel if present, else fallback to selected item
-  let imageUrl = selected?.imageUrl;
+  // Prefer the accordion's featured image; fall back to the selected panel image
+  let imageUrl: string | null = selected?.imageUrl ?? null;
   if (
+    !imageUrl &&
     panels.length > 0 &&
     openPanelIdx !== null &&
     panels[openPanelIdx] &&
@@ -56,7 +56,7 @@ const WeDoCollaboration: React.FC = () => {
     <section className="we-do-collaboration-bg">
       <div className="we-do-collaboration-container">
         <h2 className="we-do-collaboration__heading">Collaboration</h2>
-        <p className="we-do-collaboration__description">Enhance your business communication with Microsoft 365. Our solutions empower teams to collaborate seamlessly, share information effortlessly, and stay connected regardless of location. With tools like Microsoft Teams, SharePoint, and Outlook, you can foster a culture of collaboration, streamline information sharing, and ensure everyone stays informed. From instant messaging to video conferencing and document management, Microsoft 365 offers a comprehensive suite of communication tools tailored to your business needs.</p>
+        <p className="we-do-collaboration__description">WE make collaboration shine in Microsoft 365. Our solutions empower teams to collaborate seamlessly, share information effortlessly, and stay connected regardless of location. With tools like Microsoft Teams, SharePoint, and Outlook, you can foster a culture of collaboration, streamline information sharing, and ensure everyone stays informed. From instant messaging to video conferencing and document management, Microsoft 365 offers a comprehensive suite of collaboration tools tailored to your business needs.</p>
         <div className="we-do-collaboration__button-row">
           {loading ? (
             <span>Loading...</span>
@@ -65,7 +65,7 @@ const WeDoCollaboration: React.FC = () => {
           ) : comms.length === 0 ? (
             <span>No items found</span>
           ) : (
-            comms.map((item, idx) => (
+            comms.map((item: Accordion, idx: number) => (
               <button
                 key={item.id}
                 className={`we-do-collaboration__button${selectedIdx === idx ? " selected" : ""}`}
@@ -85,7 +85,7 @@ const WeDoCollaboration: React.FC = () => {
                 items={[{
                   title: selected.label,
                   panels: panels.length > 0
-                    ? panels.map((p) => ({
+                    ? panels.map((p: AccordionItem) => ({
                         title: p.label,
                         content: p.blurb,
                         slug: p.slug ?? undefined,
@@ -99,12 +99,12 @@ const WeDoCollaboration: React.FC = () => {
               <div>No accordion data found.</div>
             )}
           </div>
-          <div className="communication-image-container">
+          <div className="collaboration-image-container">
             {imageUrl ? (
               <img
                 src={imageUrl}
                 alt={selected?.label}
-                className="communication-image"
+                className="collaboration-image"
                 style={{
                   opacity: 1,
                   transition: 'opacity 0.5s cubic-bezier(.4,0,.2,1)',
@@ -117,11 +117,11 @@ const WeDoCollaboration: React.FC = () => {
                 onLoad={e => { e.currentTarget.style.opacity = '1'; }}
               />
             ) : (
-              <div className="communication-image-placeholder" style={{ height: accordionHeight ? `${accordionHeight}px` : 'auto', width: '100%' }}>No image</div>
+              <div className="collaboration-image-placeholder" style={{ height: accordionHeight ? `${accordionHeight}px` : 'auto', width: '100%' }}>No image</div>
             )}
           </div>
         </div>
-        <p className="we-do-communication__footer">Yo</p>
+        <p className="we-do-collaboration__footer">Yo</p>
       </div>
     </section>
   );

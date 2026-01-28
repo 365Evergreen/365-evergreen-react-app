@@ -2,17 +2,16 @@ import React, { useState, useRef, useEffect } from "react";
 import "../WeDoCommunication.css";
 import WhatWeDoAccordion from "./WhatWeDoAccordion";
 
-
-
 // We now fetch accordions and their items from WPGraphQL via `useAccordionsByComponent`
 import { useAccordionsByComponent } from '../lib/useAccordionsByComponent';
+import type { Accordion, AccordionItem } from '../lib/useAccordionsByComponent';
 
-const WeDoCommunication: React.FC = () => {
+const WeDoAutomation: React.FC = () => {
 
   // Use GraphQL hook to fetch accordions and items for this component
-  const { accordions: comms, items: accordionList, loading, error } = useAccordionsByComponent('WeDoCommunication');
+  const { accordions: comms, items: accordionList, loading, error } = useAccordionsByComponent('WeDoAutomation');
   // Compute defaultIdx from comms
-  const defaultIdx = comms.findIndex(c => c.label === 'Stay connected');
+  const defaultIdx = comms.findIndex((c: Accordion) => c.label === 'Stay connected');
   const [selectedIdx, setSelectedIdx] = useState<number>(defaultIdx >= 0 ? defaultIdx : 0);
   const [openPanelIdx, setOpenPanelIdx] = useState<number | null>(0);
   const accordionContainerRef = useRef<HTMLDivElement>(null);
@@ -23,7 +22,7 @@ const WeDoCommunication: React.FC = () => {
   const panels = React.useMemo(() => {
     return selected && Array.isArray(accordionList)
       ? accordionList
-        .filter((item) => item.parentId === selected.id)
+        .filter((item: AccordionItem) => item.parentId === selected.id)
         .slice()
         .sort((a, b) => ((a.order ?? Number.MAX_SAFE_INTEGER) - (b.order ?? Number.MAX_SAFE_INTEGER)))
       : [];
@@ -41,9 +40,10 @@ const WeDoCommunication: React.FC = () => {
 
   // ...existing code...
 
-  // Get image for selected panel if present, else fallback to selected item
-  let imageUrl = selected?.imageUrl;
+  // Prefer the accordion's featured image; fall back to the selected panel image
+  let imageUrl: string | null = selected?.imageUrl ?? null;
   if (
+    !imageUrl &&
     panels.length > 0 &&
     openPanelIdx !== null &&
     panels[openPanelIdx] &&
@@ -65,7 +65,7 @@ const WeDoCommunication: React.FC = () => {
           ) : comms.length === 0 ? (
             <span>No items found</span>
           ) : (
-            comms.map((item, idx) => (
+            comms.map((item: Accordion, idx: number) => (
               <button
                 key={item.id}
                 className={`we-do-communication__button${selectedIdx === idx ? " selected" : ""}`}
@@ -85,7 +85,7 @@ const WeDoCommunication: React.FC = () => {
                 items={[{
                   title: selected.label,
                   panels: panels.length > 0
-                    ? panels.map((p) => ({
+                    ? panels.map((p: AccordionItem) => ({
                         title: p.label,
                         content: p.blurb,
                         slug: p.slug ?? undefined,
@@ -127,4 +127,4 @@ const WeDoCommunication: React.FC = () => {
   );
 };
 
-export default WeDoCommunication;
+export default WeDoAutomation;
