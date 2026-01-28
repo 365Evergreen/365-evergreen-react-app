@@ -1,55 +1,48 @@
-
 # Copilot Instructions for 365 Evergreen React App ✅
 
-## Quick summary
-- SPA frontend built with React (TypeScript) and Vite. Uses **pnpm** as the package manager.
-- Single-page UI: `src/App.tsx` is the entrypoint; components live under `src/components/` and use matching CSS modules under `src/`.
-- Data comes from two places:
-  - WPGraphQL API: `https://365evergreen.com/graphql` (various hooks in `src/lib/`)
-  - Azure Blob static JSON: base `https://365evergreendev.blob.core.windows.net/365-evergreen/` (e.g., `accordions.json`, `components/page-components.json`)
+## Overview & Architecture
+- SPA frontend built with React (TypeScript) and Vite. Entry: src/App.tsx
+- Components: src/components/, styled via CSS modules (*.module.css)
+- Data sources:
+  - WPGraphQL API (https://365evergreen.com/graphql): hooks in src/lib/ (e.g., useSiteFeatures.ts, usePageBySlug.ts)
+  - Azure Blob static JSON (https://365evergreendev.blob.core.windows.net/365-evergreen/): hooks like useAllAzureAccordions.ts, useFeatureButtons.ts
+- Props-only communication: No global state (no Context, Redux, Zustand). Local state per component.
+- Theming via src/fluent-theme.ts. Avoid inline styles except in src/index.css
+
+## Developer Workflows
+- Local dev: pnpm dev (Vite HMR)
+- Build: pnpm build (runs tsc -b then vite build)
+- Preview: pnpm preview
+- Lint: pnpm lint
+- Type check: tsc -b
+- Use local JSON files in repo root for mocking remote data if endpoints are unavailable
+
+## Patterns & Conventions
+- Components: src/components/MyComponent.tsx + src/MyComponent.module.css
+- Data hooks: src/lib/*.ts, use explicit TypeScript interfaces (Raw* for fetched data)
+- Blob hooks handle arrays, { body: [...] }, or single objects—mirror fallback logic from existing hooks
+- Update static JSON (e.g., page-components.json) if adding content-driven components
+- Document integration changes in docs/ (see docs/prd.md, docs/workflows.md)
+- Accessibility: Manual keyboard & ARIA checks required for new UI
+
+## Integration Points
+- WPGraphQL: Use provided hooks, expect standard WPGraphQL responses
+- Azure Blob: Use hooks with fallback logic for different JSON shapes
+- AI/Copilot: Client-side logic in src/components/CopilotChat.tsx
+
+## Examples
+- See src/lib/useAllAzureAccordions.ts for blob fetch/fallback pattern
+- See src/components/ for props-only component design
+- See src/fluent-theme.ts for theming
+
+## PR Checklist
+1. Run pnpm lint and pnpm build
+2. Use props-only and local state
+3. Add/update hooks in src/lib/ for remote data
+4. Update static JSON if needed
+5. Update docs for integrations
+6. Manual accessibility checks
 
 ---
 
-## When you start coding 🔧
-- Read `src/App.tsx` and examples in `src/components/` to understand render patterns and where features are mounted.
-- Follow the **props-only** rule: components communicate via props. Do not introduce global state (no React Context, Redux, or Zustand).
-- Keep UI state local to components and put data-fetching logic in `src/lib/*.ts` hooks.
-- Use `src/fluent-theme.ts` for theming; avoid inline styles except in `src/index.css`.
-
-## Common integration patterns (copy-paste friendly) 🔗
-- GraphQL hooks: `useSiteFeatures.ts`, `usePageBySlug.ts`, `usePageBlocks.ts`, `useGlobalNav.ts`, `useLatestPosts.ts`, `useWhatWeDoPage.ts` — they fetch from `https://365evergreen.com/graphql` and expect standard WPGraphQL responses.
-- Blob hooks: `useAllAzureAccordions.ts`, `useFeatureButtons.ts`, and `useLatestPosts.ts` (components URL constant). Blob responses may be either an array, an object with `{ body: [...] }`, or a single object — hooks include fallbacks (see `useAllAzureAccordions.ts`). Mirror those patterns when adding new hooks.
-
-## File & component conventions 📁
-- Components: `src/components/MyComponent.tsx` and `src/MyComponent.css` (or `*.module.css`).
-- Hooks & logic: `src/lib/*.ts` (use `Raw*` interfaces for fetched raw content).
-- Assets: `src/assets/` and `public/`.
-- Use TypeScript types and prefer explicit interfaces for props and fetched data.
-
-## Developer workflows & commands ⚙️
-- Local dev: `pnpm dev` (Vite with HMR)
-- Build: `pnpm build` (runs `tsc -b` then `vite build`) — use this to catch type errors before PRs
-- Preview built site: `pnpm preview`
-- Lint: `pnpm lint` (ESLint)
-- If adding types or project refs, run `tsc -b` locally to verify
-
-## PR checklist ✅
-1. Run `pnpm lint` and `pnpm build` locally.
-2. Verify the component uses props-only and local state.
-3. If adding remote data, add or update a hook in `src/lib/` following existing fetch/fallback patterns.
-4. Update `page-components.json` or other static JSON if your change adds content-driven components.
-5. Add or update docs in `docs/` (especially `docs/prd.md` or `docs/workflows.md`) when integrations change.
-6. Include manual accessibility checks (keyboard & ARIA where applicable).
-
-## Debugging & tips 💡
-- tsc errors are surfaced during `pnpm build` — use `tsc -b` for more direct diagnostics.
-- Many hooks fetch remote endpoints; if the network or blob storage is unavailable, use local JSON files in the repo root (e.g., `accordions.json`) as a quick mock.
-- For Azure blob JSON, expect different shapes (array vs `{ body: [...] }`) — follow hook examples.
-- Copilot/AI integration lives in `src/components/CopilotChat.tsx`. Changes to AI behavior should be done client-side here and documented.
-
-## Testing & QA
-- This repo has no automated tests by default. See `docs/QA.md` for existing QA guidance and add test instructions there if you introduce automated tests.
-
----
-
-If any section above is unclear or you'd like more examples (e.g., a new hook or a component scaffold), tell me which area and I'll add a brief snippet and checklist. 🔁
+If any section is unclear or missing, request feedback to iterate and improve instructions.

@@ -8,22 +8,26 @@ import WhatWeDoAccordion from "./WhatWeDoAccordion";
 import { useAccordionsByComponent } from '../lib/useAccordionsByComponent';
 
 const WeDoCommunication: React.FC = () => {
-  const [selectedIdx, setSelectedIdx] = useState(0);
+
+  // Use GraphQL hook to fetch accordions and items for this component
+  const { accordions: comms, items: accordionList, loading, error } = useAccordionsByComponent('WeDoCommunication');
+  // Compute defaultIdx from comms
+  const defaultIdx = comms.findIndex(c => c.label === 'Stay connected');
+  const [selectedIdx, setSelectedIdx] = useState<number>(defaultIdx >= 0 ? defaultIdx : 0);
   const [openPanelIdx, setOpenPanelIdx] = useState<number | null>(0);
   const accordionContainerRef = useRef<HTMLDivElement>(null);
   const [accordionHeight, setAccordionHeight] = useState<number>(0);
 
-  // Use GraphQL hook to fetch accordions and items for this component
-  const { accordions: comms, items: accordionList, loading, error } = useAccordionsByComponent('WeDoCommunication');
-
   const selected = comms.length > 0 ? comms[selectedIdx] : null;
   // Filter panels for the selected accordion and sort by provided order (sortOrder)
-  const panels = selected && Array.isArray(accordionList)
-    ? accordionList
-      .filter((item) => item.parentId === selected.id)
-      .slice()
-      .sort((a, b) => ((a.order ?? Number.MAX_SAFE_INTEGER) - (b.order ?? Number.MAX_SAFE_INTEGER)))
-    : [];
+  const panels = React.useMemo(() => {
+    return selected && Array.isArray(accordionList)
+      ? accordionList
+        .filter((item) => item.parentId === selected.id)
+        .slice()
+        .sort((a, b) => ((a.order ?? Number.MAX_SAFE_INTEGER) - (b.order ?? Number.MAX_SAFE_INTEGER)))
+      : [];
+  }, [selected, accordionList]);
 
   useEffect(() => {
     if (accordionContainerRef.current) {
@@ -33,14 +37,7 @@ const WeDoCommunication: React.FC = () => {
 
   // previous blob-based fetch replaced by GraphQL hook `useAccordionsByComponent`.
   // We still handle loading/error states for parity with previous behavior.
-  useEffect(() => {
-    if (!loading && !error && comms.length > 0) {
-      // Default to the 'Stay connected' accordion if present, otherwise first item
-      const defaultIdx = comms.findIndex(c => c.label === 'Stay connected');
-      setSelectedIdx(defaultIdx >= 0 ? defaultIdx : 0);
-      setOpenPanelIdx(0);
-    }
-  }, [loading, error, comms]);
+    // Remove effect that sets state synchronously from comms
 
   // ...existing code...
 

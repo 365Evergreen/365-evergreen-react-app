@@ -7,10 +7,10 @@ import WhatWeDoAccordion from "./WhatWeDoAccordion";
 // We now fetch accordions and their items from WPGraphQL via `useAccordionsByComponent`
 import { useAccordionsByComponent } from '../lib/useAccordionsByComponent';
 
-const WeDoCollaboration: React.FC = () => {
+const WeDoCommunication: React.FC = () => {
 
   // Use GraphQL hook to fetch accordions and items for this component
-  const { accordions: comms, items: accordionList, loading, error } = useAccordionsByComponent('WeDoCollaboration');
+  const { accordions: comms, items: accordionList, loading, error } = useAccordionsByComponent('WeDoCommunication');
   // Compute defaultIdx from comms
   const defaultIdx = comms.findIndex(c => c.label === 'Stay connected');
   const [selectedIdx, setSelectedIdx] = useState<number>(defaultIdx >= 0 ? defaultIdx : 0);
@@ -53,11 +53,11 @@ const WeDoCollaboration: React.FC = () => {
   }
 
   return (
-    <section className="we-do-collaboration-bg">
-      <div className="we-do-collaboration-container">
-        <h2 className="we-do-collaboration__heading">Collaboration</h2>
-        <p className="we-do-collaboration__description">Enhance your business communication with Microsoft 365. Our solutions empower teams to collaborate seamlessly, share information effortlessly, and stay connected regardless of location. With tools like Microsoft Teams, SharePoint, and Outlook, you can foster a culture of collaboration, streamline information sharing, and ensure everyone stays informed. From instant messaging to video conferencing and document management, Microsoft 365 offers a comprehensive suite of communication tools tailored to your business needs.</p>
-        <div className="we-do-collaboration__button-row">
+    <section className="we-do-communication-bg">
+      <div className="we-do-communication-container">
+        <h2 className="we-do-communication__heading">Automation</h2>
+        <p className="we-do-communication__description">.</p>
+        <div className="we-do-communication__button-row">
           {loading ? (
             <span>Loading...</span>
           ) : error ? (
@@ -68,7 +68,7 @@ const WeDoCollaboration: React.FC = () => {
             comms.map((item, idx) => (
               <button
                 key={item.id}
-                className={`we-do-collaboration__button${selectedIdx === idx ? " selected" : ""}`}
+                className={`we-do-communication__button${selectedIdx === idx ? " selected" : ""}`}
                 onClick={() => setSelectedIdx(idx)}
               >
                 {item.label}
@@ -76,8 +76,8 @@ const WeDoCollaboration: React.FC = () => {
             ))
           )}
         </div>
-        <div className="we-do-collaboration__columns">
-          <div className="collaboration-accordion-container" ref={accordionContainerRef}>
+        <div className="we-do-communication__columns">
+          <div className="communication-accordion-container" ref={accordionContainerRef}>
             {comms.length === 0 ? (
               <div>Loading accordion...</div>
             ) : selected ? (
@@ -127,4 +127,4 @@ const WeDoCollaboration: React.FC = () => {
   );
 };
 
-export default WeDoCollaboration;
+export default WeDoCommunication;
