@@ -27,3 +27,4 @@ src\components\LatestPostsArchive.backup.tsx
 .github/copilot-instructions.md
 src/components/LatestPostsArchive.backup.tsx
 src/components/LatestPostsArchive.backup.md
+src/lib/useWhatWeDoPage.ts.backup
