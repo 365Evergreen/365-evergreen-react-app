@@ -1,6 +1,6 @@
 .what-we-do-nav {
   display: block;
-  padding: 0.5rem 0;
+  padding: 0 4vw 0 4vw;
 }
 
 .what-we-do-nav__list {
@@ -13,6 +13,7 @@
 }
 
 .what-we-do-nav__item {
+    text-decoration: none;
 }
 
 .what-we-do-nav__link {
