@@ -6,6 +6,10 @@ export interface FeatureData {
   title: string;
   blocks: PageBlock[];
   content: string;
+  siteFeature?: {
+    title?: string;
+    blurb?: string;
+  } | null;
 }
 
 export function useFeatureBySlug(slug: string | undefined): FeatureData | null {
@@ -16,7 +20,7 @@ export function useFeatureBySlug(slug: string | undefined): FeatureData | null {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        query: `query GetFeatureBySlug {\n  featureBy(uri: \"${slug}\") {\n    id\n    title\n    blocks\n    content\n  }\n}`
+        query: `query GetFeatureBySlug {\n  featureBy(uri: \"${slug}\") {\n    id\n    title\n    blocks\n    content\n    siteFeature {\n      title\n      blurb\n    }\n  }\n}`
       })
     })
       .then(res => res.json())
@@ -28,7 +32,11 @@ export function useFeatureBySlug(slug: string | undefined): FeatureData | null {
         } catch {
           blocks = [];
         }
-        setData(feature ? { id: feature.id, title: feature.title, blocks, content: feature.content } : null);
+        setData(
+          feature
+            ? { id: feature.id, title: feature.title, blocks, content: feature.content, siteFeature: feature.siteFeature ?? null }
+            : null
+        );
       });
   }, [slug]);
   return data;
