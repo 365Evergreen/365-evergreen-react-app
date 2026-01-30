@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import "../WeDogovernance.css";
+import "../WeDoGovernance.css";
 import WhatWeDoAccordion from "./WhatWeDoAccordion";
 
 const governance_URL = "https://365evergreendev.blob.core.windows.net/365evergreen/accordions.json";
