@@ -6,9 +6,9 @@ const WhatWeDoHero: React.FC = () => (
   <section className="what-we-do-hero-root">
     <div className="what-we-do-hero-gradient" />
     <div className="what-we-do-hero-content">
-      <h1 className="what-we-do-hero-title fluent-display">Microsoft 365 and Power Platform specialists</h1>
+      <h1 className="what-we-do-hero-title fluent-display">What we do</h1>
       <p className="what-we-do-hero-desc">
-        We help businesses create collaborative and secure workspaces to increase productivity, streamline processes, and drive sustainable innovation. — without the tech headaches.
+        We help teams like yours navigate the complexity of the Microsoft 365 ecosystem, focusing on the six core pillars that define modern work in the evergreen era.
       </p>
       <div style={{ display: 'flex', gap: '1rem' }}>
         <Button

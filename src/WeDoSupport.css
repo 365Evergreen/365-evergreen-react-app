@@ -1,91 +1,56 @@
 @media (max-width: 768px) {
-  .we-do-communication-container {
+  .we-do-support-container {
     flex-direction: column;
     padding: 1.2rem 0.5rem;
     max-width: 100vw;
     gap: 1.2rem;
   }
-  .communication-accordion-container,
-  .communication-image-container {
+  .support-accordion-container,
+  .support-image-container {
     max-width: 100%;
     min-width: 0;
   }
-  .communication-image,
-  .we-do-communication__image {
+  .support-image,
+  .we-do-support__image {
     max-width: 100vw;
     max-height: 180px;
     border-radius: 8px;
   }
-  .communication-image-placeholder,
-  .we-do-communication__image-placeholder {
+  .support-image-placeholder,
+  .we-do-support__image-placeholder {
     max-width: 100vw;
     height: 120px;
     font-size: 1rem;
   }
-  .we-do-communication__heading {
+  .we-do-support__heading {
     font-size: 1.5rem;
     text-align: left;
   }
-  .we-do-communication__description {
+  .we-do-support__description {
     font-size: 1rem;
     margin-bottom: 1.2rem;
   }
-  .we-do-communication__button-row {
+  .we-do-support__button-row {
     flex-direction: column;
     gap: 0.7rem;
     margin-bottom: 1.2rem;
     align-items: stretch;
   }
-  .we-do-communication__button {
+  .we-do-support__button {
     font-size: 1rem;
     padding: 0.6rem 1.2rem;
   }
-  .we-do-communication__footer {
+  .we-do-support__footer {
     font-size: 1.1rem;
     margin-top: 1.5rem;
   }
 }
-.communication-accordion-container {
+.support-accordion-container {
   flex: 1;
   min-width: 0;
 }
 
-.communication-image-container {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 0;
-  max-width: 420px;
-  height: 100%;
-  min-height: 220px;
-  background: none;
-}
-
-.communication-image {
-  width: 100%;
-  max-width: 380px;
-  max-height: 320px;
-  object-fit: cover;
-  border-radius: 12px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-  opacity: 0;
-  transition: opacity 0.5s cubic-bezier(.4,0,.2,1);
-}
-
-.communication-image-placeholder {
-  width: 100%;
-  max-width: 380px;
-  height: 220px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #f3f3f3;
-  color: #aaa;
-  border-radius: 12px;
-  font-size: 1.2rem;
-}
-.we-do-communication__image-container {
+.support-image-container {
   flex: 1;
   display: flex;
   align-items: center;
@@ -97,7 +62,7 @@
   background: none;
 }
 
-.we-do-communication__image {
+.support-image {
   width: 100%;
   max-width: 380px;
   max-height: 320px;
@@ -108,7 +73,7 @@
   transition: opacity 0.5s cubic-bezier(.4,0,.2,1);
 }
 
-.we-do-communication__image-placeholder {
+.support-image-placeholder {
   width: 100%;
   max-width: 380px;
   height: 220px;
@@ -120,13 +85,48 @@
   border-radius: 12px;
   font-size: 1.2rem;
 }
-.we-do-communication__button-row {
+.we-do-support__image-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  max-width: 420px;
+  height: 100%;
+  min-height: 220px;
+  background: none;
+}
+
+.we-do-support__image {
+  width: 100%;
+  max-width: 380px;
+  max-height: 320px;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  opacity: 0;
+  transition: opacity 0.5s cubic-bezier(.4,0,.2,1);
+}
+
+.we-do-support__image-placeholder {
+  width: 100%;
+  max-width: 380px;
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f3f3f3;
+  color: #aaa;
+  border-radius: 12px;
+  font-size: 1.2rem;
+}
+.we-do-support__button-row {
   display: flex;
   gap: 1.5rem;
   margin-bottom: 2.5rem;
 }
 
-.we-do-communication__button {
+.we-do-support__button {
   --button-bg: #fff;
   --button-color: #7c4d9e;
   --button-bg-selected: #7c4d9e;
@@ -141,20 +141,20 @@
   cursor: pointer;
   transition: background 0.18s, color 0.18s;
 }
-.we-do-communication__button.selected,
-.we-do-communication__button[aria-pressed="true"] {
+.we-do-support__button.selected,
+.we-do-support__button[aria-pressed="true"] {
   background: var(--button-bg-selected);
   color: var(--button-color-selected);
 }
-.we-do-communication__button:not(.selected):not([aria-pressed="true"]) {
+.we-do-support__button:not(.selected):not([aria-pressed="true"]) {
   background: var(--button-bg);
   color: var(--button-color);
 }
-.we-do-communication__button:hover {
+.we-do-support__button:hover {
   background: #f3e9fa;
   color: #5a3570;
 }
-.we-do-communication-bg {
+.we-do-support-bg {
   position: relative;
   background-image: url('https://365evergreen.com/wp-content/uploads/2026/01/377150-PPL-Hero-Background.png');
   background-size: cover;
@@ -163,7 +163,7 @@
   padding: 0;
 }
 
-.we-do-communication-container {
+.we-do-support-container {
   position: relative;
   z-index: 1;
   padding: 3rem 0;
@@ -171,7 +171,7 @@
   margin: 0 auto;
 }
 
-.we-do-communication__heading {
+.we-do-support__heading {
   font-size: 2.5rem;
   font-weight: 700;
   margin-bottom: 1rem;
@@ -179,30 +179,30 @@
   color: #222;
 }
 
-.we-do-communication__description {
+.we-do-support__description {
   font-size: 1.25rem;
   margin-bottom: 2.5rem;
   color: #444;
   text-align: left;
 }
 
-.we-do-communication__columns {
+.we-do-support__columns {
   display: flex;
   gap: 32px;
 }
 
-.we-do-communication__accordion {
+.we-do-support__accordion {
   flex: 1;
   min-width: 0;
   min-height: 420px; /* Prevents height jump when expanding/collapsing panels */
 }
 
-.we-do-communication__calendar {
+.we-do-support__calendar {
   flex: 2;
   min-width: 0;
 }
 
-.we-do-communication__calendar-inner {
+.we-do-support__calendar-inner {
   background: #fff;
   border-radius: 8px;
   min-height: 300px;
@@ -210,7 +210,7 @@
   box-shadow: 0 2px 8px rgba(0,0,0,0.06);
 }
 
-.we-do-communication__footer {
+.we-do-support__footer {
   text-align: center;
   font-size: 32px;
   margin-top: 48px;
