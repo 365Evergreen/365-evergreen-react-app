@@ -1,5 +1,3 @@
-
-
 import '../WhatWeDo.css';
 import { useAllPagesWithBlocks } from '../lib/useAllPagesWithBlocks';
 import { usePageBySlug } from '../lib/usePageBySlug';
@@ -35,5 +33,4 @@ const WhatWeDo: React.FC = () => {
   );
 };
 
-// eslint-disable-next-line import/no-unused-modules
 export default WhatWeDo;

@@ -1,4 +1,5 @@
 import React from "react";
+import WhatWeDoHero from "./WhatWeDoHero";
 import ResponsiveVideoPlayer from "./ResponsiveVideoPlayer";
 import WeDoCollaboration from "./WeDoCollaboration";
 import WeDoCommunication from "./WeDoCommunication";
@@ -29,6 +30,7 @@ const TagCloud: React.FC = () => (
 // Main static page component
 const WhatWeDoStatic: React.FC = () => (
   <main>
+    <WhatWeDoHero />
     <WeDoCommunication />
     <WeDoCollaboration />
     <WeDoAutomation/>
