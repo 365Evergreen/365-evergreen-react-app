@@ -60,7 +60,7 @@ const WhatWeSupport: React.FC = () => {
   }
 
   return (
-    <section className="we-do-support-bg">
+    <section id="support" className="we-do-support-bg">
       <div className="we-do-support-container">
         <h2 className="we-do-support__heading">Support</h2>
         <p className="we-do-support__description">Placeholder description for support. Replace with real content describing support offerings.</p>

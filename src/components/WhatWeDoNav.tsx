@@ -7,10 +7,12 @@ type NavItem = {
 }
 
 const defaultItems: NavItem[] = [
-  { href: '#overview', label: 'Overview' },
-  { href: '#services', label: 'Services' },
-  { href: '#solutions', label: 'Solutions' },
-  { href: '#contact', label: 'Contact' },
+  { href: '#communication', label: 'Communication' },
+  { href: '#collaboration', label: 'Collaboration' },
+  { href: '#automation', label: 'Automation' },
+  { href: '#business-apps', label: 'Business apps' },
+  { href: '#governance', label: 'Governance' },
+  { href: '#support', label: 'Support' },
 ]
 
 export const WhatWeDoNav: React.FC<{ items?: NavItem[] }> = ({ items = defaultItems }) => {

@@ -53,7 +53,7 @@ const WeDoAutomation: React.FC = () => {
   }
 
   return (
-    <section className="we-do-automation-bg">
+    <section id="automation" className="we-do-automation-bg">
       <div className="we-do-automation-container">
         <h2 className="we-do-automation__heading">Automation</h2>
         <p className="we-do-automation__description">.</p>

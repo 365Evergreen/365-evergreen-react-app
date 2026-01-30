@@ -60,7 +60,7 @@ const WeDoGovernance: React.FC = () => {
   }
 
   return (
-    <section className="we-do-governance-bg">
+    <section id="governance" className="we-do-governance-bg">
       <div className="we-do-governance-container">
         <h2 className="we-do-governance__heading">Governance</h2>
         <p className="we-do-governance__description">Placeholder description for governance. Replace with real content describing governance capabilities.</p>
