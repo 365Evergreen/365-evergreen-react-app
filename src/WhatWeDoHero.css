@@ -1,8 +1,8 @@
 /* what-we-do-hero styles */
 .what-we-do-hero-root {
   background: url('https://365evergreen.com/wp-content/uploads/2026/01/MicrosoftViva-Teams-background-16.png') center/cover no-repeat;
-  min-height: 750px; /* Adjusted background position */
-  height: 750px;
+  min-height: 550px; /* reduced hero height for desktop */
+  height: 550px;
   padding: 0 0 4rem 4vw;
   position: relative;
   z-index: 1;

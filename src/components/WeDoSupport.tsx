@@ -56,7 +56,7 @@ const WeDoSupport: React.FC = () => {
   return (
     <section id="support" className="we-do-support-bg">
       <div className="we-do-support-container">
-        <h2 className="we-do-support__heading">support</h2>
+        <h2 className="we-do-support__heading">Support</h2>
         <p className="we-do-support__description">Enhance your business support with Microsoft 365. Our solutions empower teams to collaborate seamlessly, share information effortlessly, and stay connected regardless of location. With tools like Microsoft Teams, SharePoint, and Outlook, you can foster a culture of collaboration, streamline information sharing, and ensure everyone stays informed. From instant messaging to video conferencing and document management, Microsoft 365 offers a comprehensive suite of support tools tailored to your business needs.</p>
         <div className="we-do-support__button-row">
           {loading ? (

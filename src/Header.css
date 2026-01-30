@@ -1,9 +1,12 @@
 @media (max-width: 900px) {
   .header-root {
-    position: sticky;
+    /* Use fixed on small screens so header reliably stays pinned to top
+       (sticky can fail if an ancestor creates a new stacking/scroll context). */
+    position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;
+    right: 0;
+    width: 100%;
     z-index: 3000;
     background: transparent;
     transition: background 0.3s, box-shadow 0.3s;

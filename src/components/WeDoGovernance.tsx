@@ -56,7 +56,7 @@ const WeDoGovernance: React.FC = () => {
   return (
     <section id="governance" className="we-do-governance-bg">
       <div className="we-do-governance-container">
-        <h2 className="we-do-governance__heading">governance</h2>
+        <h2 className="we-do-governance__heading">Governance</h2>
         <p className="we-do-governance__description">Enhance your business governance with Microsoft 365. Our solutions empower teams to collaborate seamlessly, share information effortlessly, and stay connected regardless of location. With tools like Microsoft Teams, SharePoint, and Outlook, you can foster a culture of collaboration, streamline information sharing, and ensure everyone stays informed. From instant messaging to video conferencing and document management, Microsoft 365 offers a comprehensive suite of governance tools tailored to your business needs.</p>
         <div className="we-do-governance__button-row">
           {loading ? (
