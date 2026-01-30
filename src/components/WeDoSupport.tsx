@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
-import "../WeDoCommunication.css";
+import "../WeDoSupport.css";
 import WhatWeDoAccordion from "./WhatWeDoAccordion";
 
-const COMMUNICATION_URL = "https://365evergreendev.blob.core.windows.net/365evergreen/accordions.json";
+const support_URL = "https://365evergreendev.blob.core.windows.net/365evergreen/accordions.json";
 const ACCORDION_LIST_URL = "https://365evergreendev.blob.core.windows.net/365evergreen/accordion-list.json";
 
 const WhatWeSupport: React.FC = () => {
@@ -26,7 +26,7 @@ const WhatWeSupport: React.FC = () => {
   useEffect(() => {
     let cancelled = false;
     Promise.all([
-      fetch(COMMUNICATION_URL).then((res) => res.json()),
+      fetch(support_URL).then((res) => res.json()),
       fetch(ACCORDION_LIST_URL).then((res) => res.json())
     ]).then(([commsData, accordionData]) => {
       let commsArr = Array.isArray(commsData)
@@ -60,18 +60,18 @@ const WhatWeSupport: React.FC = () => {
   }
 
   return (
-    <section className="we-do-communication-bg">
-      <div className="we-do-communication-container">
-        <h2 className="we-do-communication__heading">Support</h2>
-        <p className="we-do-communication__description">Placeholder description for support. Replace with real content describing support offerings.</p>
-        <div className="we-do-communication__button-row">
+    <section className="we-do-support-bg">
+      <div className="we-do-support-container">
+        <h2 className="we-do-support__heading">Support</h2>
+        <p className="we-do-support__description">Placeholder description for support. Replace with real content describing support offerings.</p>
+        <div className="we-do-support__button-row">
           {comms.length === 0 ? (
             <span>Loading...</span>
           ) : (
             comms.map((item, idx) => (
               <button
                 key={item.id}
-                className={`we-do-communication__button${selectedIdx === idx ? " selected" : ""}`}
+                className={`we-do-support__button${selectedIdx === idx ? " selected" : ""}`}
                 onClick={() => setSelectedIdx(idx)}
               >
                 {item.label}
@@ -79,8 +79,8 @@ const WhatWeSupport: React.FC = () => {
             ))
           )}
         </div>
-        <div className="we-do-communication__columns">
-          <div className="communication-accordion-container" ref={accordionContainerRef}>
+        <div className="we-do-support__columns">
+          <div className="support-accordion-container" ref={accordionContainerRef}>
             {comms.length === 0 ? (
               <div>Loading accordion...</div>
             ) : selected ? (
@@ -101,12 +101,12 @@ const WhatWeSupport: React.FC = () => {
               <div>No accordion data found.</div>
             )}
           </div>
-          <div className="communication-image-container">
+          <div className="support-image-container">
             {imageUrl ? (
               <img
                 src={imageUrl}
                 alt={selected?.label}
-                className="communication-image"
+                className="support-image"
                 style={{
                   opacity: 1,
                   transition: 'opacity 0.5s cubic-bezier(.4,0,.2,1)',
@@ -119,11 +119,11 @@ const WhatWeSupport: React.FC = () => {
                 onLoad={e => { e.currentTarget.style.opacity = '1'; }}
               />
             ) : (
-              <div className="communication-image-placeholder" style={{ height: accordionHeight ? `${accordionHeight}px` : 'auto', width: '100%' }}>No image</div>
+              <div className="support-image-placeholder" style={{ height: accordionHeight ? `${accordionHeight}px` : 'auto', width: '100%' }}>No image</div>
             )}
           </div>
         </div>
-        <p className="we-do-communication__footer">Support footer</p>
+        <p className="we-do-support__footer">Support footer</p>
       </div>
     </section>
     );

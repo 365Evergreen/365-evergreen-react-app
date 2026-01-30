@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
-import "../WeDoCommunication.css";
+import "../WeDogovernance.css";
 import WhatWeDoAccordion from "./WhatWeDoAccordion";
 
-const COMMUNICATION_URL = "https://365evergreendev.blob.core.windows.net/365evergreen/accordions.json";
+const governance_URL = "https://365evergreendev.blob.core.windows.net/365evergreen/accordions.json";
 const ACCORDION_LIST_URL = "https://365evergreendev.blob.core.windows.net/365evergreen/accordion-list.json";
 
 const WeDoGovernance: React.FC = () => {
@@ -26,7 +26,7 @@ const WeDoGovernance: React.FC = () => {
   useEffect(() => {
     let cancelled = false;
     Promise.all([
-      fetch(COMMUNICATION_URL).then((res) => res.json()),
+      fetch(governance_URL).then((res) => res.json()),
       fetch(ACCORDION_LIST_URL).then((res) => res.json())
     ]).then(([commsData, accordionData]) => {
       let commsArr = Array.isArray(commsData)
@@ -60,18 +60,18 @@ const WeDoGovernance: React.FC = () => {
   }
 
   return (
-    <section className="we-do-communication-bg">
-      <div className="we-do-communication-container">
-        <h2 className="we-do-communication__heading">Governance</h2>
-        <p className="we-do-communication__description">Placeholder description for governance. Replace with real content describing governance capabilities.</p>
-        <div className="we-do-communication__button-row">
+    <section className="we-do-governance-bg">
+      <div className="we-do-governance-container">
+        <h2 className="we-do-governance__heading">Governance</h2>
+        <p className="we-do-governance__description">Placeholder description for governance. Replace with real content describing governance capabilities.</p>
+        <div className="we-do-governance__button-row">
           {comms.length === 0 ? (
             <span>Loading...</span>
           ) : (
             comms.map((item, idx) => (
               <button
                 key={item.id}
-                className={`we-do-communication__button${selectedIdx === idx ? " selected" : ""}`}
+                className={`we-do-governance__button${selectedIdx === idx ? " selected" : ""}`}
                 onClick={() => setSelectedIdx(idx)}
               >
                 {item.label}
@@ -79,8 +79,8 @@ const WeDoGovernance: React.FC = () => {
             ))
           )}
         </div>
-        <div className="we-do-communication__columns">
-          <div className="communication-accordion-container" ref={accordionContainerRef}>
+        <div className="we-do-governance__columns">
+          <div className="governance-accordion-container" ref={accordionContainerRef}>
             {comms.length === 0 ? (
               <div>Loading accordion...</div>
             ) : selected ? (
@@ -101,12 +101,12 @@ const WeDoGovernance: React.FC = () => {
               <div>No accordion data found.</div>
             )}
           </div>
-          <div className="communication-image-container">
+          <div className="governance-image-container">
             {imageUrl ? (
               <img
                 src={imageUrl}
                 alt={selected?.label}
-                className="communication-image"
+                className="governance-image"
                 style={{
                   opacity: 1,
                   transition: 'opacity 0.5s cubic-bezier(.4,0,.2,1)',
@@ -119,11 +119,11 @@ const WeDoGovernance: React.FC = () => {
                 onLoad={e => { e.currentTarget.style.opacity = '1'; }}
               />
             ) : (
-              <div className="communication-image-placeholder" style={{ height: accordionHeight ? `${accordionHeight}px` : 'auto', width: '100%' }}>No image</div>
+              <div className="governance-image-placeholder" style={{ height: accordionHeight ? `${accordionHeight}px` : 'auto', width: '100%' }}>No image</div>
             )}
           </div>
         </div>
-        <p className="we-do-communication__footer">Governance footer</p>
+        <p className="we-do-governance__footer">Governance footer</p>
       </div>
     </section>
     );

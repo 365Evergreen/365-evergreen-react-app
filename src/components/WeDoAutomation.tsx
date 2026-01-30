@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import "../WeDoCommunication.css";
+import "../WeDoAutomation.css";
 import WhatWeDoAccordion from "./WhatWeDoAccordion";
 
 // We now fetch accordions and their items from WPGraphQL via `useAccordionsByComponent`
@@ -53,11 +53,11 @@ const WeDoAutomation: React.FC = () => {
   }
 
   return (
-    <section className="we-do-communication-bg">
-      <div className="we-do-communication-container">
-        <h2 className="we-do-communication__heading">Automation</h2>
-        <p className="we-do-communication__description">.</p>
-        <div className="we-do-communication__button-row">
+    <section className="we-do-automation-bg">
+      <div className="we-do-automation-container">
+        <h2 className="we-do-automation__heading">Automation</h2>
+        <p className="we-do-automation__description">.</p>
+        <div className="we-do-automation__button-row">
           {loading ? (
             <span>Loading...</span>
           ) : error ? (
@@ -68,7 +68,7 @@ const WeDoAutomation: React.FC = () => {
             comms.map((item: Accordion, idx: number) => (
               <button
                 key={item.id}
-                className={`we-do-communication__button${selectedIdx === idx ? " selected" : ""}`}
+                className={`we-do-automation__button${selectedIdx === idx ? " selected" : ""}`}
                 onClick={() => setSelectedIdx(idx)}
               >
                 {item.label}
@@ -76,8 +76,8 @@ const WeDoAutomation: React.FC = () => {
             ))
           )}
         </div>
-        <div className="we-do-communication__columns">
-          <div className="communication-accordion-container" ref={accordionContainerRef}>
+        <div className="we-do-automation__columns">
+          <div className="automation-accordion-container" ref={accordionContainerRef}>
             {comms.length === 0 ? (
               <div>Loading accordion...</div>
             ) : selected ? (
@@ -99,12 +99,12 @@ const WeDoAutomation: React.FC = () => {
               <div>No accordion data found.</div>
             )}
           </div>
-          <div className="communication-image-container">
+          <div className="automation-image-container">
             {imageUrl ? (
               <img
                 src={imageUrl}
                 alt={selected?.label}
-                className="communication-image"
+                className="automation-image"
                 style={{
                   opacity: 1,
                   transition: 'opacity 0.5s cubic-bezier(.4,0,.2,1)',
@@ -117,11 +117,11 @@ const WeDoAutomation: React.FC = () => {
                 onLoad={e => { e.currentTarget.style.opacity = '1'; }}
               />
             ) : (
-              <div className="communication-image-placeholder" style={{ height: accordionHeight ? `${accordionHeight}px` : 'auto', width: '100%' }}>No image</div>
+              <div className="automation-image-placeholder" style={{ height: accordionHeight ? `${accordionHeight}px` : 'auto', width: '100%' }}>No image</div>
             )}
           </div>
         </div>
-        <p className="we-do-communication__footer">Yo</p>
+        <p className="we-do-automation__footer">Yo</p>
       </div>
     </section>
   );

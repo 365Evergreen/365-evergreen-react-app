@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import "../WeDoCommunication.css";
+import "../WeDoApps.css";
 import WhatWeDoAccordion from "./WhatWeDoAccordion";
 
 
@@ -55,11 +55,11 @@ const WeDoApps: React.FC = () => {
   }
 
   return (
-    <section className="we-do-communication-bg">
-      <div className="we-do-communication-container">
-        <h2 className="we-do-communication__heading">Business apps</h2>
-        <p className="we-do-communication__description">Enhance your business communication with Microsoft 365. Our solutions empower teams to collaborate seamlessly, share information effortlessly, and stay connected regardless of location. With tools like Microsoft Teams, SharePoint, and Outlook, you can foster a culture of collaboration, streamline information sharing, and ensure everyone stays informed. From instant messaging to video conferencing and document management, Microsoft 365 offers a comprehensive suite of communication tools tailored to your business needs.</p>
-        <div className="we-do-communication__button-row">
+    <section className="we-do-apps-bg">
+      <div className="we-do-apps-container">
+        <h2 className="we-do-apps__heading">Business apps</h2>
+        <p className="we-do-apps__description">Enhance your business apps with Microsoft 365. Our solutions empower teams to collaborate seamlessly, share information effortlessly, and stay connected regardless of location. With tools like Microsoft Teams, SharePoint, and Outlook, you can foster a culture of collaboration, streamline information sharing, and ensure everyone stays informed. From instant messaging to video conferencing and document management, Microsoft 365 offers a comprehensive suite of apps tools tailored to your business needs.</p>
+        <div className="we-do-apps__button-row">
           {loading ? (
             <span>Loading...</span>
           ) : error ? (
@@ -70,7 +70,7 @@ const WeDoApps: React.FC = () => {
             comms.map((item: Accordion, idx: number) => (
               <button
                 key={item.id}
-                className={`we-do-communication__button${selectedIdx === idx ? " selected" : ""}`}
+                className={`we-do-apps__button${selectedIdx === idx ? " selected" : ""}`}
                 onClick={() => setSelectedIdx(idx)}
               >
                 {item.label}
@@ -78,8 +78,8 @@ const WeDoApps: React.FC = () => {
             ))
           )}
         </div>
-        <div className="we-do-communication__columns">
-          <div className="communication-accordion-container" ref={accordionContainerRef}>
+        <div className="we-do-apps__columns">
+          <div className="apps-accordion-container" ref={accordionContainerRef}>
             {comms.length === 0 ? (
               <div>Loading accordion...</div>
             ) : selected ? (
@@ -101,12 +101,12 @@ const WeDoApps: React.FC = () => {
               <div>No accordion data found.</div>
             )}
           </div>
-          <div className="communication-image-container">
+          <div className="apps-image-container">
             {imageUrl ? (
               <img
                 src={imageUrl}
                 alt={selected?.label}
-                className="communication-image"
+                className="apps-image"
                 style={{
                   opacity: 1,
                   transition: 'opacity 0.5s cubic-bezier(.4,0,.2,1)',
@@ -119,11 +119,11 @@ const WeDoApps: React.FC = () => {
                 onLoad={e => { e.currentTarget.style.opacity = '1'; }}
               />
             ) : (
-              <div className="communication-image-placeholder" style={{ height: accordionHeight ? `${accordionHeight}px` : 'auto', width: '100%' }}>No image</div>
+              <div className="apps-image-placeholder" style={{ height: accordionHeight ? `${accordionHeight}px` : 'auto', width: '100%' }}>No image</div>
             )}
           </div>
         </div>
-        <p className="we-do-communication__footer">Yo</p>
+        <p className="we-do-apps__footer">Yo</p>
       </div>
     </section>
   );
