@@ -14,6 +14,10 @@ type CategoryGroup = {
 	children: WPCategory[];
 };
 
+function stripHtml(value: string): string {
+	return value.replace(/<[^>]+>/g, ' ');
+}
+
 const LatestPostsArchive: React.FC = () => {
 	const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
 	// Find the hero config for the archive page
@@ -66,6 +70,57 @@ const LatestPostsArchive: React.FC = () => {
 
 		return result;
 	}, [allCategories]);
+
+	const parentSlugByChildSlug = React.useMemo(() => {
+		const map = new Map<string, string>();
+		categories.forEach(({ parent, children }) => {
+			children.forEach(child => {
+				if (child.slug) {
+					map.set(child.slug, parent.slug);
+				}
+			});
+		});
+		return map;
+	}, [categories]);
+
+	const filteredPosts = React.useMemo(() => {
+		const searchTerm = search.trim().toLowerCase();
+		const selectedSet = new Set(selectedCategories.filter(Boolean));
+
+		return posts.filter(post => {
+			const combinedText = `${post.title ?? ''} ${stripHtml(post.excerpt ?? '')}`.toLowerCase();
+			const matchesSearch = searchTerm.length === 0 || combinedText.includes(searchTerm);
+			if (!matchesSearch) {
+				return false;
+			}
+
+			if (selectedSet.size === 0) {
+				return true;
+			}
+
+			const edges = post.categories?.edges ?? [];
+			if (edges.length === 0) {
+				return false;
+			}
+
+			return edges.some(edge => {
+				const slug = edge?.node?.slug;
+				if (!slug) {
+					return false;
+				}
+				if (selectedSet.has(slug)) {
+					return true;
+				}
+				const parentSlug = parentSlugByChildSlug.get(slug);
+				return parentSlug ? selectedSet.has(parentSlug) : false;
+			});
+		});
+	}, [posts, search, selectedCategories, parentSlugByChildSlug]);
+
+	const visiblePosts = React.useMemo(() => {
+		const limit = viewMode === 'grid' ? 15 : 15;
+		return filteredPosts.slice(0, limit);
+	}, [filteredPosts, viewMode]);
 
 	// Close dropdown on outside click
 	useEffect(() => {
@@ -211,15 +266,52 @@ const LatestPostsArchive: React.FC = () => {
 						)}
 					</div>
 					{/* Clear filters button */}
-					   <div className="latest-posts-archive-filter-group">
-						   <button
-							   type="button"
-							   className="latest-posts-archive-clear-filters"
-							   onClick={() => { setSearch(''); setSelectedCategories([]); }}
-						   >
-							   Clear filters
-						   </button>
-					   </div>
+				   <div className="latest-posts-archive-filter-group">
+					   <button
+					   	type="button"
+					   	className="latest-posts-archive-clear-filters"
+					   	onClick={() => { setSearch(''); setSelectedCategories([]); }}
+					   >
+					   	<svg
+					   		width="16"
+					   		height="16"
+					   		viewBox="0 0 16 16"
+					   		fill="none"
+					   		xmlns="http://www.w3.org/2000/svg"
+					   		aria-hidden="true"
+					   	>
+					   		<path
+					   			d="M3 4.5H13"
+					   			stroke="currentColor"
+					   			strokeWidth="1.5"
+					   			strokeLinecap="round"
+					   			strokeLinejoin="round"
+					   		/>
+					   		<path
+					   			d="M5.5 4.5V11.25C5.5 11.8023 5.94772 12.25 6.5 12.25H9.5C10.0523 12.25 10.5 11.8023 10.5 11.25V4.5"
+					   			stroke="currentColor"
+					   			strokeWidth="1.5"
+					   			strokeLinecap="round"
+					   			strokeLinejoin="round"
+					   		/>
+					   		<path
+					   			d="M7 6.5V10"
+					   			stroke="currentColor"
+					   			strokeWidth="1.5"
+					   			strokeLinecap="round"
+					   			strokeLinejoin="round"
+					   		/>
+					   		<path
+					   			d="M9 6.5V10"
+					   			stroke="currentColor"
+					   			strokeWidth="1.5"
+					   			strokeLinecap="round"
+					   			strokeLinejoin="round"
+					   		/>
+					   	</svg>
+					   	Clear filters
+					   </button>
+				   </div>
 				   {/* Removed selected category tags from hero section */}
 			</div>
 		</div></section>
@@ -291,7 +383,7 @@ const LatestPostsArchive: React.FC = () => {
 
 		 {/* Posts container: grid or list view */}
 		 <div className={viewMode === 'grid' ? 'latest-posts-archive-grid' : 'latest-posts-archive-list'}>
-				{posts.slice(0, viewMode === 'grid' ? 15 : 15).map((post: LatestPost) => {
+				{visiblePosts.map((post: LatestPost) => {
 				 if (viewMode === 'grid') {
 					 const primaryCategory = post.categories?.edges?.[0]?.node?.slug || 'post';
 					 const postUrl = `/category/${primaryCategory}/${post.slug}`;

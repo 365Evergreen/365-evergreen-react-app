@@ -1,13 +1,10 @@
-import { useState } from 'react';
+import { useState, lazy, Suspense, type ComponentProps, type ComponentType } from 'react';
 import { Header } from './components/Header/Header';
 import { Hero } from './components/Hero';
 // import { CTA } from './components/CTA';
 import { Features } from './components/Features';
 import LatestPosts from './components/LatestPosts';
 import { ContactForm } from './components/ContactForm';
-import FeatureView from './components/FeatureView';
-import AllAccordions from './components/allacordions';
-import AllFeatures from './components/AllFeatures';
 import { Footer } from './components/Footer';
 import { CookieConsent } from './components/CookieConsent';
 import { CopilotChat } from './components/CopilotChat';
@@ -15,34 +12,39 @@ import { ChatBubble } from './components/ChatBubble';
 import { FloatingDrawer } from './components/FloatingDrawer';
 import { JourneySurvey } from './components/JourneySurvey';
 import questionsData from '../CTAJourneyQuestions.json';
-import { PageView } from './components/PageView';
-import CtaPage from './components/CtaPage';
-import TestCtaQuery from './components/TestCtaQuery';
-import WhatWeDoStatic from './components/WhatWeDoStatic';
-import WhatWeDoItem from './components/WhatWeDoItem';
-import LatestPostsArchive from './components/LatestPostsArchive/LatestPostsArchive';
-import ResourceArchive from './components/ResourceArchive/ResourceArchive';
 // import Carousel from './components/Carousel';
 import FluentCarousel from './components/FluentCarousel';
-import VanillaAccordionDemoPage from './components/VanillaAccordionDemoPage';
 import { AnimatePresence, motion } from 'framer-motion';
 import { fadeVariants } from './components/motionPresets';
-import AccordionTest from './components/AccordionTest';
-import FeatureButtonsTest from './components/FeatureButtonsTest';
-import FeatureButtonsLogic from './components/FeatureButtonsLogic';
 import { Routes, Route } from 'react-router-dom';
 import './HomeSectionLayout.css';
+import RouteLoader from './components/RouteLoader';
+
+const CtaPage = lazy(() => import('./components/CtaPage'));
+const FeatureView = lazy(() => import('./components/FeatureView'));
+const AllAccordions = lazy(() => import('./components/allacordions'));
+const AllFeatures = lazy(() => import('./components/AllFeatures'));
+const LatestPostsArchive = lazy(() => import('./components/LatestPostsArchive/LatestPostsArchive'));
+const WhatWeDoItem = lazy(() => import('./components/WhatWeDoItem'));
+const WhatWeDoStatic = lazy(() => import('./components/WhatWeDoStatic'));
+const ResourceArchive = lazy(() => import('./components/ResourceArchive/ResourceArchive'));
+const TestCtaQuery = lazy(() => import('./components/TestCtaQuery'));
+const VanillaAccordionDemoPage = lazy(() => import('./components/VanillaAccordionDemoPage'));
+const AccordionTest = lazy(() => import('./components/AccordionTest'));
+const FeatureButtonsTest = lazy(() => import('./components/FeatureButtonsTest'));
+const FeatureButtonsLogic = lazy(() => import('./components/FeatureButtonsLogic'));
+const PageView = lazy(() => import('./components/PageView').then(module => ({ default: module.PageView })));
 
 // Wrapper to allow passing optional props to PageView without changing its
 // original typings. We cast props through any when forwarding.
 
 
 
-type PageViewProps = React.ComponentProps<typeof PageView>;
+type PageViewProps = ComponentProps<typeof PageView>;
 
 type PageViewOptionalProps = Partial<PageViewProps> & { whatWeDoPageId?: string };
 
-const PageViewOptional: React.ComponentType<PageViewOptionalProps> = (props) => (
+const PageViewOptional: ComponentType<PageViewOptionalProps> = (props) => (
   <PageView {...(props as PageViewProps)} />
 );
 
@@ -53,85 +55,87 @@ function App() {
     <>
       <Header />
       <main>
-        <Routes>
-          <Route path="/" element={
-            <AnimatePresence mode="wait">
-              <motion.div
-                key="hero"
-                variants={fadeVariants}
-                initial="hidden"
-                animate="visible"
-                exit="exit"
-              >
-                <Hero onOpenDrawer={() => setDrawerOpen(true)} />
-              </motion.div>
-              <motion.div
-                key="fluentcarousel"
-                variants={fadeVariants}
-                initial="hidden"
-                animate="visible"
-                exit="exit"
-              >
-                <FluentCarousel />
-              </motion.div>
-              <div className="bg-default">
+        <Suspense fallback={<RouteLoader />}>
+          <Routes>
+            <Route path="/" element={
+              <AnimatePresence mode="wait">
                 <motion.div
-                  key="features"
+                  key="hero"
                   variants={fadeVariants}
                   initial="hidden"
                   animate="visible"
                   exit="exit"
                 >
-                  <div className="features-outer">
-                    <Features />
-                  </div>
+                  <Hero onOpenDrawer={() => setDrawerOpen(true)} />
                 </motion.div>
-              </div>
-              <div className="bg-alt">
                 <motion.div
-                  key="latestposts"
+                  key="fluentcarousel"
                   variants={fadeVariants}
                   initial="hidden"
                   animate="visible"
                   exit="exit"
                 >
-                  <LatestPosts />
+                  <FluentCarousel />
                 </motion.div>
-              </div>
-              <div className="bg-default">
-                <motion.div
-                  key="contactform"
-                  variants={fadeVariants}
-                  initial="hidden"
-                  animate="visible"
-                  exit="exit"
-                >
-                  <ContactForm />
-                </motion.div>
-              </div>
-            </AnimatePresence>
-          } />
-          <Route path="/CTA/:slug" element={<CtaPage />} />
-          <Route path="/feature/:slug" element={<FeatureView />} />
-          <Route path="/all-accordions" element={<AllAccordions />} />
-          <Route path="/all-features" element={<AllFeatures />} />
-          <Route path="/test/cta-query" element={<TestCtaQuery />} />
-          <Route path="/latest-posts" element={<LatestPostsArchive />} />
-          <Route path="/category/:category" element={<LatestPostsArchive />} />
-          <Route path="/category/:category/:slug" element={<PageView />} />
-          <Route path="/what-we-do" element={<PageViewOptional whatWeDoPageId="cG9zdDo0OTM=" />} />
-          <Route path="/what-we-do/:slug" element={<WhatWeDoItem />} />
-          <Route path="/e365-page/what-we-do/" element={<WhatWeDoStatic />} />
-          <Route path="/e365-page/how-we-do-it" element={<ResourceArchive />} />
-          <Route path="/e365-page/resources/" element={<ResourceArchive />} />
-          <Route path="/:slug" element={<PageView />} />
-          <Route path="/:parent/:slug" element={<PageView />} />
-          <Route path="/vanilla-accordion-demo" element={<VanillaAccordionDemoPage />} />
-          <Route path="/accordion-test" element={<AccordionTest />} />
-          <Route path="/feature-buttons-test" element={<FeatureButtonsTest />} />
-          {/* Simulate homepage selection: pass featureId for Modern workplace */}
-          <Route path="/feature-buttons-logic" element={<FeatureButtonsLogic featureId="cG9zdDozMzg=" />} />
-        </Routes>
+                <div className="bg-default">
+                  <motion.div
+                    key="features"
+                    variants={fadeVariants}
+                    initial="hidden"
+                    animate="visible"
+                    exit="exit"
+                  >
+                    <div className="features-outer">
+                      <Features />
+                    </div>
+                  </motion.div>
+                </div>
+                <div className="bg-alt">
+                  <motion.div
+                    key="latestposts"
+                    variants={fadeVariants}
+                    initial="hidden"
+                    animate="visible"
+                    exit="exit"
+                  >
+                    <LatestPosts />
+                  </motion.div>
+                </div>
+                <div className="bg-default">
+                  <motion.div
+                    key="contactform"
+                    variants={fadeVariants}
+                    initial="hidden"
+                    animate="visible"
+                    exit="exit"
+                  >
+                    <ContactForm />
+                  </motion.div>
+                </div>
+              </AnimatePresence>
+            } />
+            <Route path="/CTA/:slug" element={<CtaPage />} />
+            <Route path="/feature/:slug" element={<FeatureView />} />
+            <Route path="/all-accordions" element={<AllAccordions />} />
+            <Route path="/all-features" element={<AllFeatures />} />
+            <Route path="/test/cta-query" element={<TestCtaQuery />} />
+            <Route path="/latest-posts" element={<LatestPostsArchive />} />
+            <Route path="/category/:category" element={<LatestPostsArchive />} />
+            <Route path="/category/:category/:slug" element={<PageView />} />
+            <Route path="/what-we-do" element={<PageViewOptional whatWeDoPageId="cG9zdDo0OTM=" />} />
+            <Route path="/what-we-do/:slug" element={<WhatWeDoItem />} />
+            <Route path="/e365-page/what-we-do/" element={<WhatWeDoStatic />} />
+            <Route path="/e365-page/how-we-do-it" element={<ResourceArchive />} />
+            <Route path="/e365-page/resources/" element={<ResourceArchive />} />
+            <Route path="/:slug" element={<PageView />} />
+            <Route path="/:parent/:slug" element={<PageView />} />
+            <Route path="/vanilla-accordion-demo" element={<VanillaAccordionDemoPage />} />
+            <Route path="/accordion-test" element={<AccordionTest />} />
+            <Route path="/feature-buttons-test" element={<FeatureButtonsTest />} />
+            {/* Simulate homepage selection: pass featureId for Modern workplace */}
+            <Route path="/feature-buttons-logic" element={<FeatureButtonsLogic featureId="cG9zdDozMzg=" />} />
+          </Routes>
+        </Suspense>
         <CopilotChat open={chatOpen} onClose={() => setChatOpen(false)} />
       </main>
       <CookieConsent />
