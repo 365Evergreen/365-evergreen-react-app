@@ -59,10 +59,10 @@ export function ContactForm() {
   };
 
   return (
-    <section id="contact" className="contact-root">
+    <section id="contact" className="contact-root home-section">
       <div className="contact-wrapper">
         <div className="contact-info">
-          <h2 className="fluent-title2 contact-heading">How can we help?</h2>
+          <h2 className="fluent-title2 contact-heading home-section-heading">How can we help?</h2>
         </div>
         <div className="contact-container">
           {submitted && (

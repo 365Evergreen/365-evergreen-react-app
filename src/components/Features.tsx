@@ -18,8 +18,8 @@ export function Features() {
   if (!sortedFeatures.length) return null;
 
   return (
-    <section className="features-root">
-      <h2 className="fluent-title2">What we do to help you succeed</h2>
+    <section className="features-root home-section">
+      <h2 className="fluent-title2 home-section-heading">What we do to help you succeed</h2>
       <div className="features-grid">
         {sortedFeatures.map(feature => (
           <div

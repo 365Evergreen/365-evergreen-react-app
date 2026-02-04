@@ -21,8 +21,6 @@
 
 .latest-posts-root {
   background: var(--themeNeutralLightest, #f5f7fa);
-  padding: 0 4vw 0 4vw;
-  padding-bottom: 2.5rem;
 }
 
 .latest-posts-container {
@@ -34,7 +32,6 @@
 
 .latest-posts-title {
   text-align: left;
-  margin-bottom: 2rem;
 }
 
 /* Use Features grid and card styles for LatestPosts */
@@ -100,7 +97,6 @@
   }
 
   .latest-posts-root {
-    padding: 0 4vw 0 4vw;
     background: var(--themeNeutralLightest, #f5f7fa);
   }
 }

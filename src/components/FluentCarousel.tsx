@@ -67,21 +67,28 @@ type Slide = {
   btnText?: string;
 };
 
-function normalizeRawItems(items: any[]): Slide[] {
+function isRawCarouselItem(value: unknown): value is RawCarouselItem {
+  if (!value || typeof value !== 'object') return false;
+  const candidate = value as Partial<RawCarouselItem>;
+  return typeof candidate.Title === 'string';
+}
+
+function normalizeRawItems(items: unknown): Slide[] {
   if (!Array.isArray(items)) return [];
   return items
-    .filter((item: RawCarouselItem) => item && (item.display === true))
-    .map((item: RawCarouselItem) => ({
+    .filter(isRawCarouselItem)
+    .filter(item => item.display === true)
+    .map(item => ({
       title: item.Title,
       blurb: item.Blurb ?? undefined,
       image: (item.image || '').replace(/^[\s"]+|[\s",]+$/g, ''),
       cta: item.CTA ?? undefined,
       btnText: item.btnText ?? undefined,
-    } as Slide));
+    }));
 }
 
 // Initialize with local JSON as a fallback and attempt to fetch remote blob on mount
-const initialSlides = normalizeRawItems(Array.isArray(localCarouselItems) ? localCarouselItems : []);
+const initialSlides = normalizeRawItems(localCarouselItems);
 
 const useSlides = () => {
   const [slides, setSlides] = React.useState<Slide[]>(initialSlides);
@@ -91,10 +98,13 @@ const useSlides = () => {
     fetch(CAROUSEL_BLOB_URL)
       .then(res => res.json())
       .then(data => {
-        let items: any[] = [];
+        let items: unknown = [];
         if (Array.isArray(data)) items = data;
-        else if (data && Array.isArray((data as any).body)) items = (data as any).body;
-        else if (data) items = [data];
+        else if (data && typeof data === 'object' && Array.isArray((data as { body?: unknown }).body)) {
+          items = (data as { body: unknown[] }).body;
+        } else if (isRawCarouselItem(data)) {
+          items = [data];
+        }
         const normalized = normalizeRawItems(items);
         if (!cancelled && normalized.length > 0) {
           setSlides(normalized);
@@ -172,9 +182,13 @@ const FluentCarousel: React.FC = () => {
   const slides = useSlides();
 
   return (
-    <div className={carouselStyles.carouselRoot}>
+    <section className={`${carouselStyles.carouselRoot} home-section`}>
+      <h2 className={`fluent-title2 home-section-heading ${carouselStyles.carouselHeading}`}>
+        Evergreen transformations in action
+      </h2>
       <Carousel
         className={carouselStyles.carouselContainer}
+        style={{ padding: 0, margin: 0 }}
         appearance="elevated"
         groupSize={1}
         circular
@@ -211,7 +225,7 @@ const FluentCarousel: React.FC = () => {
           </CarouselNav>
         </CarouselNavContainer>
       </Carousel>
-    </div>
+    </section>
   );
 };
 

@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
@@ -25,20 +24,26 @@ import LatestPostsArchive from './components/LatestPostsArchive';
 // import Carousel from './components/Carousel';
 import FluentCarousel from './components/FluentCarousel';
 import VanillaAccordionDemoPage from './components/VanillaAccordionDemoPage';
-
 import { AnimatePresence, motion } from 'framer-motion';
 import { fadeVariants } from './components/motionPresets';
 import AccordionTest from './components/AccordionTest';
 import FeatureButtonsTest from './components/FeatureButtonsTest';
 import FeatureButtonsLogic from './components/FeatureButtonsLogic';
-
 import { Routes, Route } from 'react-router-dom';
+import './HomeSectionLayout.css';
 
 // Wrapper to allow passing optional props to PageView without changing its
 // original typings. We cast props through any when forwarding.
 
-const PageViewAny: any = PageView;
 
+
+type PageViewProps = React.ComponentProps<typeof PageView>;
+
+type PageViewOptionalProps = Partial<PageViewProps> & { whatWeDoPageId?: string };
+
+const PageViewOptional: React.ComponentType<PageViewOptionalProps> = (props) => (
+  <PageView {...(props as PageViewProps)} />
+);
 
 function App() {
   const [chatOpen, setChatOpen] = useState(false);
@@ -89,9 +94,7 @@ function App() {
                   animate="visible"
                   exit="exit"
                 >
-                  <div style={{ paddingBottom: '2.5rem' }}>
-                    <LatestPosts />
-                  </div>
+                  <LatestPosts />
                 </motion.div>
               </div>
               <div className="bg-default">
@@ -115,7 +118,7 @@ function App() {
           <Route path="/latest-posts" element={<LatestPostsArchive />} />
           <Route path="/category/:category" element={<LatestPostsArchive />} />
           <Route path="/category/:category/:slug" element={<PageView />} />
-          <Route path="/what-we-do" element={<PageViewAny whatWeDoPageId="cG9zdDo0OTM=" />} />
+          <Route path="/what-we-do" element={<PageViewOptional whatWeDoPageId="cG9zdDo0OTM=" />} />
           <Route path="/what-we-do/:slug" element={<WhatWeDoItem />} />
           <Route path="/e365-page/what-we-do/" element={<WhatWeDoStatic />} />
           <Route path="/:slug" element={<PageView />} />

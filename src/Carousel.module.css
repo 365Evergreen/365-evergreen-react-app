@@ -2,12 +2,25 @@
 .carouselRoot {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
   width: 100%;
   margin: 0;
-  padding: 0 4vw 0 4vw;
+  padding: 0;
   box-sizing: border-box;
   background: var(--themeNeutralLightest, #f5f7fa);
+}
+
+.carouselRoot :global(.fui-Carousel) {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.carouselHeading {
+  align-self: stretch;
+  width: 100%;
+  box-sizing: border-box;
+  color: var(--themeNeutralPrimary, #1b1a19);
+  text-align: left;
 }
 
 .carouselContainer {
@@ -15,22 +28,29 @@
   min-width: 0;
   position: relative;
   margin: 0;
-  padding: 0 4vw 0 4vw;
+  padding: 0;
   box-sizing: border-box;
   overflow: visible;
 }
 
 @media (max-width: 900px) {
   .carouselRoot {
-    padding: 0 2vw 0 2vw;
+    padding: 0;
+  }
+  .carouselHeading {
+    padding-left: 0;
+    padding-right: 0;
   }
   .carouselContainer {
-    padding: 0 2vw 0 2vw;
+    padding: 0;
   }
 }
 @media (max-width: 600px) {
   .carouselRoot {
-    padding: 0 0 0 0;
+    padding: 0;
+  }
+  .carouselHeading {
+    padding: 0 0 1.25rem;
   }
 }
 
@@ -136,7 +156,7 @@
   box-shadow: 0 4px 32px rgba(0,0,0,0.10);
   border-radius: 8px;
   padding: 2.5rem 2.5rem 2.5rem 2.5rem;
-  margin: 3vw 0 3vw 4vw;
+  margin: 3vw 0;
   min-width: 340px;
   max-width: 420px;
   display: flex;
@@ -149,15 +169,13 @@
   background: #fff;
   box-shadow: 0 4px 32px rgba(0,0,0,0.10);
   border-radius: 8px;
-  padding: 2.5rem 2.5rem 2.5rem 2.5rem;
-  margin-left: 0;
+  padding: 2.5rem;
   margin-right: 2.5rem;
   flex: 1 1 420px;
   max-width: 480px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  justify-content: center;
   gap: 1.2rem;
   min-width: 340px;
 }
@@ -246,14 +264,14 @@
 }
 @media (max-width: 900px) {
   .carouselRoot {
-    padding-left: 2vw;
-    padding-right: 2vw;
+    padding-left: 0;
+    padding-right: 0;
   }
   .carouselContainer {
     width: 100%;
     min-height: 340px;
-    padding-left: 2vw;
-    padding-right: 2vw;
+    padding-left: 0;
+    padding-right: 0;
     margin-left: auto;
     margin-right: auto;
   }
@@ -275,7 +293,7 @@
 @media (max-width: 600px) {
   .carouselRoot {
     min-height: 320px;
-    padding: 1rem 0;
+    padding: 0;
   }
   .carouselContainer {
     min-height: 220px;

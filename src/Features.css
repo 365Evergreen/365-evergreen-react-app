@@ -6,17 +6,6 @@
 /* Features styles */
 .features-root {
   background-color: var(--neutralLightestAlt);
-  padding: 0 4vw 0 4vw;
-  padding-left: 4vw;
-  padding-right: 4vw;
-  padding-bottom: 2.5rem;
-}
-@media (max-width: 900px) {
-  .features-root {
-    padding: 2rem 0 2rem 2vw;
-    padding-left: 2vw;
-    padding-right: 2vw;
-  }
 }
 .features-container {
   width: 100%;
@@ -68,7 +57,6 @@
 
 .features-root {
   /*border: 2px dashed #b5d2b5;*/
-  padding-bottom: 2.5rem;
 }
 .features-icon {
   color: var(--themeSecondary);

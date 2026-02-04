@@ -25,9 +25,9 @@ const LatestPosts: React.FC = () => {
 
   return (
     <div className="latest-posts-outer">
-      <section className="latest-posts-root">
+      <section className="latest-posts-root home-section">
         <div className="latest-posts-container">
-          <h2 className="latest-posts-title fluent-title2">Latest by 365 Evergreen</h2>
+          <h2 className="latest-posts-title fluent-title2 home-section-heading">Latest by 365 Evergreen</h2>
           <div className="features-grid">
             {sortedPosts.map((post) => {
               const primaryCategory = post.categories?.edges?.[0]?.node?.slug || 'post';

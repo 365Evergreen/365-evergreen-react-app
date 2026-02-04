@@ -9,6 +9,14 @@
             "page": "latest-posts"
         },
         {
+            "title": "Evergreen Resource Library",
+            "blurb": "Explore eBooks, templates, and checklists designed to accelerate your evergreen workplace strategy.",
+            "backgroundImage": "https://365evergreen.com/wp-content/uploads/2026/01/Resource-Archive-Hero.png",
+            "backgroundColour": "#f3f2f1",
+            "gradient": null,
+            "page": "resources"
+        },
+        {
             "title": "Collaboration and communication",
             "blurb": "Architecting the future of work through SharePoint mastery, bespoke automation, and strategic Microsoft 365 implementation.",
             "backgroundImage": "https://365evergreen.com/wp-content/uploads/2026/01/MicrosoftViva-Teams-background-2.png",
