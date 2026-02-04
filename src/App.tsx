@@ -19,6 +19,7 @@ import { fadeVariants } from './components/motionPresets';
 import { Routes, Route } from 'react-router-dom';
 import './HomeSectionLayout.css';
 import RouteLoader from './components/RouteLoader';
+import HowWeDoItStatic from './components/HowWeDoIt/HowWeDoItStatic';
 
 const CtaPage = lazy(() => import('./components/CtaPage'));
 const FeatureView = lazy(() => import('./components/FeatureView'));
@@ -125,7 +126,7 @@ function App() {
             <Route path="/what-we-do" element={<PageViewOptional whatWeDoPageId="cG9zdDo0OTM=" />} />
             <Route path="/what-we-do/:slug" element={<WhatWeDoItem />} />
             <Route path="/e365-page/what-we-do/" element={<WhatWeDoStatic />} />
-            <Route path="/e365-page/how-we-do-it" element={<ResourceArchive />} />
+            <Route path="/e365-page/how-we-do-it" element={<HowWeDoItStatic />} />
             <Route path="/e365-page/resources/" element={<ResourceArchive />} />
             <Route path="/:slug" element={<PageView />} />
             <Route path="/:parent/:slug" element={<PageView />} />
