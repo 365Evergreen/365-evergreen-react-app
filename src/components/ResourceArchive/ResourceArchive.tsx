@@ -1,8 +1,9 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import type { CSSProperties, ChangeEvent } from 'react';
 import ReactDOM from 'react-dom';
-import heroConfig from '../../page-components.json';
-import { useE365Resources } from '../lib/useE365Resources';
+import heroConfig from '../../../page-components.json';
+import { useE365Resources } from './useE365Resources';
+import type { ResourceItem } from './useE365Resources';
 import styles from './ResourceArchive.module.css';
 
 type HeroEntry = {
@@ -86,7 +87,7 @@ const ResourceArchive: React.FC = () => {
 
   const categoryOptions = useMemo<ResourceCategory[]>(() => {
     const unique = new Map<string, string>();
-    resources.forEach(resource => {
+    resources.forEach((resource: ResourceItem) => {
       const typeKey = normalise(resource.resourceType);
       const labelKey = normalise(resource.label);
       if (typeKey) {
@@ -102,7 +103,7 @@ const ResourceArchive: React.FC = () => {
 
   const filteredResources = useMemo(() => {
     const searchTerm = normalise(search);
-    return resources.filter(resource => {
+    return resources.filter((resource: ResourceItem) => {
       const categoryKeys = [resource.resourceType, resource.label]
         .map(normalise)
         .filter(Boolean);
@@ -289,7 +290,7 @@ const ResourceArchive: React.FC = () => {
 
       {!loading && !error && limitedResources.length > 0 && (
         <div className={viewMode === 'grid' ? styles.resourceGrid : styles.resourceList}>
-          {limitedResources.map(resource => {
+          {limitedResources.map((resource: ResourceItem) => {
             const plainExcerpt = stripHtml(resource.excerpt);
             const excerptPreview = truncate(plainExcerpt, viewMode === 'grid' ? 175 : 220);
             const badgeLabel = resource.resourceType ?? resource.label ?? 'Resource';

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Button } from '@fluentui/react-components';
-import { Modal } from './Modal';
+import { Modal } from './Modal/Modal';
 import { JourneySurvey } from './JourneySurvey';
 import questionsData from '../../CTAJourneyQuestions.json';
 import '../Hero.css';

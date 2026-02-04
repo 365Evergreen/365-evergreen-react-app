@@ -2,11 +2,11 @@ import React from "react";
 import WhatWeDoHero from "./WhatWeDoHero";
 import { WhatWeDoNav } from "./WhatWeDoNav";
 import ResponsiveVideoPlayer from "./ResponsiveVideoPlayer";
-import WeDoCollaboration from "./WeDoCollaboration";
-import WeDoCommunication from "./WeDoCommunication";
+import WeDoCollaboration from "./WeDoCollaboration/WeDoCollaboration";
+import WeDoCommunication from "./WeDoCommunication/WeDoCommunication";
 import WeDoGovernance from "./WeDoGovernance";
 import WeDoAutomation from "./WeDoAutomation";
-import WeDoApps from "./WeDoApps";
+import WeDoApps from "./WeDoApps/WeDoApps";
 import WeDoSupport from "./WeDoSupport";
 
 

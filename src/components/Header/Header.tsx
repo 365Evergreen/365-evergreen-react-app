@@ -1,8 +1,8 @@
 import { Button } from '@fluentui/react-components';
 import { ChevronDown24Regular } from '@fluentui/react-icons';
-import '../Header.css';
+import './Header.css';
 import { useState, useEffect } from 'react';
-import { useGlobalNav } from '../lib/useGlobalNav';
+import { useGlobalNav } from '../../lib/useGlobalNav';
 import { useNavigate } from 'react-router-dom';
 
 export function Header() {

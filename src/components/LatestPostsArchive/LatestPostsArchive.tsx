@@ -1,20 +1,24 @@
-
-
-
 import React, { useEffect, useState, useRef } from 'react';
 import ReactDOM from 'react-dom';
-import heroConfig from '../../page-components.json';
-import { useLatestPosts } from '../lib/useLatestPosts';
-import { useAllCategories } from '../lib/useAllCategories';
-import '../LatestPostsArchive.css';
+import heroConfig from '../../../page-components.json';
+import { useLatestPosts } from './useLatestPosts';
+import { useAllCategories, type WPCategory } from '../../lib/useAllCategories';
+import type { LatestPost, CategoryEdge } from './useLatestPosts';
+import './LatestPostsArchive.css';
 
 
+
+type CategoryGroup = {
+	slug: string;
+	parent: WPCategory;
+	children: WPCategory[];
+};
 
 const LatestPostsArchive: React.FC = () => {
 	const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
 	// Find the hero config for the archive page
 	const hero = Array.isArray(heroConfig.body)
-		? heroConfig.body.find((b: any) => b.page === 'latest-posts')
+		? heroConfig.body.find((b: Record<string, unknown>) => b.page === 'latest-posts')
 		: null;
 
 	// Posts and categories
@@ -29,37 +33,37 @@ const LatestPostsArchive: React.FC = () => {
 	// Fetch all categories from WPGraphQL
 	const { categories: allCategories } = useAllCategories();
 	// Group categories by parent, sort alphabetically, avoid duplicates
-	const categories = React.useMemo(() => {
-		// Map of id to category
-		const catMap: Record<string, typeof allCategories[0]> = {};
-		allCategories.forEach(cat => { catMap[cat.id] = cat; });
-		// Build parent/child structure
-		const parentGroups: Record<string, typeof allCategories[0][]> = {};
+	const categories = React.useMemo<CategoryGroup[]>(() => {
+		const catMap = new Map<string, WPCategory>();
+		allCategories.forEach(cat => catMap.set(cat.id, cat));
+
+		const parentGroups = new Map<string, WPCategory[]>();
 		allCategories.forEach(cat => {
-			const parentId = cat.parent?.node?.id || 'root';
-			if (!parentGroups[parentId]) parentGroups[parentId] = [];
-			parentGroups[parentId].push(cat);
+			const parentId = cat.parent?.node?.id ?? 'root';
+			const group = parentGroups.get(parentId) ?? [];
+			group.push(cat);
+			parentGroups.set(parentId, group);
 		});
-		// Sort each group alphabetically
-		Object.values(parentGroups).forEach(group => group.sort((a, b) => a.name.localeCompare(b.name)));
-		// Only show root categories at top level, and nest children under their parent
-		const result: {
-			slug: string;
-			parent: typeof allCategories[0];
-			children: typeof allCategories[0][];
-		}[] = [];
-		(parentGroups['root'] || []).forEach(parentCat => {
-			const children = parentGroups[parentCat.id] || [];
+
+		Array.from(parentGroups.values()).forEach(group =>
+			group.sort((a, b) => a.name.localeCompare(b.name))
+		);
+
+		const result: CategoryGroup[] = [];
+		(parentGroups.get('root') ?? []).forEach(parentCat => {
+			const children = parentGroups.get(parentCat.id) ?? [];
 			result.push({ slug: parentCat.slug, parent: parentCat, children });
 		});
-		// Also show orphaned children (whose parent is not in the list)
-		Object.entries(parentGroups).forEach(([parentId, group]) => {
-			if (parentId !== 'root' && !catMap[parentId]) {
-				group.forEach(cat => {
-					result.push({ slug: cat.slug, parent: cat, children: [] });
-				});
+
+		parentGroups.forEach((group, parentId) => {
+			if (parentId === 'root' || catMap.has(parentId)) {
+				return;
 			}
+			group.forEach(cat => {
+				result.push({ slug: cat.slug, parent: cat, children: [] });
+			});
 		});
+
 		return result;
 	}, [allCategories]);
 
@@ -226,7 +230,7 @@ const LatestPostsArchive: React.FC = () => {
 					   <div className="latest-posts-archive-category-tags">
 						   {selectedCategories.filter(slug => !!slug).map(slug => {
 							   // Find the category object by searching parents and children only
-							   let cat: import("../lib/useAllCategories").WPCategory | null = null;
+							   let cat: import("../../lib/useAllCategories").WPCategory | null = null;
 							   for (const group of categories) {
 								   if (group.parent && group.parent.slug === slug) {
 									   cat = group.parent;
@@ -287,7 +291,7 @@ const LatestPostsArchive: React.FC = () => {
 
 		 {/* Posts container: grid or list view */}
 		 <div className={viewMode === 'grid' ? 'latest-posts-archive-grid' : 'latest-posts-archive-list'}>
-			 {posts.slice(0, viewMode === 'grid' ? 15 : 15).map(post => {
+				{posts.slice(0, viewMode === 'grid' ? 15 : 15).map((post: LatestPost) => {
 				 if (viewMode === 'grid') {
 					 const primaryCategory = post.categories?.edges?.[0]?.node?.slug || 'post';
 					 const postUrl = `/category/${primaryCategory}/${post.slug}`;
@@ -311,10 +315,15 @@ const LatestPostsArchive: React.FC = () => {
 							 )}
 							 {(post.categories?.edges?.length ?? 0) > 0 && (
 								 <div style={{ marginBottom: '0.5rem', display: 'flex', flexWrap: 'wrap', gap: '0.5em' }}>
-									 {(post.categories?.edges ?? []).map((cat: any) => (
-										 <span
-											 key={cat.node.slug}
-											 className="latest-posts-category-tag"
+									 {(post.categories?.edges ?? []).map((catEdge: CategoryEdge) => {
+									 	const category = catEdge?.node;
+									 	if (!category) {
+									 		return null;
+									 	}
+									 	return (
+									 		<span
+									 			key={category.slug}
+									 			className="latest-posts-category-tag"
 											 style={{
 												 background: '#e6f2e6',
 												 color: '#2d6a2d',
@@ -325,12 +334,13 @@ const LatestPostsArchive: React.FC = () => {
 											 }}
 											 onClick={e => {
 												 e.stopPropagation();
-												 window.location.href = `/category/${cat.node.slug}`;
+									 			window.location.href = `/category/${category.slug}`;
 											 }}
 										 >
-											 {cat.node.name}
-										 </span>
-									 ))}
+									 		 {category.name}
+									 	</span>
+									 	);
+									 })}
 								 </div>
 							 )}
 							 <div className="latest-posts-date">{new Date(post.date).toLocaleDateString()}</div>

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Header } from './components/Header';
+import { Header } from './components/Header/Header';
 import { Hero } from './components/Hero';
 // import { CTA } from './components/CTA';
 import { Features } from './components/Features';
@@ -20,7 +20,8 @@ import CtaPage from './components/CtaPage';
 import TestCtaQuery from './components/TestCtaQuery';
 import WhatWeDoStatic from './components/WhatWeDoStatic';
 import WhatWeDoItem from './components/WhatWeDoItem';
-import LatestPostsArchive from './components/LatestPostsArchive';
+import LatestPostsArchive from './components/LatestPostsArchive/LatestPostsArchive';
+import ResourceArchive from './components/ResourceArchive/ResourceArchive';
 // import Carousel from './components/Carousel';
 import FluentCarousel from './components/FluentCarousel';
 import VanillaAccordionDemoPage from './components/VanillaAccordionDemoPage';
@@ -121,6 +122,8 @@ function App() {
           <Route path="/what-we-do" element={<PageViewOptional whatWeDoPageId="cG9zdDo0OTM=" />} />
           <Route path="/what-we-do/:slug" element={<WhatWeDoItem />} />
           <Route path="/e365-page/what-we-do/" element={<WhatWeDoStatic />} />
+          <Route path="/e365-page/how-we-do-it" element={<ResourceArchive />} />
+          <Route path="/e365-page/resources/" element={<ResourceArchive />} />
           <Route path="/:slug" element={<PageView />} />
           <Route path="/:parent/:slug" element={<PageView />} />
           <Route path="/vanilla-accordion-demo" element={<VanillaAccordionDemoPage />} />

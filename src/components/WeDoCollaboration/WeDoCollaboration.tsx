@@ -1,11 +1,11 @@
 import React, { useState, useRef, useEffect } from "react";
-import "../WeDoCollaboration.css";
-import WhatWeDoAccordion from "./WhatWeDoAccordion";
+import "./WeDoCollaboration.css";
+import WhatWeDoAccordion from "../WhatWeDoAccordion.tsx";
 
 
 
 // We now fetch accordions and their items from WPGraphQL via `useAccordionsByComponent`
-import { useAccordionsByComponent } from '../lib/useAccordionsByComponent.ts';
+import { useAccordionsByComponent } from '../../lib/useAccordionsByComponent.ts';
 
 const WeDoCollaboration: React.FC = () => {
 
