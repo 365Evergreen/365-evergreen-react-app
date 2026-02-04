@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import "../WeDoApps.css";
+import "./WeDoApps.css";
 import WhatWeDoAccordion from "../WhatWeDoAccordion";
 
 
