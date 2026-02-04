@@ -53,7 +53,7 @@ const WeDoCollaboration: React.FC = () => {
   }
 
   return (
-    <section className="we-do-collaboration-bg">
+    <section id="collaboration" className="we-do-collaboration-bg">
       <div className="we-do-collaboration-container">
         <h2 className="we-do-collaboration__heading">Collaboration</h2>
         <p className="we-do-collaboration__description">Enhance your business communication with Microsoft 365. Our solutions empower teams to collaborate seamlessly, share information effortlessly, and stay connected regardless of location. With tools like Microsoft Teams, SharePoint, and Outlook, you can foster a culture of collaboration, streamline information sharing, and ensure everyone stays informed. From instant messaging to video conferencing and document management, Microsoft 365 offers a comprehensive suite of communication tools tailored to your business needs.</p>

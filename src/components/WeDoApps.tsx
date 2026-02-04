@@ -55,7 +55,7 @@ const WeDoApps: React.FC = () => {
   }
 
   return (
-    <section className="we-do-apps-bg">
+    <section id="business-apps" className="we-do-apps-bg">
       <div className="we-do-apps-container">
         <h2 className="we-do-apps__heading">Business apps</h2>
         <p className="we-do-apps__description">Enhance your business apps with Microsoft 365. Our solutions empower teams to collaborate seamlessly, share information effortlessly, and stay connected regardless of location. With tools like Microsoft Teams, SharePoint, and Outlook, you can foster a culture of collaboration, streamline information sharing, and ensure everyone stays informed. From instant messaging to video conferencing and document management, Microsoft 365 offers a comprehensive suite of apps tools tailored to your business needs.</p>

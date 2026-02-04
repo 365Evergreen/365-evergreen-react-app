@@ -1,21 +1,34 @@
 import React, { useState, useRef, useEffect } from "react";
-import "../WeDogovernance.css";
+import "../WeDoGovernance.css";
 import WhatWeDoAccordion from "./WhatWeDoAccordion";
 
-const governance_URL = "https://365evergreendev.blob.core.windows.net/365evergreen/accordions.json";
-const ACCORDION_LIST_URL = "https://365evergreendev.blob.core.windows.net/365evergreen/accordion-list.json";
+
+
+// We now fetch accordions and their items from WPGraphQL via `useAccordionsByComponent`
+import { useAccordionsByComponent } from '../lib/useAccordionsByComponent';
+import type { Accordion, AccordionItem } from '../lib/useAccordionsByComponent';
 
 const WeDoGovernance: React.FC = () => {
-  const [comms, setComms] = React.useState<any[]>([]);
-  const [accordionList, setAccordionList] = React.useState<any[]>([]);
-  const [selectedIdx, setSelectedIdx] = useState(0);
+
+  // Use GraphQL hook to fetch accordions and items for this component
+  const { accordions: comms, items: accordionList, loading, error } = useAccordionsByComponent('WeDoGovernance');
+  // Compute defaultIdx from comms
+  const defaultIdx = comms.findIndex((c: Accordion) => c.label === 'Stay connected');
+  const [selectedIdx, setSelectedIdx] = useState<number>(defaultIdx >= 0 ? defaultIdx : 0);
   const [openPanelIdx, setOpenPanelIdx] = useState<number | null>(0);
   const accordionContainerRef = useRef<HTMLDivElement>(null);
   const [accordionHeight, setAccordionHeight] = useState<number>(0);
+
   const selected = comms.length > 0 ? comms[selectedIdx] : null;
-  const panels = selected && Array.isArray(accordionList)
-    ? accordionList.filter((item) => item.parentId === selected.id)
-    : [];
+  // Filter panels for the selected accordion and sort by provided order (sortOrder)
+  const panels = React.useMemo(() => {
+    return selected && Array.isArray(accordionList)
+      ? accordionList
+        .filter((item: AccordionItem) => item.parentId === selected.id)
+        .slice()
+        .sort((a, b) => ((a.order ?? Number.MAX_SAFE_INTEGER) - (b.order ?? Number.MAX_SAFE_INTEGER)))
+      : [];
+  }, [selected, accordionList]);
 
   useEffect(() => {
     if (accordionContainerRef.current) {
@@ -23,30 +36,11 @@ const WeDoGovernance: React.FC = () => {
     }
   }, [panels, openPanelIdx, selectedIdx]);
 
-  useEffect(() => {
-    let cancelled = false;
-    Promise.all([
-      fetch(governance_URL).then((res) => res.json()),
-      fetch(ACCORDION_LIST_URL).then((res) => res.json())
-    ]).then(([commsData, accordionData]) => {
-      let commsArr = Array.isArray(commsData)
-        ? commsData
-        : (commsData && Array.isArray(commsData.body) ? commsData.body : []);
-      let accordionArr = Array.isArray(accordionData)
-        ? accordionData
-        : (accordionData && Array.isArray(accordionData.body) ? accordionData.body : []);
-      if (!cancelled) {
-        setComms(commsArr.filter((item: { section: string; }) => item.section === "governance"));
-        setAccordionList(accordionArr);
-      }
-    }).catch(() => {
-      if (!cancelled) {
-        setComms([]);
-        setAccordionList([]);
-      }
-    });
-    return () => { cancelled = true; };
-  }, []);
+  // previous blob-based fetch replaced by GraphQL hook `useAccordionsByComponent`.
+  // We still handle loading/error states for parity with previous behavior.
+    // Remove effect that sets state synchronously from comms
+
+  // ...existing code...
 
   // Get image for selected panel if present, else fallback to selected item
   let imageUrl = selected?.imageUrl;
@@ -60,15 +54,19 @@ const WeDoGovernance: React.FC = () => {
   }
 
   return (
-    <section className="we-do-governance-bg">
+    <section id="governance" className="we-do-governance-bg">
       <div className="we-do-governance-container">
         <h2 className="we-do-governance__heading">Governance</h2>
-        <p className="we-do-governance__description">Placeholder description for governance. Replace with real content describing governance capabilities.</p>
+        <p className="we-do-governance__description">Enhance your business governance with Microsoft 365. Our solutions empower teams to collaborate seamlessly, share information effortlessly, and stay connected regardless of location. With tools like Microsoft Teams, SharePoint, and Outlook, you can foster a culture of collaboration, streamline information sharing, and ensure everyone stays informed. From instant messaging to video conferencing and document management, Microsoft 365 offers a comprehensive suite of governance tools tailored to your business needs.</p>
         <div className="we-do-governance__button-row">
-          {comms.length === 0 ? (
+          {loading ? (
             <span>Loading...</span>
+          ) : error ? (
+            <span style={{ color: 'red' }}>Failed to load content</span>
+          ) : comms.length === 0 ? (
+            <span>No items found</span>
           ) : (
-            comms.map((item, idx) => (
+            comms.map((item: Accordion, idx: number) => (
               <button
                 key={item.id}
                 className={`we-do-governance__button${selectedIdx === idx ? " selected" : ""}`}
@@ -88,11 +86,12 @@ const WeDoGovernance: React.FC = () => {
                 items={[{
                   title: selected.label,
                   panels: panels.length > 0
-                    ? panels.map((p) => ({
+                    ? panels.map((p: AccordionItem) => ({
                         title: p.label,
                         content: p.blurb,
+                        slug: p.slug ?? undefined,
                       }))
-                    : [{ title: selected.label, content: selected.blurb }]
+                    : [{ title: selected.label, content: selected.blurb, slug: undefined }]
                 }]}
                 openPanelIdx={openPanelIdx}
                 setOpenPanelIdx={setOpenPanelIdx}
@@ -123,10 +122,10 @@ const WeDoGovernance: React.FC = () => {
             )}
           </div>
         </div>
-        <p className="we-do-governance__footer">Governance footer</p>
+        <p className="we-do-governance__footer">Yo</p>
       </div>
     </section>
-    );
+  );
 };
 
 export default WeDoGovernance;

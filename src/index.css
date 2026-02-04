@@ -1,3 +1,6 @@
+@import url('https://s.w.org/wp-includes/css/dist/block-library/style.min.css');
+@import url('https://s.w.org/wp-includes/css/dist/block-library/theme.min.css');
+
 @media (max-width: 900px) {
   /* No main margin-top: header overlays hero, hero gets padding */
 }
@@ -17,8 +20,7 @@ p {
   color: var(--neutralPrimary, #323130);
   margin-bottom: 1.1em;
 }
-@import url('https://s.w.org/wp-includes/css/dist/block-library/style.min.css');
-@import url('https://s.w.org/wp-includes/css/dist/block-library/theme.min.css');
+
 
 :root {
   font-family: 'Segoe UI', 'SegoeUI', 'Helvetica Neue', Arial, sans-serif;
