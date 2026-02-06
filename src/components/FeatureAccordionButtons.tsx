@@ -65,7 +65,7 @@ const FeatureAccordionButtons: React.FC<FeatureAccordionButtonsProps> = ({ featu
         const res2 = await fetch('https://365evergreendev.blob.core.windows.net/365evergreen/accordion-list.json');
         const data2 = await res2.json();
         if (!cancelled) setAccordionList(Array.isArray(data2) ? data2 : (data2.body || []));
-      } catch (e) {
+      } catch {
         // ignore fetch errors for this UI helper
       }
     })();
@@ -87,11 +87,11 @@ const FeatureAccordionButtons: React.FC<FeatureAccordionButtonsProps> = ({ featu
       // Find items in accordion-list where parentId matches acc.id
       const panels = accordionList.filter(item => item.parentId === acc.id)
         .sort((a, b) => (a.order || 0) - (b.order || 0))
-        .map(item => ({ title: item.label, content: item.blurb }));
+        .map(item => ({ title: item.label ?? '', content: item.blurb ?? '' }));
       return {
         id: acc.id,
-        title: acc.label,
-        description: acc.blurb,
+        title: acc.label ?? '',
+        description: acc.blurb ?? '',
         image: acc.image,
         panels
       };
