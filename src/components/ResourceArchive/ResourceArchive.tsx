@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import type { CSSProperties, ChangeEvent } from 'react';
 import ReactDOM from 'react-dom';
+import { Link } from 'react-router-dom';
 import heroConfig from '../../../page-components.json';
 import { useE365Resources } from './useE365Resources';
 import type { ResourceItem } from './useE365Resources';
@@ -311,15 +312,19 @@ const ResourceArchive: React.FC = () => {
             return (
               <article key={resource.id} className={`${styles.resourceCard} ${styles.resourceCardSelectable}`}>
                 {resource.featuredImageUrl && (
-                  <img
-                    src={resource.featuredImageUrl}
-                    alt={resource.title}
-                    className={styles.resourceImage}
-                    loading="lazy"
-                  />
+                  <Link to={`/e365-page/${resource.slug ?? resource.id}`} aria-label={resource.title}>
+                    <img
+                      src={resource.featuredImageUrl}
+                      alt={resource.title}
+                      className={styles.resourceImage}
+                      loading="lazy"
+                    />
+                  </Link>
                 )}
                 <span className={styles.resourceBadge}>{badgeLabel}</span>
-                <span className={styles.resourceTitle}>{resource.title}</span>
+                <Link to={`/e365-page/${resource.slug ?? resource.id}`} className={styles.resourceLink} aria-label={resource.title}>
+                  <span className={styles.resourceTitle}>{resource.title}</span>
+                </Link>
                 <p className={styles.resourceExcerpt}>{excerptPreview}</p>
               </article>
             );

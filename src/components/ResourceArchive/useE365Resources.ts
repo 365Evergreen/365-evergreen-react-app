@@ -15,6 +15,8 @@ export interface ResourceFieldGroup {
 
 export interface ResourceItem {
   id: string;
+  slug?: string | null;
+  uri?: string | null;
   title: string;
   excerpt: string;
   featuredImageUrl: string | null;
@@ -38,6 +40,8 @@ const QUERY = `query e365Resources {
       node {
         id
         title
+        slug
+        uri
         excerpt(format: RENDERED)
         featuredImage {
           node {
@@ -101,6 +105,8 @@ export function useE365Resources(): HookState {
 
             return {
               id: typeof rawNode.id === 'string' ? rawNode.id : String(rawNode.id ?? ''),
+              slug: typeof (rawNode as any).slug === 'string' ? (rawNode as any).slug : null,
+              uri: typeof (rawNode as any).uri === 'string' ? (rawNode as any).uri : null,
               title: typeof rawNode.title === 'string' ? rawNode.title : '',
               excerpt: typeof rawNode.excerpt === 'string' ? rawNode.excerpt : '',
               featuredImageUrl: typeof rawNode.featuredImage?.node?.sourceUrl === 'string' ? rawNode.featuredImage.node.sourceUrl : null,
