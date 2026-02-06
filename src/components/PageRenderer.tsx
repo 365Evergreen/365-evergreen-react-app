@@ -11,25 +11,26 @@ export default function PageRenderer({ blocks }: { blocks: PageBlock[] }) {
     <>
       {blocks.map((b, i) => {
         const name = (b.name || '').toLowerCase();
-        const attrs = (b.attributes || {}) as any;
+        const attrs = (b.attributes || {}) as Record<string, unknown>;
         // map common block names to components
         if (name.includes('hero'))
           return (
             <div key={i}>
-              <Hero {...attrs} onOpenDrawer={attrs?.onOpenDrawer ?? (() => {})} />
+              <Hero {...attrs} onOpenDrawer={(typeof attrs?.onOpenDrawer === 'function' ? (attrs.onOpenDrawer as () => void) : () => {})} />
             </div>
           );
         if (name.includes('accordion') || name.includes('we-do'))
           return (
             <div key={i}>
-              <WhatWeDoAccordion {...attrs} items={attrs?.items ?? []} />
+              <WhatWeDoAccordion {...attrs} items={Array.isArray(attrs?.items) ? attrs.items : []} />
             </div>
           );
         if (name.includes('cta')) return <div key={i}><CTA {...(b.attributes || {})} /></div>;
         if (name.includes('feature')) return <div key={i}><Features {...(b.attributes || {})} /></div>;
         if (name.includes('image') || name === 'core/image') {
-          const src = (b.attributes as any)?.url || (b.attributes as any)?.src || undefined;
-          return src ? <div key={i}><ResponsiveImage src={String(src)} alt={(b.attributes as any)?.alt ?? ''} /></div> : null;
+          const attributes = b.attributes as Record<string, unknown>;
+          const src = attributes?.url || attributes?.src || undefined;
+          return src ? <div key={i}><ResponsiveImage src={String(src)} alt={String(attributes?.alt ?? '')} /></div> : null;
         }
 
         // html block fallback

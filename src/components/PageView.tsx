@@ -2,6 +2,7 @@ import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Breadcrumb, BreadcrumbItem } from '@fluentui/react-components';
 import { usePageBySlug } from '../lib/usePageBySlug';
+import './PageView.css';
 import { useCtaPost } from '../lib/useCtaPost';
 import { useE365Resources } from './ResourceArchive/useE365Resources';
 import PageRenderer from './PageRenderer';
@@ -34,14 +35,14 @@ export const PageView: React.FC = () => {
   ];
 
   return (
-    <section style={{ minHeight: 300, padding: 0, margin: 0 }}>
+    <section className="pageViewRoot">
       <Breadcrumb>
         {breadcrumbItems.map((item, idx) => (
           <BreadcrumbItem key={item.href + '-' + idx}>
             {idx < breadcrumbItems.length - 1 ? (
               <>
                 <Link to={item.href}>{item.text}</Link>
-                <span style={{ margin: '0 0.5em', color: '#888' }}>/</span>
+                <span className="breadcrumbSeparator">/</span>
               </>
             ) : (
               <span>{item.text}</span>

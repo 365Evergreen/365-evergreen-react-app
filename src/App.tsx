@@ -20,6 +20,7 @@ import { Routes, Route } from 'react-router-dom';
 import './HomeSectionLayout.css';
 import RouteLoader from './components/RouteLoader';
 import HowWeDoItStatic from './components/HowWeDoIt/HowWeDoItStatic';
+import ScrollToTop from './components/ScrollToTop';
 
 const CtaPage = lazy(() => import('./components/CtaPage'));
 const FeatureView = lazy(() => import('./components/FeatureView'));
@@ -57,6 +58,7 @@ function App() {
       <Header />
       <main>
         <Suspense fallback={<RouteLoader />}>
+          <ScrollToTop />
           <Routes>
             <Route path="/" element={
               <AnimatePresence mode="wait">
