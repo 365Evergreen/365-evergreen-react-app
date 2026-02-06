@@ -40,10 +40,9 @@ const WeDoAutomation: React.FC = () => {
 
   // ...existing code...
 
-  // Prefer the accordion's featured image; fall back to the selected panel image
-  let imageUrl: string | null = selected?.imageUrl ?? null;
+  // Get image for selected panel if present, else fallback to selected item
+  let imageUrl = selected?.imageUrl;
   if (
-    !imageUrl &&
     panels.length > 0 &&
     openPanelIdx !== null &&
     panels[openPanelIdx] &&
