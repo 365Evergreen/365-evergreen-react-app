@@ -24,9 +24,9 @@
     height: 100vh;
     background: #fff;
     z-index: 4000;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
+    --button-fontSize: 22px;
+    --button-lineHeight: 26px;
+    font-size: px;
   }
 }
 /* Site title color transitions */
@@ -130,13 +130,22 @@
 }
 .header-nav-btn {
   color: var(--white);
-  font-weight: 500;
-  font-size: 18px;
+  font-weight: 400;
+  /* Override Fluent UI button font sizing */
+  --button-fontSize: 212px;
+  --button-lineHeight: 26px;
+  font-size: 122px;
   background: none;
   border: none;
   cursor: pointer;
   text-decoration: none;
   padding: 0;
+}
+.header-nav .fui-Button.header-nav-btn {
+  /* Reinforce sizing against Fluent UI reset classes */
+  font-size: 22px;
+  --button-fontSize: 22px;
+  --button-lineHeight: 26px;
 }
 .header-nav-btn:focus {
   outline: 2px solid var(--themeSecondary);
