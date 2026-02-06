@@ -4,6 +4,28 @@ import '../LatestPosts.css';
 import { useLatestPosts } from '../lib/useLatestPosts';
 import { useNavigate } from 'react-router-dom';
 
+interface Post {
+  id: string;
+  title: string;
+  slug: string;
+  date: string;
+  excerpt?: string;
+  content?: string;
+  featuredImage?: {
+    node?: {
+      sourceUrl: string;
+    };
+  };
+  categories?: {
+    edges: Array<{
+      node: {
+        slug: string;
+        name: string;
+      };
+    }>;
+  };
+}
+
 const LatestPosts: React.FC = () => {
   const posts = useLatestPosts(6);
   const navigate = useNavigate();
@@ -11,7 +33,7 @@ const LatestPosts: React.FC = () => {
   // Sort by date descending (should already be, but ensure)
   const sortedPosts = [...posts].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
-  function getExcerpt(post: any) {
+  function getExcerpt(post: Post) {
     // If WPGraphQL returns an excerpt, use it. Otherwise, use the first 175 chars of the title as fallback.
     // If content is available, prefer that.
     const content = post.excerpt || post.content || '';
@@ -53,13 +75,13 @@ const LatestPosts: React.FC = () => {
                   {/* Category tags */}
                   {(post.categories?.edges?.length ?? 0) > 0 && (
                     <div style={{ marginBottom: '0.5rem', display: 'flex', flexWrap: 'wrap', gap: '0.5em' }}>
-                      {(post.categories?.edges ?? []).map((cat: any) => (
+                      {(post.categories?.edges ?? []).map((cat: { node: { slug: string; name: string } }) => (
                         <span
                           key={cat.node.slug}
                           className="latest-posts-category-tag"
                           style={{
                             background: '#e6f2e6',
-                            color: '#2d6a2d',
+                            color: '#d821ba',
                             fontSize: '0.85em',
                             borderRadius: '6px',
                             padding: '0.15em 0.7em',

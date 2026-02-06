@@ -8,12 +8,53 @@ function toLocalUrl(url?: string) {
   return url.replace(/^https?:\/\/(www\.)?365evergreen\.com/, '');
 }
 
+type JsonRecord = Record<string, unknown>;
+
 type Block = {
   name: string;
-  attributes?: Record<string, any>;
+  attributes?: JsonRecord;
   innerHTML?: string;
   innerBlocks?: Block[];
 };
+
+function isRecord(value: unknown): value is JsonRecord {
+  return Boolean(value) && typeof value === 'object';
+}
+
+function getAttributes(block: Block): JsonRecord {
+  return isRecord(block.attributes) ? (block.attributes as JsonRecord) : {};
+}
+
+function getRecordValue(source: JsonRecord | undefined, key: string): JsonRecord | undefined {
+  if (!source) return undefined;
+  const value = source[key];
+  return isRecord(value) ? (value as JsonRecord) : undefined;
+}
+
+function getStringValue(source: JsonRecord | undefined, key: string): string | undefined {
+  if (!source) return undefined;
+  const value = source[key];
+  return typeof value === 'string' ? value : undefined;
+}
+
+function getNumberValue(source: JsonRecord | undefined, key: string): number | undefined {
+  if (!source) return undefined;
+  const value = source[key];
+  return typeof value === 'number' ? value : undefined;
+}
+
+function sanitiseHtml(value: unknown): string {
+  return typeof value === 'string' ? value : '';
+}
+
+function toCssProperties(value: JsonRecord | undefined): React.CSSProperties | undefined {
+  if (!value) return undefined;
+  const entries = Object.entries(value).filter(([, v]) => typeof v === 'string' || typeof v === 'number');
+  if (entries.length === 0) {
+    return undefined;
+  }
+  return Object.fromEntries(entries) as React.CSSProperties;
+}
 
 interface PageBlocksProps {
   blocks?: Block[];
@@ -26,54 +67,73 @@ const PageBlocks: React.FC<PageBlocksProps> = ({ blocks }) => {
     <>
       {blocks.map((block, idx) => {
         let content: React.ReactNode = null;
+        const attrs = getAttributes(block);
         switch (block.name) {
           case 'core/paragraph':
-            content = <p className="fluent-body1" dangerouslySetInnerHTML={{ __html: block.attributes?.content || block.innerHTML || '' }} />;
+            content = <p className="fluent-body1" dangerouslySetInnerHTML={{ __html: sanitiseHtml(getStringValue(attrs, 'content') ?? block.innerHTML) }} />;
             break;
           case 'core/heading': {
-            const level = block.attributes?.level || 2;
+            const level = getNumberValue(attrs, 'level') ?? 2;
             const tag = `h${level}`;
             if (/^h[1-6]$/.test(tag)) {
               content = React.createElement(tag, {
                 className: `fluent-title${level}`,
-                dangerouslySetInnerHTML: { __html: block.attributes?.content || block.innerHTML || '' }
+                dangerouslySetInnerHTML: { __html: sanitiseHtml(getStringValue(attrs, 'content') ?? block.innerHTML) }
               });
             } else {
-              content = <h2 className="fluent-title2" dangerouslySetInnerHTML={{ __html: block.attributes?.content || block.innerHTML || '' }} />;
+              content = <h2 className="fluent-title2" dangerouslySetInnerHTML={{ __html: sanitiseHtml(getStringValue(attrs, 'content') ?? block.innerHTML) }} />;
             }
             break;
           }
-          case 'core/image':
-            content = <img src={block.attributes?.url} alt={block.attributes?.alt || ''} style={{ maxWidth: '100%', borderRadius: 8 }} />;
+          case 'core/image': {
+            const url = getStringValue(attrs, 'url');
+            if (url) {
+              const alt = getStringValue(attrs, 'alt');
+              content = <img src={url} alt={alt ?? undefined} style={{ maxWidth: '100%', borderRadius: 8 }} />;
+            }
             break;
-          case 'core/button':
+          }
+          case 'core/button': {
+            const href = getStringValue(attrs, 'url');
+            const backgroundColor = getStringValue(attrs, 'backgroundColor') ?? 'black';
+            const textColor = getStringValue(attrs, 'textColor') ?? 'white';
+            const buttonContent = getStringValue(attrs, 'content') ?? '';
+
             content = (
               <a
-                href={toLocalUrl(block.attributes?.url)}
-                style={{ display: 'inline-block', padding: '0.5em 1.5em', background: block.attributes?.backgroundColor || 'black', color: block.attributes?.textColor || 'white', textDecoration: 'none', fontWeight: 700, borderRadius: 6 }}
+                href={toLocalUrl(href)}
+                style={{ display: 'inline-block', padding: '0.5em 1.5em', background: backgroundColor, color: textColor, textDecoration: 'none', fontWeight: 700, borderRadius: 6 }}
               >
-                {block.attributes?.content}
+                {buttonContent}
               </a>
             );
             break;
+          }
           case 'core/navigation-link':
             content = (
-              <a href={toLocalUrl(block.attributes?.url)}>{block.attributes?.label}</a>
+              <a href={toLocalUrl(getStringValue(attrs, 'url'))}>{getStringValue(attrs, 'label') ?? 'Learn more'}</a>
             );
             break;
-          case 'core/columns':
+          case 'core/columns': {
             // Render columns as flex row, with background and padding
+            const styleRecord = getRecordValue(attrs, 'style');
+            const spacingRecord = getRecordValue(styleRecord, 'spacing');
+            const padding = getStringValue(spacingRecord, 'padding') ?? '2.5rem 2rem';
+            const customStyle = toCssProperties(getRecordValue(styleRecord, 'custom'));
+            const backgroundColor = getStringValue(attrs, 'backgroundColor');
+            const borderRadius = getStringValue(attrs, 'borderRadius');
+            const boxShadow = getStringValue(attrs, 'boxShadow');
             content = (
               <div
                 className="wp-columns"
                 style={{
-                  background: block.attributes?.backgroundColor || undefined,
-                  borderRadius: block.attributes?.borderRadius || undefined,
-                  boxShadow: block.attributes?.boxShadow || undefined,
-                  padding: block.attributes?.style?.spacing?.padding || '2.5rem 2rem',
+                  background: backgroundColor,
+                  borderRadius,
+                  boxShadow,
+                  padding,
                   minHeight: 200,
                   margin: '1.5rem 0',
-                  ...block.attributes?.style?.custom,
+                  ...(customStyle ?? {}),
                 }}
               >
                 {block.innerBlocks?.map((col, i) => (
@@ -84,6 +144,7 @@ const PageBlocks: React.FC<PageBlocksProps> = ({ blocks }) => {
               </div>
             );
             break;
+          }
           case 'core/column':
             // Render column content only
             content = (
@@ -102,13 +163,16 @@ const PageBlocks: React.FC<PageBlocksProps> = ({ blocks }) => {
           // Automatically map WP accordion block to VanillaAccordion
           case 'core/accordion': {
             // Map WP block to VanillaAccordionItem structure
-            const panels = (block.innerBlocks || []).map((panelBlock: any) => ({
-              title: panelBlock.attributes?.title || 'Accordion Panel',
-              content: panelBlock.attributes?.content || panelBlock.innerHTML || '',
-            }));
+            const panels = (block.innerBlocks || []).map(panelBlock => {
+              const panelAttrs = getAttributes(panelBlock);
+              return {
+                title: getStringValue(panelAttrs, 'title') ?? 'Accordion Panel',
+                content: sanitiseHtml(getStringValue(panelAttrs, 'content') ?? panelBlock.innerHTML),
+              };
+            });
             const item = {
-              title: block.attributes?.title || 'Accordion',
-              description: block.attributes?.description || '',
+              title: getStringValue(attrs, 'title') ?? 'Accordion',
+              description: getStringValue(attrs, 'description') ?? '',
               panels,
             };
             content = <VanillaAccordion items={[item]} />;
@@ -136,30 +200,40 @@ const PageBlocks: React.FC<PageBlocksProps> = ({ blocks }) => {
         ].some(type => block.name.startsWith(type));
 
         // Compose style for container
-        const hasBgOrOverlay = !!(block.attributes?.backgroundColor || block.attributes?.overlayColor);
+        const backgroundColor = getStringValue(attrs, 'backgroundColor');
+        const textColor = getStringValue(attrs, 'textColor');
+        const borderRadius = getStringValue(attrs, 'borderRadius');
+        const containerStyleRecord = getRecordValue(attrs, 'style');
+        const containerSpacingRecord = getRecordValue(containerStyleRecord, 'spacing');
+        const padding = getStringValue(containerSpacingRecord, 'padding');
+        const customStyle = toCssProperties(getRecordValue(containerStyleRecord, 'custom'));
+        const overlayColor = getStringValue(attrs, 'overlayColor');
+        const hasBgOrOverlay = Boolean(backgroundColor || overlayColor);
         const containerStyle: React.CSSProperties = isContainer
           ? {
               margin: '12px 0',
-              background: block.attributes?.backgroundColor || undefined,
-              color: block.attributes?.textColor || undefined,
-              borderRadius: block.attributes?.borderRadius || undefined,
-              padding: block.attributes?.style?.spacing?.padding || (hasBgOrOverlay ? '2.5rem 2rem' : undefined),
+              background: backgroundColor,
+              color: textColor,
+              borderRadius,
+              padding: padding ?? (hasBgOrOverlay ? '2.5rem 2rem' : undefined),
               minHeight: hasBgOrOverlay ? 200 : undefined,
               display: hasBgOrOverlay ? 'flex' : undefined,
               flexDirection: hasBgOrOverlay ? 'column' : undefined,
               alignItems: hasBgOrOverlay ? 'center' : undefined,
               justifyContent: hasBgOrOverlay ? 'center' : undefined,
               position: undefined, // will be set below if overlay
+              ...(customStyle ?? {}),
             }
           : {};
 
         // Overlay support
         let overlay: React.ReactNode = null;
-        if (isContainer && block.attributes?.overlayColor) {
+        if (isContainer && overlayColor) {
           // Accept overlayOpacity as 0-1 or 0-100
           let opacity = 0.5;
-          if (typeof block.attributes.overlayOpacity === 'number') {
-            opacity = block.attributes.overlayOpacity > 1 ? block.attributes.overlayOpacity / 100 : block.attributes.overlayOpacity;
+          const overlayOpacity = getNumberValue(attrs, 'overlayOpacity');
+          if (typeof overlayOpacity === 'number') {
+            opacity = overlayOpacity > 1 ? overlayOpacity / 100 : overlayOpacity;
           }
           overlay = (
             <div
@@ -171,9 +245,9 @@ const PageBlocks: React.FC<PageBlocksProps> = ({ blocks }) => {
                 height: '100%',
                 pointerEvents: 'none',
                 zIndex: 1,
-                background: block.attributes.overlayColor,
+                background: overlayColor,
                 opacity,
-                borderRadius: block.attributes?.borderRadius || undefined,
+                borderRadius,
               }}
               aria-hidden="true"
             />

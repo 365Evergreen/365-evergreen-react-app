@@ -26,7 +26,7 @@ const FeatureView = lazy(() => import('./components/FeatureView'));
 const AllAccordions = lazy(() => import('./components/allacordions'));
 const AllFeatures = lazy(() => import('./components/AllFeatures/AllFeatures'));
 const LatestPostsArchive = lazy(() => import('./components/LatestPostsArchive/LatestPostsArchive'));
-const WhatWeDoItem = lazy(() => import('./components/WhatWeDoItem'));
+
 const WhatWeDoStatic = lazy(() => import('./components/WhatWeDoStatic'));
 const ResourceArchive = lazy(() => import('./components/ResourceArchive/ResourceArchive'));
 const PrivacyPolicy = lazy(() => import('./components/PrivacyPolicy/PrivacyPolicy'));
@@ -124,7 +124,7 @@ function App() {
             <Route path="/category/:category" element={<LatestPostsArchive />} />
             <Route path="/category/:category/:slug" element={<PageView />} />
             <Route path="/what-we-do" element={<PageViewOptional whatWeDoPageId="cG9zdDo0OTM=" />} />
-            <Route path="/what-we-do/:slug" element={<WhatWeDoItem />} />
+           
             <Route path="/e365-page/what-we-do/" element={<WhatWeDoStatic />} />
             <Route path="/e365-page/how-we-do-it" element={<HowWeDoItStatic />} />
             <Route path="/e365-page/resources/" element={<ResourceArchive />} />

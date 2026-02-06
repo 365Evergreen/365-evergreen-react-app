@@ -90,7 +90,7 @@ export const WhatWeDoNav: React.FC<{ items?: NavItem[] }> = ({ items = defaultIt
 
     try {
       history.replaceState(null, '', href)
-    } catch (err) {
+    } catch {
       // ignore
     }
     setActive(href)

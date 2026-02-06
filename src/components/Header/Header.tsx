@@ -1,4 +1,3 @@
-import { Button } from '@fluentui/react-components';
 import { ChevronDown24Regular } from '@fluentui/react-icons';
 import './Header.css';
 import { useState, useEffect } from 'react';
@@ -21,6 +20,9 @@ export function Header() {
   }, []);
 
   const handleNav = (url: string) => {
+    if (!url) {
+      return;
+    }
     // If url is absolute, open in new tab; else, use router
     if (/^https?:\/\//.test(url)) {
       window.open(url, '_blank');
@@ -30,8 +32,8 @@ export function Header() {
     }
   };
 
-  const handleSubmenuToggle = (id: string) => {
-    setOpenSubmenus((prev) => ({ ...prev, [id]: !prev[id] }));
+  const handleSubmenuToggle = (key: string) => {
+    setOpenSubmenus(prev => ({ ...prev, [key]: !prev[key] }));
   };
 
   return (
@@ -44,47 +46,67 @@ export function Header() {
         <nav className={`header-nav${menuOpen ? ' header-nav--open' : ''}`}>
           {navItems.length > 0 ? (
             navItems.map((item, idx) => {
-              const hasChildren = item.children && item.children.length > 0;
-              const isOpen = !!openSubmenus[item.id || idx];
+              const hasChildren = (item.children?.length ?? 0) > 0;
               const navKey = item.id && item.id !== '' ? item.id : `nav-${idx}`;
+              const isOpen = !!openSubmenus[navKey];
               return (
-                <div className="header-nav-item" key={navKey} style={{ position: 'relative', display: 'inline-block' }}>
-                  <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <Button as="a" href={item.url} className="header-nav-btn" appearance="transparent"
-                      onClick={e => { e.preventDefault(); handleNav(item.uri); }}>
-                      {item.label}
-                    </Button>
+                <div className="header-nav-item" key={navKey}>
+                  <a
+                    href={item.url}
+                    className="header-nav-btn"
+                    onClick={e => {
+                      e.preventDefault();
+                      handleNav(item.uri || item.url);
+                    }}
+                    aria-haspopup={hasChildren ? 'true' : undefined}
+                    aria-expanded={hasChildren ? isOpen : undefined}
+                  >
+                    <span className="header-nav-label">{item.label}</span>
                     {hasChildren && (
+                      <ChevronDown24Regular
+                        className={`header-chevron-icon${isOpen ? ' header-chevron-icon--open' : ''}`}
+                        aria-hidden="true"
+                      />
+                    )}
+                  </a>
+                  {hasChildren && (
+                    <div className={`header-nav-submenu${isOpen ? ' header-nav-submenu--open' : ''}`} role="menu">
                       <button
                         type="button"
+                        className="header-submenu-toggle"
                         aria-label={isOpen ? `Collapse submenu for ${item.label}` : `Expand submenu for ${item.label}`}
-                        onClick={() => handleSubmenuToggle(item.id)}
-                        className="header-chevron-btn"
+                        onClick={() => handleSubmenuToggle(navKey)}
                       >
-                        <ChevronDown24Regular className="header-chevron-icon" style={{ marginLeft: 4, marginRight: 4, transition: 'transform 0.2s', transform: isOpen ? 'rotate(180deg)' : 'none' }} />
+                        <span>{isOpen ? 'Hide' : 'Show'} menu</span>
                       </button>
-                    )}
-                  </div>
-                  {hasChildren && isOpen && (
-                    <div className="header-nav-submenu" style={{ position: 'absolute', left: 0, top: '100%', background: '#fff', minWidth: 180, zIndex: 10, boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }}>
-                      {item.children?.map((sub, subIdx) => {
-                        const subKey = sub.id && sub.id !== '' ? sub.id : `subnav-${idx}-${subIdx}`;
-                        return (
-                          <Button as="a" href={sub.url} className="header-nav-btn header-nav-btn--submenu" appearance="transparent" key={subKey}
-                            onClick={e => { e.preventDefault(); handleNav(sub.uri); }}>
-                            {sub.label}
-                          </Button>
-                        );
-                      })}
+                      <div className="header-nav-submenu-list">
+                        {item.children?.map((sub, subIdx) => {
+                          const subKey = sub.id && sub.id !== '' ? sub.id : `subnav-${idx}-${subIdx}`;
+                          return (
+                            <a
+                              key={subKey}
+                              href={sub.url}
+                              className="header-nav-submenu-link"
+                              onClick={e => {
+                                e.preventDefault();
+                                handleNav(sub.uri || sub.url);
+                              }}
+                              role="menuitem"
+                            >
+                              {sub.label}
+                            </a>
+                          );
+                        })}
+                      </div>
                     </div>
                   )}
                 </div>
               );
             })
           ) : (
-            <Button as="a" href="/" className="header-nav-btn" appearance="transparent">Home</Button>
+            <a href="/" className="header-nav-btn">Home</a>
           )}
-          <Button as="a" href="#contact" className="header-contact-btn">Get in touch</Button>
+          <a href="#contact" className="header-contact-btn">Get in touch</a>
         </nav>
         <button
           className="header-hamburger"
