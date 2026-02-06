@@ -322,6 +322,7 @@
 
   .header-nav.header-nav--open {
     display: flex !important;
+    padding-left: 25px;
   }
 
   .header-nav-item {

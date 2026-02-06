@@ -27,7 +27,7 @@ const AllAccordions = lazy(() => import('./components/allacordions'));
 const AllFeatures = lazy(() => import('./components/AllFeatures/AllFeatures'));
 const LatestPostsArchive = lazy(() => import('./components/LatestPostsArchive/LatestPostsArchive'));
 
-const WhatWeDoStatic = lazy(() => import('./components/WhatWeDoStatic'));
+const WhatWeDoStatic = lazy(() => import('./components/WhatWeDoStatic/WhatWeDoStatic'));
 const ResourceArchive = lazy(() => import('./components/ResourceArchive/ResourceArchive'));
 const PrivacyPolicy = lazy(() => import('./components/PrivacyPolicy/PrivacyPolicy'));
 const TestCtaQuery = lazy(() => import('./components/TestCtaQuery'));

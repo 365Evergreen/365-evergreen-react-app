@@ -1,13 +1,13 @@
 import React from "react";
-import WhatWeDoHero from "./WhatWeDoHero";
-import { WhatWeDoNav } from "./WhatWeDoNav";
-import ResponsiveVideoPlayer from "./ResponsiveVideoPlayer";
-import WeDoCollaboration from "./WeDoCollaboration/WeDoCollaboration";
-import WeDoCommunication from "./WeDoCommunication/WeDoCommunication";
-import WeDoGovernance from "./WeDoGovernance/WeDoGovernance";
-import WeDoAutomation from "./WeDoAutomation/WeDoAutomation";
-import WeDoApps from "./WeDoApps/WeDoApps";
-import WeDoSupport from "./WeDoSupport/WeDoSupport";
+import WhatWeDoHero from "../WhatWeDoHero";
+import { WhatWeDoNav } from "../WhatWeDoNav";
+import ResponsiveVideoPlayer from "../ResponsiveVideoPlayer";
+import WeDoCollaboration from "../WeDoCollaboration/WeDoCollaboration";
+import WeDoCommunication from "../WeDoCommunication/WeDoCommunication";
+import WeDoGovernance from "../WeDoGovernance/WeDoGovernance";
+import WeDoAutomation from "../WeDoAutomation/WeDoAutomation";
+import WeDoApps from "../WeDoApps/WeDoApps";
+import WeDoSupport from "../WeDoSupport/WeDoSupport";
 
 
 
