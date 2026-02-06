@@ -40,7 +40,7 @@ export function Header() {
     <header className={`header-root${scrolled ? ' header-root--scrolled' : ''}`}>
       <div className="header-container" style={{ display: 'flex', alignItems: 'center' }}>
         <a href="/" className="header-logo-link">
-          <img src="https://365evergreen.com/wp-content/uploads/2025/07/cropped-Evergreen_Logo__2110.webp" alt="365 Evergreen Logo" className="header-logo" />
+          <img src="https://365evergreen.com/wp-content/uploads/2026/02/Evergreen_Logo__100px.webp" alt="365 Evergreen Logo" className="header-logo" />
           <h1 className={`header-title${scrolled ? ' header-title--scrolled' : ''}`}>365 Evergreen</h1>
         </a>
         <nav className={`header-nav${menuOpen ? ' header-nav--open' : ''}`}>

@@ -1,16 +1,12 @@
 import React from "react";
 import WhatWeDoHero from "../WhatWeDoHero";
 import { WhatWeDoNav } from "../WhatWeDoNav";
-import ResponsiveVideoPlayer from "../ResponsiveVideoPlayer";
 import WeDoCollaboration from "../WeDoCollaboration/WeDoCollaboration";
 import WeDoCommunication from "../WeDoCommunication/WeDoCommunication";
 import WeDoGovernance from "../WeDoGovernance/WeDoGovernance";
 import WeDoAutomation from "../WeDoAutomation/WeDoAutomation";
 import WeDoApps from "../WeDoApps/WeDoApps";
 import WeDoSupport from "../WeDoSupport/WeDoSupport";
-
-
-
 
 
 // Example: Tag cloud
@@ -27,7 +23,6 @@ const TagCloud: React.FC = () => (
 );
 
 
-
 // Main static page component
 const WhatWeDoStatic: React.FC = () => (
   <main>
@@ -35,16 +30,11 @@ const WhatWeDoStatic: React.FC = () => (
     <WhatWeDoNav />
     <WeDoCommunication />
     <WeDoCollaboration />
-    <WeDoAutomation/>
+    <WeDoAutomation />
     <WeDoApps />
     <WeDoGovernance />
     <WeDoSupport />
     <TagCloud />
-    <ResponsiveVideoPlayer
-      src="https://365evergreendev.blob.core.windows.net/365evergreen/videos/Recording-20260116_084354.webm"
-      title="Evergreen Demo Video"
-      aspectRatio="16:9"
-    />
   </main>
 );
 

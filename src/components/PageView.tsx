@@ -36,7 +36,8 @@ export const PageView: React.FC = () => {
 
   return (
     <section className="pageViewRoot">
-      <Breadcrumb>
+      <div className="pageViewBreadcrumbWrap">
+        <Breadcrumb className="pageViewBreadcrumb">
         {breadcrumbItems.map((item, idx) => (
           <BreadcrumbItem key={item.href + '-' + idx}>
             {idx < breadcrumbItems.length - 1 ? (
@@ -49,7 +50,8 @@ export const PageView: React.FC = () => {
             )}
           </BreadcrumbItem>
         ))}
-      </Breadcrumb>
+        </Breadcrumb>
+      </div>
       <h2>{titleText}</h2>
       <ResponsiveContainer>
         {page ? (
