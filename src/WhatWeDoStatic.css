@@ -69,3 +69,12 @@
 .tag-cloud__link {
   margin: 8px;
 }
+
+/* Mobile: add left/right padding to content areas */
+@media (max-width: 600px) {
+  .hero-section__content,
+  .collaboration-section__content {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
