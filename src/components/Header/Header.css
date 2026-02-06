@@ -30,6 +30,33 @@
     display: flex !important;
     flex-direction: column;
   }
+
+  /* Make expanded mobile header full viewport height and fixed */
+  .mobileHeader.expanded,
+  .mobileHeader.is-open,
+  .MobileHeader.expanded,
+  .headerMobile.open,
+  .Header-mobile--expanded,
+  .header--mobile-open {
+    position: fixed;
+    inset: 0; /* top:0; right:0; bottom:0; left:0; */
+    width: 100%;
+    height: 100vh;
+    max-height: 100vh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    z-index: 9999;
+    background: inherit; /* preserve background if set on header */
+    padding-left: 16px;
+  }
+
+  /* Ensure inner container stretches to fill the header area */
+  .mobileHeader.expanded > .container,
+  .mobileHeader.is-open > .container,
+  .MobileHeader.expanded > .container {
+    min-height: 100%;
+    padding-left: 16px;
+  }
 }
 
 /* Site title color transitions */

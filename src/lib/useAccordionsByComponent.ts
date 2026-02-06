@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 const WP_GRAPHQL_ENDPOINT = 'https://365evergreen.com/graphql';
 
@@ -31,7 +32,6 @@ export function useAccordionsByComponent(componentName: string) {
 
   useEffect(() => {
     let cancelled = false;
-    setLoading(true);
     fetch(WP_GRAPHQL_ENDPOINT, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },

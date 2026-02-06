@@ -20,7 +20,7 @@ export const WhatWeDoNav: React.FC<{ items?: NavItem[] }> = ({ items = defaultIt
   const sentinelRef = useRef<HTMLDivElement | null>(null)
   const [stuck, setStuck] = useState(false)
   const [fixedStyle, setFixedStyle] = useState<React.CSSProperties | undefined>(undefined)
-  // nav height is read directly from the element when needed; no persistent state required
+  const [navHeight, setNavHeight] = useState<number>(0)
 
   useEffect(() => {
     const navEl = navRef.current
@@ -60,9 +60,12 @@ export const WhatWeDoNav: React.FC<{ items?: NavItem[] }> = ({ items = defaultIt
 
     const onResize = () => {
       if (stuck) updateFixedStyle()
+      if (navRef.current) setNavHeight(Math.round(navRef.current.getBoundingClientRect().height))
     }
 
     window.addEventListener('resize', onResize)
+
+    if (stuck && navRef.current) setNavHeight(Math.round(navRef.current.getBoundingClientRect().height))
 
     return () => {
       observer.disconnect()
@@ -154,8 +157,8 @@ export const WhatWeDoNav: React.FC<{ items?: NavItem[] }> = ({ items = defaultIt
   return (
     <>
       <div ref={sentinelRef} />
-      {stuck && navRef.current && (
-        <div style={{ height: navRef.current.getBoundingClientRect().height }} aria-hidden="true" />
+      {stuck && navHeight > 0 && (
+        <div style={{ height: navHeight }} aria-hidden="true" />
       )}
       <nav
         ref={navRef}

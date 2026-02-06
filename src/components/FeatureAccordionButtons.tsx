@@ -12,15 +12,15 @@ import { useParams } from 'react-router-dom';
 const FeatureAccordionButtons: React.FC<FeatureAccordionButtonsProps> = ({ feature }) => {
   // Find featureId from features.json, robustly (by title or slug)
   const { slug } = useParams<{ slug?: string }>();
+  type FeatureEdge = { node: { id: string; title: string; slug?: string } };
   const featureId = useMemo(() => {
-    const edges = featuresData.data?.features?.edges || [];
+    const edges: FeatureEdge[] = featuresData.data?.features?.edges || [];
     const norm = (s: string) => s.trim().toLowerCase().replace(/\s+/g, ' ');
-    let match = edges.find((f: any) => norm(f.node.title) === norm(feature));
+    let match = edges.find((f) => norm(f.node.title) === norm(feature));
     if (!match && slug) {
-      match = edges.find((f: any) => f.node.slug?.toLowerCase() === slug.toLowerCase());
+      match = edges.find((f) => f.node.slug?.toLowerCase() === slug.toLowerCase());
     }
     if (!match) {
-      // eslint-disable-next-line no-console
       console.warn('No feature match for:', feature, 'slug:', slug);
     }
     return match?.node?.id ?? undefined;
@@ -28,30 +28,56 @@ const FeatureAccordionButtons: React.FC<FeatureAccordionButtonsProps> = ({ featu
 
 
   // Fetch accordions and accordion-list from hosted URLs
-  const [accordions, setAccordions] = useState<any[]>([]);
-  const [accordionList, setAccordionList] = useState<any[]>([]);
+  interface RawAccordion {
+    id: string;
+    featureId?: string;
+    label?: string;
+    blurb?: string;
+    image?: string;
+  }
+  interface RawAccordionListItem {
+    parentId?: string;
+    label?: string;
+    blurb?: string;
+    order?: number;
+  }
+
+  const [accordions, setAccordions] = useState<RawAccordion[]>([]);
+  const [accordionList, setAccordionList] = useState<RawAccordionListItem[]>([]);
 
   useEffect(() => {
     if (!featureId) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setAccordions([]);
+       
+      setAccordionList([]);
       return;
     }
-    fetch('https://365evergreendev.blob.core.windows.net/365evergreen/accordions.json')
-      .then(res => res.json())
-      .then(data => {
-        const arr = Array.isArray(data) ? data : (data.body || []);
-        setAccordions(arr.filter((acc: any) => acc.featureId === featureId));
-      });
-    fetch('https://365evergreendev.blob.core.windows.net/365evergreen/accordion-list.json')
-      .then(res => res.json())
-      .then(data => {
-        setAccordionList(Array.isArray(data) ? data : (data.body || []));
-      });
+
+    let cancelled = false;
+    (async () => {
+      try {
+        const res1 = await fetch('https://365evergreendev.blob.core.windows.net/365evergreen/accordions.json');
+        const data1 = await res1.json();
+        const arr = Array.isArray(data1) ? data1 : (data1.body || []);
+        if (!cancelled) setAccordions(arr.filter((acc: RawAccordion) => acc.featureId === featureId));
+
+        const res2 = await fetch('https://365evergreendev.blob.core.windows.net/365evergreen/accordion-list.json');
+        const data2 = await res2.json();
+        if (!cancelled) setAccordionList(Array.isArray(data2) ? data2 : (data2.body || []));
+      } catch (e) {
+        // ignore fetch errors for this UI helper
+      }
+    })();
+
+    return () => { cancelled = true; };
   }, [featureId]);
 
   // State for selected accordion index
   const [selectedIdx, setSelectedIdx] = useState(0);
   useEffect(() => {
+    // reset selection when feature changes
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setSelectedIdx(0);
   }, [featureId]);
 

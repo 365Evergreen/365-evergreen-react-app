@@ -35,7 +35,7 @@ export function useLatestPosts(limit: number = 100): LatestPost[] {
         setPosts(data?.data?.posts?.edges?.map((e: any) => e.node) || []);
       })
       .catch(err => {
-        // eslint-disable-next-line no-console
+         
         console.error('Failed to fetch posts from WPGraphQL:', err);
         setPosts([]);
       });

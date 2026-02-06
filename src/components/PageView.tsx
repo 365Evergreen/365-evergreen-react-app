@@ -3,7 +3,8 @@ import { useParams, Link } from 'react-router-dom';
 import { Breadcrumb, BreadcrumbItem } from '@fluentui/react-components';
 import { usePageBySlug } from '../lib/usePageBySlug';
 import { useCtaPost } from '../lib/useCtaPost';
-import PageBlocks from './PageBlocks';
+import PageRenderer from './PageRenderer';
+import ResponsiveContainer from './ResponsiveContainer';
 
 export const PageView: React.FC = () => {
   const { slug, parent } = useParams<{ slug?: string; parent?: string }>();
@@ -45,17 +46,17 @@ export const PageView: React.FC = () => {
         ))}
       </Breadcrumb>
       <h2>{titleText}</h2>
-      <div style={{ width: '100%', margin: 0, padding: 0 }}>
+      <ResponsiveContainer>
         {page ? (
           page.blocks && page.blocks.length > 0 ? (
-            <PageBlocks blocks={page.blocks} />
+            <PageRenderer blocks={page.blocks} />
           ) : page.content ? (
-            <div style={{ width: '100%', margin: 0, padding: 0 }} dangerouslySetInnerHTML={{ __html: page.content }} />
+            <div dangerouslySetInnerHTML={{ __html: page.content }} />
           ) : <em>No content found…</em>
         ) : ctaPost ? (
-          <div style={{ width: '100%', margin: 0, padding: 0 }} dangerouslySetInnerHTML={{ __html: ctaPost.content || '' }} />
+          <div dangerouslySetInnerHTML={{ __html: ctaPost.content || '' }} />
         ) : <em>Loading page content…</em>}
-      </div>
+      </ResponsiveContainer>
     </section>
   );
 };
