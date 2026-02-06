@@ -86,7 +86,7 @@
   transition: background 0.2s, color 0.2s;
 }
 .header-contact-btn:hover, .header-contact-btn:focus {
-  background: var(--themeSecondary, #005fa3);
+  background: var(--themeSecondary, #0ff66c);
   color: #fff;
 }
 /* Header styles */
