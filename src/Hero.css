@@ -71,6 +71,7 @@
   }
   .hero-title {
     font-size: 2rem !important;
+    font-weight: 450 !important;
     line-height: 2.3rem !important;
     margin-bottom: 0.5rem !important;
     word-break: break-word !important;
@@ -87,8 +88,8 @@
 }
 .hero-title {
   color: #fff;
-  font-size: 3.5rem;
-  font-weight: 700;
+  font-size: 4.5rem;
+  font-weight: 450;
   line-height: 1.1;
   margin-bottom: 0.5rem;
   word-break: break-word;

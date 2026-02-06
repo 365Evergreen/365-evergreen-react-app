@@ -108,7 +108,7 @@
 
 /* Header styles */
 .header-root {
-  position: sticky;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;

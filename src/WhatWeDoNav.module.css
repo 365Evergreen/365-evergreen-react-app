@@ -10,10 +10,14 @@
   display: flex;
   gap: 1rem;
   align-items: center;
+  flex-wrap: wrap; /* allow wrapping by default */
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .what-we-do-nav__item {
-    text-decoration: none;
+  text-decoration: none;
+  flex: 0 0 auto; /* prevent items from shrinking so they wrap instead */
 }
 
 .what-we-do-nav__link {
@@ -51,6 +55,17 @@
   background: var(--neutral-layer-1, #fff);
 }
 
+/* When the nav is made sticky/fixed via JS, ensure the inner list keeps
+   the same wrapping behaviour and item sizing as the non-stuck state. */
+.what-we-do-nav--stuck .what-we-do-nav__list {
+  flex-wrap: wrap;
+  width: 100%;
+  box-sizing: border-box;
+}
+.what-we-do-nav--stuck .what-we-do-nav__item {
+  flex: 0 0 auto;
+}
+
 /* On smaller screens make the nav stick below the header. */
 @media (max-width: 900px) {
   .what-we-do-nav {
@@ -61,7 +76,7 @@
     left: 0;
     right: 0;
     width: 100%;
-    background: transparent;
+ background: var(--neutral-layer-1, #fff);
   }
   .what-we-do-nav--stuck {
     /* When JS applies a fixed style, prefer that; this rule ensures
@@ -72,10 +87,11 @@
     z-index: 2500;
   }
 }
-
 @media (max-width: 600px) {
   .what-we-do-nav__list {
-    gap: 0.75rem;
+    gap: 0.5rem;
     flex-wrap: wrap;
+    justify-content: flex-start;
+    padding: 0.25rem 0;
   }
 }

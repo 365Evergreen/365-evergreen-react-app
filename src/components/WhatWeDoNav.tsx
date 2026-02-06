@@ -20,6 +20,7 @@ export const WhatWeDoNav: React.FC<{ items?: NavItem[] }> = ({ items = defaultIt
   const sentinelRef = useRef<HTMLDivElement | null>(null)
   const [stuck, setStuck] = useState(false)
   const [fixedStyle, setFixedStyle] = useState<React.CSSProperties | undefined>(undefined)
+  // nav height is read directly from the element when needed; no persistent state required
 
   useEffect(() => {
     const navEl = navRef.current
