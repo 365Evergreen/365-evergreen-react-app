@@ -5,7 +5,7 @@ import { useFeatureBySlug } from './useFeatureBySlug';
 import PageBlocks from '../PageBlocks';
 import FeatureAccordionButtons from '../FeatureAccordionButtons';
 import FeaturePage from './FeaturePage';
-import fvStyles from '../FeatureView.module.css';
+import fvStyles from './FeatureView.module.css';
 
 
 const FeatureView: React.FC = () => {
