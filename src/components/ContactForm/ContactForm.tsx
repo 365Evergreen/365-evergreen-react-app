@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Input, Textarea, Button } from '@fluentui/react-components';
 import { Send24Regular } from '@fluentui/react-icons';
-import '../ContactForm.css';
+import './ContactForm.css';
 
 
 export function ContactForm() {
@@ -53,8 +53,9 @@ export function ContactForm() {
       setPhone('');
       setSubject('');
       setMessage('');
-    } catch (err: any) {
-      setError(err.message || 'An error occurred.');
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : String(err);
+      setError(message || 'An error occurred.');
     }
   };
 

@@ -1,20 +1,19 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Button } from '@fluentui/react-components';
-import styles from '../CookieConsent.module.css';
+import styles from './CookieConsent.module.css';
 
 const CONSENT_KEY = 'cookieConsent';
 
 type Consent = 'accepted' | 'rejected' | null;
 
 export function CookieConsent() {
-  const [consent, setConsent] = useState<Consent>(null);
-
-  useEffect(() => {
+  const [consent, setConsent] = useState<Consent>(() => {
     const stored = localStorage.getItem(CONSENT_KEY);
     if (stored === 'accepted' || stored === 'rejected') {
-      setConsent(stored);
+      return stored;
     }
-  }, []);
+    return null;
+  });
 
   function handleConsent(choice: Consent) {
     setConsent(choice);
@@ -27,7 +26,7 @@ export function CookieConsent() {
   return (
     <div className={styles.banner} role="dialog" aria-live="polite">
       <div className={styles.text}>
-        We use cookies to enhance your experience, analyze site usage, and assist in our marketing efforts. See our <a href="/privacy" className={styles.link}>Privacy Policy</a>.
+        We use cookies to enhance your experience, analyse site usage, and assist in our marketing efforts. See our <a href="/privacy" className={styles.link}>Privacy Policy</a>.
       </div>
       <div className={styles.actions}>
         <Button appearance="primary" size="small" onClick={() => handleConsent('accepted')}>Accept</Button>

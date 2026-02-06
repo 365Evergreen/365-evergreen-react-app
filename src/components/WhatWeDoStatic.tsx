@@ -4,10 +4,10 @@ import { WhatWeDoNav } from "./WhatWeDoNav";
 import ResponsiveVideoPlayer from "./ResponsiveVideoPlayer";
 import WeDoCollaboration from "./WeDoCollaboration/WeDoCollaboration";
 import WeDoCommunication from "./WeDoCommunication/WeDoCommunication";
-import WeDoGovernance from "./WeDoGovernance";
-import WeDoAutomation from "./WeDoAutomation";
+import WeDoGovernance from "./WeDoGovernance/WeDoGovernance";
+import WeDoAutomation from "./WeDoAutomation/WeDoAutomation";
 import WeDoApps from "./WeDoApps/WeDoApps";
-import WeDoSupport from "./WeDoSupport";
+import WeDoSupport from "./WeDoSupport/WeDoSupport";
 
 
 

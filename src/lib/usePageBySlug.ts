@@ -20,7 +20,7 @@ export function usePageBySlug(slug: string | undefined): PageData | null {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        query: `query whatwedo {\n  e365page(id: \"${uri}\", idType: URI) {\n    title\n    uri\n    slug\n    content(format: RENDERED)\n  }\n}`
+        query: `query whatwedo {\n  e365page(id: "${uri}", idType: URI) {\n    title\n    uri\n    slug\n    content(format: RENDERED)\n  }\n}`
       })
     })
       .then(res => res.json())

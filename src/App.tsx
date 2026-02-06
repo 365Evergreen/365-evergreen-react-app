@@ -4,9 +4,9 @@ import { Hero } from './components/Hero';
 // import { CTA } from './components/CTA';
 import { Features } from './components/Features';
 import LatestPosts from './components/LatestPosts';
-import { ContactForm } from './components/ContactForm';
+import { ContactForm } from './components/ContactForm/ContactForm';
 import { Footer } from './components/Footer';
-import { CookieConsent } from './components/CookieConsent';
+import { CookieConsent } from './components/CookieConsent/CookieConsent';
 import { CopilotChat } from './components/CopilotChat';
 import { ChatBubble } from './components/ChatBubble';
 import { FloatingDrawer } from './components/FloatingDrawer';
@@ -29,9 +29,9 @@ const LatestPostsArchive = lazy(() => import('./components/LatestPostsArchive/La
 const WhatWeDoItem = lazy(() => import('./components/WhatWeDoItem'));
 const WhatWeDoStatic = lazy(() => import('./components/WhatWeDoStatic'));
 const ResourceArchive = lazy(() => import('./components/ResourceArchive/ResourceArchive'));
+const PrivacyPolicy = lazy(() => import('./components/PrivacyPolicy/PrivacyPolicy'));
 const TestCtaQuery = lazy(() => import('./components/TestCtaQuery'));
 const VanillaAccordionDemoPage = lazy(() => import('./components/VanillaAccordionDemoPage'));
-const AccordionTest = lazy(() => import('./components/AccordionTest'));
 const FeatureButtonsTest = lazy(() => import('./components/FeatureButtonsTest'));
 const FeatureButtonsLogic = lazy(() => import('./components/FeatureButtonsLogic'));
 const PageView = lazy(() => import('./components/PageView').then(module => ({ default: module.PageView })));
@@ -128,10 +128,10 @@ function App() {
             <Route path="/e365-page/what-we-do/" element={<WhatWeDoStatic />} />
             <Route path="/e365-page/how-we-do-it" element={<HowWeDoItStatic />} />
             <Route path="/e365-page/resources/" element={<ResourceArchive />} />
+            <Route path="/e365-page/privacy-policy/" element={<PrivacyPolicy />} />
             <Route path="/:slug" element={<PageView />} />
             <Route path="/:parent/:slug" element={<PageView />} />
             <Route path="/vanilla-accordion-demo" element={<VanillaAccordionDemoPage />} />
-            <Route path="/accordion-test" element={<AccordionTest />} />
             <Route path="/feature-buttons-test" element={<FeatureButtonsTest />} />
             {/* Simulate homepage selection: pass featureId for Modern workplace */}
             <Route path="/feature-buttons-logic" element={<FeatureButtonsLogic featureId="cG9zdDozMzg=" />} />
