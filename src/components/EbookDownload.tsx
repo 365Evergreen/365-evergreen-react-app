@@ -14,7 +14,7 @@ type EbookDownloadProps = {
   ctaLabel?: string;
 };
 
-const defaultTitle = 'Download the Evergreen Playbook';
+const defaultTitle = 'Download the 365 Evergreen playbook';
 const defaultSubtitle = 'Get actionable guidance on building and sustaining a thriving evergreen workplace.';
 const defaultCtaLabel = 'Email me the eBook';
 

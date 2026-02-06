@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from '../FeaturePage.module.css'
+import styles from './FeaturePage.module.css'
 
 type FeaturePageProps = {
   title?: string
@@ -26,15 +26,7 @@ const FeaturePage: React.FC<FeaturePageProps> = ({ title = 'Feature', subtitle, 
       )}
 
       <div className={styles['featurepage-content']}>
-        <aside className={styles['featurepage-aside']}> 
-          <nav className={styles['featurepage-asideNav']} aria-label="Feature quick links">
-            <ul>
-              <li><a href="#overview">Overview</a></li>
-              <li><a href="#benefits">Benefits</a></li>
-              <li><a href="#details">Details</a></li>
-            </ul>
-          </nav>
-        </aside>
+        
 
         <div className={styles['featurepage-main']}>
           {children ?? (

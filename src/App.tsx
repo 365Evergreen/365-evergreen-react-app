@@ -24,7 +24,7 @@ import HowWeDoItStatic from './components/HowWeDoIt/HowWeDoItStatic';
 const CtaPage = lazy(() => import('./components/CtaPage'));
 const FeatureView = lazy(() => import('./components/FeatureView'));
 const AllAccordions = lazy(() => import('./components/allacordions'));
-const AllFeatures = lazy(() => import('./components/AllFeatures'));
+const AllFeatures = lazy(() => import('./components/AllFeatures/AllFeatures'));
 const LatestPostsArchive = lazy(() => import('./components/LatestPostsArchive/LatestPostsArchive'));
 const WhatWeDoItem = lazy(() => import('./components/WhatWeDoItem'));
 const WhatWeDoStatic = lazy(() => import('./components/WhatWeDoStatic'));

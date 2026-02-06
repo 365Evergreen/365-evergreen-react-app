@@ -1,5 +1,3 @@
-
-
 import styles from "../CTA.module.css";
 import { Button } from "@fluentui/react-components";
 import { CheckmarkCircle24Regular, PeopleTeam24Regular, Flash24Regular, BrainCircuit24Regular } from "@fluentui/react-icons";

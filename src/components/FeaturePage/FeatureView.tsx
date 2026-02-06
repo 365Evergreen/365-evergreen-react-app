@@ -1,10 +1,10 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Breadcrumb, BreadcrumbItem } from '@fluentui/react-components';
-import { useFeatureBySlug } from '../lib/useFeatureBySlug';
-import PageBlocks from './PageBlocks';
-import FeatureAccordionButtons from './FeatureAccordionButtons';
-import FeaturePage from './FeaturePage/FeaturePage';
+import { useFeatureBySlug } from './useFeatureBySlug';
+import PageBlocks from '../PageBlocks';
+import FeatureAccordionButtons from '../FeatureAccordionButtons';
+import FeaturePage from './FeaturePage';
 import fvStyles from '../FeatureView.module.css';
 
 

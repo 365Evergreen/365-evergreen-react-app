@@ -1,5 +1,3 @@
-
-
 import * as React from 'react';
 import styles from './DynamicAccordion.module.css';
 import {

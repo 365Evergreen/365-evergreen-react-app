@@ -1,7 +1,7 @@
 import React from 'react';
-import '../Features.css';
-import { useSiteFeatures } from '../lib/useSiteFeatures';
-import type { SiteFeature } from '../lib/useSiteFeatures';
+import './AllFeatures.css';
+import { useSiteFeatures } from '../../lib/useSiteFeatures';
+import type { SiteFeature } from '../../lib/useSiteFeatures';
 import { Breadcrumb, BreadcrumbItem } from '@fluentui/react-components';
 import { PeopleTeamToolbox24Regular, ChevronRight24Filled } from '@fluentui/react-icons';
 import { useNavigate, Link } from 'react-router-dom';
