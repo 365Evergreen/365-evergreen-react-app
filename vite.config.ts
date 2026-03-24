@@ -22,8 +22,12 @@ export default defineConfig({
           react: [
             'react',
             'react-dom',
-            'react-router-dom',
-            '@fluentui/react-components',
+            'react-router-dom'
+          ],
+          fluent: [
+            '@fluentui/react-components'
+          ],
+          motion: [
             'framer-motion'
           ]
         }

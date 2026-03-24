@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../TenantAuditForm.css';
+import styles from './TenantAuditForm.module.css';
 import { Button } from '@fluentui/react-components';
 
 
@@ -61,58 +61,58 @@ export const TenantAuditForm: React.FC = () => {
   };
 
   return (
-    <form className="form" onSubmit={handleSubmit}>
-      <label className="label">
+    <form className={styles.form} onSubmit={handleSubmit}>
+      <label className={styles.label}>
         First Name
         <input
           type="text"
           name="firstName"
           value={form.firstName}
           onChange={handleChange}
-          className="input"
+          className={styles.input}
           required
         />
       </label>
-      <label className="label">
+      <label className={styles.label}>
         Surname
         <input
           type="text"
           name="surname"
           value={form.surname}
           onChange={handleChange}
-          className="input"
+          className={styles.input}
           required
         />
       </label>
-      <label className="label">
+      <label className={styles.label}>
         Email Address
         <input
           type="email"
           name="email"
           value={form.email}
           onChange={handleChange}
-          className="input"
+          className={styles.input}
           required
         />
       </label>
-      <label className="label">
+      <label className={styles.label}>
         Organisation
         <input
           type="text"
           name="organisation"
           value={form.organisation}
           onChange={handleChange}
-          className="input"
+          className={styles.input}
           required
         />
       </label>
-      <label className="label">
+      <label className={styles.label}>
         Message
         <textarea
           name="message"
           value={form.message}
           onChange={handleChange}
-          className="textarea"
+          className={styles.textarea}
           required
         />
       </label>

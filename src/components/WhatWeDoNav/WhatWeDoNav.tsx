@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import styles from '../WhatWeDoNav.module.css'
+import styles from './WhatWeDoNav.module.css'
 
 type NavItem = {
   href: string
@@ -162,17 +162,17 @@ export const WhatWeDoNav: React.FC<{ items?: NavItem[] }> = ({ items = defaultIt
       )}
       <nav
         ref={navRef}
-        className={`${styles['what-we-do-nav']} ${stuck ? styles['what-we-do-nav--stuck'] : ''}`}
+        className={`${styles.whatWeDoNav} ${stuck ? styles.whatWeDoNavStuck : ''}`}
         style={stuck ? fixedStyle : undefined}
         aria-label="What we do navigation"
       >
-        <ul className={styles['what-we-do-nav__list']} role="tablist" aria-label="What we do tabs">
+        <ul className={styles.whatWeDoNavList} role="tablist" aria-label="What we do tabs">
           {items.map((it) => (
-            <li key={it.href} className={styles['what-we-do-nav__item']}> 
+            <li key={it.href} className={styles.whatWeDoNavItem}> 
               <a
                 role="tab"
                 aria-selected={active === it.href}
-                className={`${styles['what-we-do-nav__link']} ${active === it.href ? styles['what-we-do-nav__link--active'] : ''}`}
+                className={`${styles.whatWeDoNavLink} ${active === it.href ? styles.whatWeDoNavLinkActive : ''}`}
                 href={it.href}
                 onClick={(e) => handleClick(e, it.href)}
               >
