@@ -1,5 +1,5 @@
 import React from 'react';
-import RouteLoader from '../RouteLoader';
+import RouteLoader from '../RouteLoader/RouteLoader';
 import { usePrivacyPolicy } from '../../lib/usePrivacyPolicy';
 import styles from './PrivacyPolicy.module.css';
 
@@ -51,3 +51,4 @@ const PrivacyPolicy: React.FC = () => {
 };
 
 export default PrivacyPolicy;
+

@@ -1,6 +1,6 @@
 import React from "react";
-import WhatWeDoHero from "../WhatWeDoHero";
-import { WhatWeDoNav } from "../WhatWeDoNav";
+import WhatWeDoHero from "../WhatWeDoHero/WhatWeDoHero";
+import { WhatWeDoNav } from "../WhatWeDoNav/WhatWeDoNav";
 import WeDoCollaboration from "../WeDoCollaboration/WeDoCollaboration";
 import WeDoCommunication from "../WeDoCommunication/WeDoCommunication";
 import WeDoGovernance from "../WeDoGovernance/WeDoGovernance";
@@ -39,3 +39,4 @@ const WhatWeDoStatic: React.FC = () => (
 );
 
 export default WhatWeDoStatic;
+

@@ -1,41 +1,41 @@
 import { useState, lazy, Suspense, type ComponentProps, type ComponentType } from 'react';
 import { Header } from './components/Header/Header';
-import { Hero } from './components/Hero';
+import { Hero } from './components/Hero/Hero';
 // import { CTA } from './components/CTA';
-import { Features } from './components/Features';
-import LatestPosts from './components/LatestPosts';
+import { Features } from './components/Features/Features';
+import LatestPosts from './components/LatestPosts/LatestPosts';
 import { ContactForm } from './components/ContactForm/ContactForm';
-import { Footer } from './components/Footer';
+import { Footer } from './components/Footer/Footer';
 import { CookieConsent } from './components/CookieConsent/CookieConsent';
-import { CopilotChat } from './components/CopilotChat';
-import { ChatBubble } from './components/ChatBubble';
-import { FloatingDrawer } from './components/FloatingDrawer';
-import { JourneySurvey } from './components/JourneySurvey';
+import { CopilotChat } from './components/CopilotChat/CopilotChat';
+import { ChatBubble } from './components/ChatBubble/ChatBubble';
+import { FloatingDrawer } from './components/FloatingDrawer/FloatingDrawer';
+import { JourneySurvey } from './components/JourneySurvey/JourneySurvey';
 import questionsData from '../CTAJourneyQuestions.json';
 // import Carousel from './components/Carousel';
-import FluentCarousel from './components/FluentCarousel';
+import FluentCarousel from './components/FluentCarousel/FluentCarousel';
 import { AnimatePresence, motion } from 'framer-motion';
 import { fadeVariants } from './components/motionPresets';
 import { Routes, Route } from 'react-router-dom';
 import './HomeSectionLayout.css';
-import RouteLoader from './components/RouteLoader';
+import RouteLoader from './components/RouteLoader/RouteLoader';
 import HowWeDoItStatic from './components/HowWeDoIt/HowWeDoItStatic';
-import ScrollToTop from './components/ScrollToTop';
+import ScrollToTop from './components/ScrollToTop/ScrollToTop';
 
-const CtaPage = lazy(() => import('./components/CtaPage'));
-const FeatureView = lazy(() => import('./components/FeatureView'));
-const AllAccordions = lazy(() => import('./components/allacordions'));
+const CtaPage = lazy(() => import('./components/CtaPage/CtaPage'));
+const FeatureView = lazy(() => import('./components/FeatureView/FeatureView'));
+const AllAccordions = lazy(() => import('./components/AllAccordions/AllAccordions'));
 const AllFeatures = lazy(() => import('./components/AllFeatures/AllFeatures'));
 const LatestPostsArchive = lazy(() => import('./components/LatestPostsArchive/LatestPostsArchive'));
 
 const WhatWeDoStatic = lazy(() => import('./components/WhatWeDoStatic/WhatWeDoStatic'));
 const ResourceArchive = lazy(() => import('./components/ResourceArchive/ResourceArchive'));
 const PrivacyPolicy = lazy(() => import('./components/PrivacyPolicy/PrivacyPolicy'));
-const TestCtaQuery = lazy(() => import('./components/TestCtaQuery'));
-const VanillaAccordionDemoPage = lazy(() => import('./components/VanillaAccordionDemoPage'));
-const FeatureButtonsTest = lazy(() => import('./components/FeatureButtonsTest'));
-const FeatureButtonsLogic = lazy(() => import('./components/FeatureButtonsLogic'));
-const PageView = lazy(() => import('./components/PageView').then(module => ({ default: module.PageView })));
+const TestCtaQuery = lazy(() => import('./components/TestCtaQuery/TestCtaQuery'));
+const VanillaAccordionDemoPage = lazy(() => import('./components/VanillaAccordionDemoPage/VanillaAccordionDemoPage'));
+const FeatureButtonsTest = lazy(() => import('./components/FeatureButtonsTest/FeatureButtonsTest'));
+const FeatureButtonsLogic = lazy(() => import('./components/FeatureButtonsLogic/FeatureButtonsLogic'));
+const PageView = lazy(() => import('./components/PageView/PageView').then(module => ({ default: module.PageView })));
 
 // Wrapper to allow passing optional props to PageView without changing its
 // original typings. We cast props through any when forwarding.

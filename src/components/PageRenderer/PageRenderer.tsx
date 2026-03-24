@@ -1,9 +1,9 @@
-import { Hero } from './Hero/Hero';
-import WhatWeDoAccordion from './WhatWeDoAccordion/WhatWeDoAccordion';
-import { CTA } from './CTA/CTA';
-import { Features } from './Features/Features';
-import ResponsiveImage from './ResponsiveImage/ResponsiveImage';
-import type { PageBlock } from '../components/FeaturePage/usePageBlocks';
+import { Hero } from '../Hero/Hero';
+import WhatWeDoAccordion from '../WhatWeDoAccordion/WhatWeDoAccordion';
+import { CTA } from '../CTA/CTA';
+import { Features } from '../Features/Features';
+import ResponsiveImage from '../ResponsiveImage/ResponsiveImage';
+import type { PageBlock } from '../FeaturePage/usePageBlocks';
 
 export default function PageRenderer({ blocks }: { blocks: PageBlock[] }) {
   if (!blocks || blocks.length === 0) return null;
@@ -41,3 +41,5 @@ export default function PageRenderer({ blocks }: { blocks: PageBlock[] }) {
     </>
   );
 }
+
+

@@ -1,10 +1,10 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Breadcrumb, BreadcrumbItem } from '@fluentui/react-components';
-import { useFeatureBySlug } from './useFeatureBySlug';
+import { useFeatureBySlug } from '../../lib/useFeatureBySlug';
 import PageBlocks from '../PageBlocks/PageBlocks';
 import FeatureAccordionButtons from '../FeatureAccordionButtons/FeatureAccordionButtons';
-import FeaturePage from './FeaturePage';
+import FeaturePage from '../FeaturePage/FeaturePage';
 import fvStyles from './FeatureView.module.css';
 
 
@@ -78,3 +78,4 @@ const FeatureView: React.FC = () => {
 };
 
 export default FeatureView;
+

@@ -68,6 +68,7 @@ Developer workflows (commands found in `package.json`)
 
 Project conventions for code changes
 - Components: `src/components/MyName.tsx` with styles `src/MyName.module.css`.
+  - **No inline styles or global CSS** — use CSS Modules for all styling.
 - Hooks: place API/data logic in `src/lib/` and export small, typed hooks. Use `Raw*` suffix for fetched DTO types.
 - No global state libraries: prefer prop-drilling or local hooks. If cross-cutting state is needed, document rationale in `docs/` first.
 - Accessibility: follow existing patterns (ARIA attributes, keyboard handling). Run manual checks for interactive components (accordions, drawers).

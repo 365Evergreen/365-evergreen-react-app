@@ -1,7 +1,7 @@
 import React from "react";
 import HowWeDoItHero from "./HowWeDoItHero";
 import { HowWeDoItNav } from "./HowWeDoItNav";
-import ResponsiveVideoPlayer from "../ResponsiveVideoPlayer";
+import ResponsiveVideoPlayer from "../ResponsiveVideoPlayer/ResponsiveVideoPlayer";
 
 
 
@@ -39,3 +39,4 @@ const HowWeDoItStatic: React.FC = () => (
 );
 
 export default HowWeDoItStatic;
+

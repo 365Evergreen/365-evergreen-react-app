@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./WeDoAutomation.css";
-import WhatWeDoAccordion from "../WhatWeDoAccordion";
+import WhatWeDoAccordion from "../WhatWeDoAccordion/WhatWeDoAccordion";
 
 // We now fetch accordions and their items from WPGraphQL via `useAccordionsByComponent`
 import { useAccordionsByComponent } from '../../lib/useAccordionsByComponent';
@@ -127,3 +127,4 @@ const WeDoAutomation: React.FC = () => {
 };
 
 export default WeDoAutomation;
+

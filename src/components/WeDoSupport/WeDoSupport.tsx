@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./WeDoSupport.css";
-import WhatWeDoAccordion from "../WhatWeDoAccordion";
+import WhatWeDoAccordion from "../WhatWeDoAccordion/WhatWeDoAccordion";
 
 
 
@@ -129,3 +129,4 @@ const WeDoSupport: React.FC = () => {
 };
 
 export default WeDoSupport;
+
