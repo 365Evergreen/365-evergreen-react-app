@@ -5,6 +5,7 @@ import { Hero } from './components/Hero/Hero';
 import { Features } from './components/Features/Features';
 import LatestPosts from './components/LatestPosts/LatestPosts';
 import { ContactForm } from './components/ContactForm/ContactForm';
+import Pillars from './components/Pillars/Pillars';
 import { Footer } from './components/Footer/Footer';
 import { CookieConsent } from './components/CookieConsent/CookieConsent';
 import { CopilotChat } from './components/CopilotChat/CopilotChat';
@@ -69,6 +70,15 @@ function App() {
                   exit="exit"
                 >
                   <Hero onOpenDrawer={() => setDrawerOpen(true)} />
+                </motion.div>
+                <motion.div
+                  key="pillars"
+                  variants={fadeVariants}
+                  initial="hidden"
+                  animate="visible"
+                  exit="exit"
+                >
+                  <Pillars />
                 </motion.div>
                 <div className="bg-default">
                   <motion.div
