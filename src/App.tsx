@@ -13,7 +13,6 @@ import { FloatingDrawer } from './components/FloatingDrawer/FloatingDrawer';
 import { JourneySurvey } from './components/JourneySurvey/JourneySurvey';
 import questionsData from '../CTAJourneyQuestions.json';
 // import Carousel from './components/Carousel';
-import FluentCarousel from './components/FluentCarousel/FluentCarousel';
 import { AnimatePresence, motion } from 'framer-motion';
 import { fadeVariants } from './components/motionPresets';
 import { Routes, Route } from 'react-router-dom';
@@ -71,15 +70,6 @@ function App() {
                 >
                   <Hero onOpenDrawer={() => setDrawerOpen(true)} />
                 </motion.div>
-                <motion.div
-                  key="fluentcarousel"
-                  variants={fadeVariants}
-                  initial="hidden"
-                  animate="visible"
-                  exit="exit"
-                >
-                  <FluentCarousel />
-                </motion.div>
                 <div className="bg-default">
                   <motion.div
                     key="features"
@@ -126,7 +116,7 @@ function App() {
             <Route path="/category/:category" element={<LatestPostsArchive />} />
             <Route path="/category/:category/:slug" element={<PageView />} />
             <Route path="/what-we-do" element={<PageViewOptional whatWeDoPageId="cG9zdDo0OTM=" />} />
-           
+
             <Route path="/e365-page/what-we-do/" element={<WhatWeDoStatic />} />
             <Route path="/e365-page/how-we-do-it" element={<HowWeDoItStatic />} />
             <Route path="/e365-page/resources/" element={<ResourceArchive />} />

@@ -1,6 +1,6 @@
 
 import React from 'react';
-import './LatestPosts.module.css';
+import styles from './LatestPosts.module.css';
 import { useLatestPosts } from '../../lib/useLatestPosts';
 import { useNavigate } from 'react-router-dom';
 
@@ -46,47 +46,38 @@ const LatestPosts: React.FC = () => {
   }
 
   return (
-    <div className="latest-posts-outer">
-      <section className="latest-posts-root home-section">
-        <div className="latest-posts-container">
-          <h2 className="latest-posts-title fluent-title2 home-section-heading">Latest by 365 Evergreen</h2>
-          <div className="features-grid">
+    <div className={styles.latestPostsOuter}>
+      <section className={`${styles.latestPostsRoot} home-section`}>
+        <div className={styles.latestPostsContainer}>
+          <h2 className={`${styles.latestPostsTitle} fluent-title2 home-section-heading`}>Latest by 365 Evergreen</h2>
+          <div className={styles.postsGrid}>
             {sortedPosts.map((post) => {
               const primaryCategory = post.categories?.edges?.[0]?.node?.slug || 'post';
               const postUrl = `/category/${primaryCategory}/${post.slug}`;
               return (
                 <div
                   key={post.id}
-                  className="features-card selectable-card"
+                  className={`${styles.postCard} selectable-card`}
                   onClick={() => navigate(postUrl)}
-                  style={{ cursor: 'pointer' }}
                 >
-                  <span className="latest-posts-title-link fluent-title3" style={{ color: '#000', marginBottom: '0.5rem', display: 'block' }}>{post.title}</span>
+                  <span className={`${styles.latestPostsTitleLink} fluent-title3`}>{post.title}</span>
                   {post.featuredImage?.node?.sourceUrl && (
-                    <span className="latest-posts-image-link">
+                    <span className={styles.latestPostsImageLink}>
                       <img
                         src={post.featuredImage.node.sourceUrl}
                         alt={post.title}
-                        className="latest-posts-featured-image"
+                        className={styles.latestPostsFeaturedImage}
                         loading="lazy"
                       />
                     </span>
                   )}
                   {/* Category tags */}
                   {(post.categories?.edges?.length ?? 0) > 0 && (
-                    <div style={{ marginBottom: '0.5rem', display: 'flex', flexWrap: 'wrap', gap: '0.5em' }}>
+                    <div className={styles.categoriesWrap}>
                       {(post.categories?.edges ?? []).map((cat: { node: { slug: string; name: string } }) => (
                         <span
                           key={cat.node.slug}
-                          className="latest-posts-category-tag"
-                          style={{
-                            background: '#e6f2e6',
-                            color: '#d821ba',
-                            fontSize: '0.85em',
-                            borderRadius: '6px',
-                            padding: '0.15em 0.7em',
-                            cursor: 'pointer',
-                          }}
+                          className={styles.latestPostsCategoryTag}
                           onClick={e => {
                             e.stopPropagation();
                             navigate(`/category/${cat.node.slug}`);
@@ -97,12 +88,11 @@ const LatestPosts: React.FC = () => {
                       ))}
                     </div>
                   )}
-                  <div className="latest-posts-date">{new Date(post.date).toLocaleDateString()}</div>
-                  <p className="latest-posts-excerpt">{getExcerpt(post)}</p>
+                  <div className={styles.latestPostsDate}>{new Date(post.date).toLocaleDateString()}</div>
+                  <p className={styles.latestPostsExcerpt}>{getExcerpt(post)}</p>
                   <a
                     href={postUrl}
-                    className="features-link"
-                    style={{ display: 'inline-flex', alignItems: 'flex-start', gap: '0.4em', fontWeight: 600, color: '#111', textDecoration: 'none', marginTop: '0.5em' }}
+                    className={styles.readMoreLink}
                     onClick={e => {
                       e.stopPropagation();
                       e.preventDefault();
@@ -111,7 +101,7 @@ const LatestPosts: React.FC = () => {
                     tabIndex={0}
                   >
                     Read more
-                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ marginLeft: '0.1em' }}>
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" className={styles.readMoreIcon}>
                       <path d="M7.5 5L12.5 10L7.5 15" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
                   </a>
