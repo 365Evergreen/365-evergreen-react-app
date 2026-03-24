@@ -21,7 +21,7 @@ export function useCtaPost(slug: string | undefined): CtaPostData | null {
     // Attempt cTA by slug first, and fall back to post by URI in one request
     const query = `query GetCtaPost {\n  cTA(id: \"${slugOnly}\", idType: URI) {\n    title\n    slug\n    blocks\n    content(format: RENDERED)\n    featuredImage { node { sourceUrl } }\n  }\n  post(id: \"${uri}\", idType: URI) {\n    title\n    slug\n    blocks\n    content(format: RENDERED)\n    featuredImage { node { sourceUrl } }\n  }\n}`;
 
-    fetch('https://365evergreen.com/graphql', {
+    fetch('https://365evergreendev.com/graphql', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ query })

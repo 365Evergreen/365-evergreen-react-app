@@ -20,7 +20,7 @@ export interface PageNode {
 export function useAllPagesWithBlocks(): PageNode[] | null {
   const [pages, setPages] = useState<PageNode[] | null>(null);
   useEffect(() => {
-    fetch('https://365evergreen.com/graphql', {
+    fetch('https://365evergreendev.com/graphql', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

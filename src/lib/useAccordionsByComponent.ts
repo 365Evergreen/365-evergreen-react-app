@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-const WP_GRAPHQL_ENDPOINT = 'https://365evergreen.com/graphql';
+const WP_GRAPHQL_ENDPOINT = 'https://365evergreendev.com/graphql';
 
 export type AccordionItem = {
   id: number | string;

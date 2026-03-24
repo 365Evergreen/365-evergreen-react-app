@@ -16,7 +16,7 @@ export function usePageBySlug(slug: string | undefined): PageData | null {
     if (!slug) return;
     // Prepend CPT base for e365page
     const uri = slug.startsWith('/e365-page/') ? slug : `/e365-page/${slug.replace(/^\//, '')}/`;
-    fetch('https://365evergreen.com/graphql', {
+    fetch('https://365evergreendev.com/graphql', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

@@ -19,7 +19,7 @@ export function usePageBlocks(
 ): PageData | null {
   const [data, setData] = useState<PageData | null>(null);
   useEffect(() => {
-    fetch('https://365evergreen.com/graphql', {
+    fetch('https://365evergreendev.com/graphql', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

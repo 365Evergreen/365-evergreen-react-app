@@ -32,7 +32,7 @@ interface HookState {
   error: string | null;
 }
 
-const GRAPHQL_ENDPOINT = 'https://365evergreen.com/graphql';
+const GRAPHQL_ENDPOINT = 'https://365evergreendev.com/graphql';
 
 const QUERY = `query e365Resources {
   e365resources {

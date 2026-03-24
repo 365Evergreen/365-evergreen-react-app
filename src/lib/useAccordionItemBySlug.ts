@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-const WP_GRAPHQL_ENDPOINT = 'https://365evergreen.com/graphql';
+const WP_GRAPHQL_ENDPOINT = 'https://365evergreendev.com/graphql';
 
 export interface AccordionPost {
   id: string;

@@ -8,7 +8,7 @@
     featuredImage { node { sourceUrl } }
   }
 }`;
-    const res = await fetch('https://365evergreen.com/graphql', {
+    const res = await fetch('https://365evergreendev.com/graphql', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ query }),

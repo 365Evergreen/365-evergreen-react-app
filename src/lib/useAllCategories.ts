@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-const WPGRAPHQL_URL = 'https://365evergreen.com/graphql';
+const WPGRAPHQL_URL = 'https://365evergreendev.com/graphql';
 
 export interface WPCategory {
   id: string;
